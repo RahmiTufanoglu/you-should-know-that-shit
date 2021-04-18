@@ -8,30 +8,29 @@ export class User {
   id: string;
 
   @ApiProperty()
-  @CreateDateColumn()
+  @CreateDateColumn({ nullable: false })
   createdDate: Date;
 
   @ApiProperty()
-  @Column()
+  @Column({ nullable: false })
   firstname: string;
 
   @ApiProperty()
-  @Column()
+  @Column({ nullable: false })
   lastname: string;
 
   @ApiProperty({
-    example: 'R2T8',
+    example: 'RaTu',
     description: 'A pseudonym of a person',
   })
-  @Column({ unique: true })
+  @Column({ nullable: false, unique: true })
   username: string;
 
   @ApiProperty()
-  @Column({ unique: true, length: 300 })
+  @Column({ nullable: false, unique: true, length: 300 })
   email: string;
 
   @ApiProperty()
-  @Column({ select: false })
-  @Column()
+  @Column({ nullable: false, select: false })
   password: string;
 }

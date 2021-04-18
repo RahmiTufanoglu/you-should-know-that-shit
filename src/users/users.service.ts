@@ -12,12 +12,10 @@ export class UsersService {
   }
 
   async create(user: CreateUserDto): Promise<User> {
-    const salt = await bcrypt.genSalt(10);
-    const hashedPassword = await bcrypt.hash(user.password, salt);
     user = {
       ...user,
       email: user.email.toLowerCase(),
-      password: hashedPassword,
+      password: await this.hashPassword(user.password),
     };
     return this.userRepository.save(user);
   }
@@ -30,7 +28,12 @@ export class UsersService {
     return this.userRepository.findOneOrFail(id);
   }
 
-  update(id: number, user: UpdateUserDto): Promise<UpdateResult> {
+  async update(id: number, user: UpdateUserDto): Promise<UpdateResult> {
+    user = {
+      ...user,
+      email: user.email.toLowerCase(),
+      password: await this.hashPassword(user.password),
+    };
     return this.userRepository.update(id, user);
   }
 
@@ -39,10 +42,21 @@ export class UsersService {
   }
 
   findByEmail(email: string): Promise<User> {
-    return this.userRepository.findOne({ where: { email } });
+    return this.userRepository.findOne(
+      { email },
+      { select: ['id', 'createdDate', 'username', 'firstname', 'lastname', 'email', 'password'] },
+    );
   }
 
   findByUsername(username: string): Promise<User> {
-    return this.userRepository.findOne({ where: { username } });
+    return this.userRepository.findOne(
+      { username },
+      { select: ['id', 'createdDate', 'username', 'firstname', 'lastname', 'email', 'password'] },
+    );
+  }
+
+  async hashPassword(password: string): Promise<string> {
+    const salt = await bcrypt.genSalt(10);
+    return await bcrypt.hash(password, salt);
   }
 }

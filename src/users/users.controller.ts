@@ -1,10 +1,10 @@
-import { Body, Controller, Delete, Get, Param, ParseIntPipe, Post, Put, UseGuards } from '@nestjs/common';
+import { Body, Controller, Delete, Get, Param, Post, Put, Res, UseGuards } from '@nestjs/common';
 import { UsersService } from './users.service';
-import { CreateUserDto } from './dto/create-user.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
 import { ApiCreatedResponse, ApiNotFoundResponse, ApiOkResponse } from '@nestjs/swagger';
 import { User } from './entities/user.entity';
 import { JwtAuthGuard } from '../auth/guard/jwt-auth.guard';
+import { CreateUserDto } from './dto/create-user.dto';
 
 @Controller('users')
 export class UsersController {
@@ -13,54 +13,79 @@ export class UsersController {
 
   @ApiCreatedResponse({ type: User })
   @Post()
-  async create(@Body() createUserDto: CreateUserDto): Promise<User> {
-    return await this.usersService.create(createUserDto);
+  async create(@Body() createUserDto: CreateUserDto, @Res() res): Promise<User> {
+    const user = await this.usersService.create(createUserDto);
+    return res.json({
+      message: 'User has been added successfully',
+      user,
+    });
   }
 
   @ApiOkResponse({ type: User, isArray: true })
   @UseGuards(JwtAuthGuard)
   @Get()
-  async findAll(): Promise<User[]> {
-    return await this.usersService.findAll();
+  async findAll(@Res() res): Promise<User[]> {
+    const users = await this.usersService.findAll();
+    return res.json({
+      message: 'All users have been found successfully',
+      users,
+    });
   }
 
   @ApiOkResponse({ type: User })
   @ApiNotFoundResponse()
   @UseGuards(JwtAuthGuard)
   @Get(':id')
-  async findOne(@Param('id') id: number): Promise<User> {
-    return await this.usersService.findOne(id);
+  async findOne(@Param('id') id: number, @Res() res): Promise<User> {
+    const user = await this.usersService.findOne(id);
+    return res.json({
+      message: `User with id #${id} has been found successfully.`,
+      user,
+    });
   }
 
 
   @UseGuards(JwtAuthGuard)
   @Put(':id')
-  async update(
-    @Param('id', ParseIntPipe) id: number,
-    @Body() updateUserDto: UpdateUserDto,
-  ): Promise<void> {
-    await this.usersService.update(id, updateUserDto);
+  async update(@Param('id') id: number, @Body() updateUserDto: UpdateUserDto, @Res() res): Promise<void> {
+    const user = await this.usersService.update(id, updateUserDto);
+    return res.json({
+      message: `User with the id #${id} has been updated successfully.`,
+      user,
+    });
   }
 
   @UseGuards(JwtAuthGuard)
   @Delete(':id')
-  async remove(@Param('id') id: number): Promise<void> {
-    await this.usersService.remove(id);
+  async remove(@Param('id') id: number, @Res() res): Promise<void> {
+    const user = await this.usersService.remove(id);
+    return res.json({
+      message: `User with the id #${id} has been deleted successfully.`,
+      user,
+    });
   }
 
   @ApiCreatedResponse({ type: User })
   @ApiNotFoundResponse()
   @UseGuards(JwtAuthGuard)
   @Get()
-  async findByEmail(@Param('email') email: string): Promise<User> {
-    return await this.usersService.findByEmail(email);
+  async findByEmail(@Param('email') email: string, @Res() res): Promise<User> {
+    const user = await this.usersService.findByEmail(email);
+    return res.json({
+      message: `User with the email #${email} has been found successfully.`,
+      user,
+    });
   }
 
   @ApiCreatedResponse({ type: User })
   @ApiNotFoundResponse()
   @UseGuards(JwtAuthGuard)
   @Get()
-  async findByUsername(@Param('username') username: string): Promise<User> {
-    return await this.usersService.findByUsername(username);
+  async findByUsername(@Param('username') username: string, @Res() res): Promise<User> {
+    const user = await this.usersService.findByUsername(username);
+    return res.json({
+      message: `User with the username #${username} has been found successfully.`,
+      user,
+    });
   }
 }

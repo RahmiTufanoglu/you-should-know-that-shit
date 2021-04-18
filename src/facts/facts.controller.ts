@@ -1,4 +1,4 @@
-import { Body, Controller, Delete, Get, Param, ParseIntPipe, Post, Put, UploadedFile, UseInterceptors } from '@nestjs/common';
+import { Body, Controller, Delete, Get, Param, ParseIntPipe, Post, Put, Res, UploadedFile, UseInterceptors } from '@nestjs/common';
 import { ApiCreatedResponse, ApiNotFoundResponse, ApiOkResponse, ApiOperation, ApiTags } from '@nestjs/swagger';
 import { FactsService } from './facts.service';
 import { Fact } from './entities/fact.entity';
@@ -19,45 +19,58 @@ export class FactsController {
     FileInterceptor('file', { storage }),
   )
   @Post()
-  async create(
-    @Body() createFactDto: CreateFactDto,
-    @UploadedFile() file: Express.Multer.File,
+  async create(@Body() createFactDto: CreateFactDto,
+               @UploadedFile() file: Express.Multer.File,
+               @Res() res,
   ): Promise<{ file: string; body: Fact }> {
-    const body = await this.factsService.create(createFactDto);
-    console.log('file', file);
-    return {
+    const fact = await this.factsService.create(createFactDto);
+    const body = { fact, file: file.buffer.toString() };
+    return res.json({
+      message: 'Fact has been added successfully',
       body,
-      file: file.buffer.toString(),
-    };
+    });
   }
 
   @ApiOkResponse({ type: Fact, isArray: true })
   @ApiOperation({ summary: 'Show all users' })
   @Get()
-  async findAll(): Promise<Fact[]> {
-    return await this.factsService.findAll();
+  async findAll(@Res() res): Promise<Fact[]> {
+    const facts = await this.factsService.findAll();
+    return res.json({
+      message: 'All facts have been found successfully',
+      facts,
+    });
   }
 
   @ApiOkResponse({ type: Fact })
   @ApiNotFoundResponse()
   @ApiOperation({ summary: 'Find a user with a specific id' })
   @Get(':id')
-  async findOne(@Param('id', ParseIntPipe) id: number): Promise<Fact> {
-    return await this.factsService.findOne(id);
+  async findOne(@Param('id') id: number, @Res() res): Promise<Fact> {
+    const fact = await this.factsService.findOne(id);
+    return res.json({
+      message: `Fact with id #${id} has been found successfully.`,
+      fact,
+    });
   }
 
   @Put(':id')
   @ApiOperation({ summary: 'Edit a user with a specific id' })
-  async update(
-    @Param('id', ParseIntPipe) id: number,
-    @Body() updateFactDto: UpdateFactDto,
-  ): Promise<void> {
-    await this.factsService.update(id, updateFactDto);
+  async update(@Param('id', ParseIntPipe) id: number, @Body() updateFactDto: UpdateFactDto, @Res() res): Promise<void> {
+    const fact = await this.factsService.update(id, updateFactDto);
+    return res.json({
+      message: `Fact with the id #${id} has been updated successfully.`,
+      fact,
+    });
   }
 
   @Delete(':id')
   @ApiOperation({ summary: 'Delete a user with a specific id' })
-  async remove(@Param('id', ParseIntPipe) id: number): Promise<void> {
-    await this.factsService.remove(id);
+  async remove(@Param('id') id: number, @Res() res): Promise<void> {
+    const fact = await this.factsService.remove(id);
+    return res.json({
+      message: `Fact with the id #${id} has been deleted successfully.`,
+      fact,
+    });
   }
 }
