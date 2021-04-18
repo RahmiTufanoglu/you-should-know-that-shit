@@ -1,0 +1,457 @@
+schemas: db blueprint
+interfaces: typescript - make coding easier
+dtos: class - transfer object in the get, post, put, delete request
+
+
+
+
+facts:
+______________________________________________________________________________________________________
+Only a few special types of piranhas eat meat. All others feed on plants.
+
+Nur ein paar spezielle Arten von Piranhas fressen Fleisch. Alle anderen ernähren sich von Pflanzen.
+______________________________________________________________________________________________________
+The colder your bedroom is, the higher is the likelihood of having a nightmare.
+
+Je kälter Ihr Schlafzimmer ist, desto höher ist die Wahrscheinlichkeit, einen Alptraum zu haben.
+______________________________________________________________________________________________________
+If you close your eyes and try to walk straight, you are involuntarily inclined to walk in circles.
+There is currently no explanation found by scientists as to why this happens.
+
+Wenn Sie Ihre Augen schließen und versuchen, geradeaus zu gehen, neigen Sie unwillkürlich dazu, im Kreis zu gehen.
+Es gibt derzeit keine von Wissenschaftlern gefundene Erklärung, warum dies geschieht.
+______________________________________________________________________________________________________
+With a speed of 91 gigbits per second, NASA has the fastest internet-connection in the world.
+
+Mit einer Geschwindigkeit von 91 Gigabit pro Sekunde verfügt die NASA über die schnellste Internet-Verbindung der Welt.
+______________________________________________________________________________________________________
+The first Game Boy had as much computing power needed for the first moon landing.
+
+Der erste Game Boy hatte so viel Rechenleistung wie für die erste Mondlandung nötig war.
+______________________________________________________________________________________________________
+An octupus has its brain in its tentacles. Even if the tentacles are seperated from the body, they continue to search for food for a short time and bring them to a mouth which is no longer present.
+
+Ein Oktopus hat sein Gehirn in seinen Tentakeln. Auch wenn die Tentakel vom Körper abgetrennt werden, suchen sie für kurze Zeit weiter nach Nahrung und bringen sie zu einem nicht mehr vorhandenen Mund.
+______________________________________________________________________________________________________
+About 83 percent of German women would abstain from sex for 100,000 Euros.
+
+Rund 83 Prozent der deutschen Frauen würden für 100.000 Euro auf Sex verzichten.
+______________________________________________________________________________________________________
+Family Guy is the first television series which, after being cancelled, came back to TV, because the DVD sales were so high.
+
+Family Guy ist die erste Fernsehserie, die, nachdem sie abgesetzt wurde, wieder ins Fernsehen kam, weil die DVD-Verkäufe so hoch waren.
+______________________________________________________________________________________________________
+Hugh Hefner has become almost completely deaf in recent years. Doctors believe his increased use of Viagra is the cause.
+Hefner however, says that he would rather be deaf than forgo sex.
+
+Hugh Hefner ist in den letzten Jahren fast vollständig taub geworden. Die Ärzte glauben, dass sein vermehrter Gebrauch von Viagra die Ursache ist.
+Hefner sagt jedoch, dass er lieber taub wäre, als auf Sex zu verzichten.
+______________________________________________________________________________________________________
+A 20 second hug increases the oxytocin level of people so much that afterwards there is a much greater trust between them.
+
+Eine 20-sekündige Umarmung erhöht den Oxytocinspiegel von Menschen so sehr, dass danach ein viel größeres Vertrauen zwischen ihnen besteht.
+______________________________________________________________________________________________________
+The two oldest cats in the world reached an age of 34 and 38. Both belonged to the same owner. She exclusively fed her cats bacon, eggs, broccoli and coffee.
+
+Die beiden ältesten Katzen der Welt erreichten ein Alter von 34 und 38 Jahren. Beide gehörten der gleichen Besitzerin. Sie fütterte ihre Katzen ausschließlich mit Speck, Eiern, Brokkoli und Kaffee.
+______________________________________________________________________________________________________
+In Spain there is a comdey club in which you pay per laugh.
+
+In Spanien gibt es einen Comdey-Club, in dem man pro Lachen bezahlt.
+______________________________________________________________________________________________________
+Carde is the roman god for door handles, door skills and door hinges.
+
+Carde ist der römische Gott für Türgriffe, Türfertigkeiten und Türbänder.
+______________________________________________________________________________________________________
+The inner skin of a vagina is folded and opens while having sex.
+
+Die innere Haut der Vagina ist gefaltet und öffnet sich beim Sex.
+______________________________________________________________________________________________________
+When the Big Bang theory was presented for the first time scientifically, it was rejected by many scientists because it seemed too religious.
+
+Als die Urknalltheorie zum ersten Mal wissenschaftlich vorgestellt wurde, wurde sie von vielen Wissenschaftlern abgelehnt, weil sie zu religiös erschien.
+______________________________________________________________________________________________________
+Cleopatra was not an Egyptian, but originally came from Greece.
+
+Kleopatra war keine Ägypterin, sondern stammte ursprünglich aus Griechenland.
+______________________________________________________________________________________________________
+Apple owns more cash than the United States.
+
+Apple besitzt mehr Bargeld als die Vereinigten Staaten.
+______________________________________________________________________________________________________
+In Switzerland there are dishwashers with cheese fondue and raclette programs.
+
+In der Schweiz gibt es Geschirrspülmaschinen mit Käsefondue- und Raclette-Programmen.
+______________________________________________________________________________________________________
+In the U.S the most dangerous job is to be a fisherman. Approximately one out of ever 900 die during work.
+
+In den USA ist der gefährlichste Job der eines Fischers. Ungefähr einer von 900 stirbt während der Arbeit.
+______________________________________________________________________________________________________
+A study came to the conclusion that the lack of movement in the Western world kills the same amount of people as smoking does.
+
+Eine Studie kam zu dem Ergebnis, dass der Bewegungsmangel in der westlichen Welt genauso viele Menschen tötet wie das Rauchen.
+______________________________________________________________________________________________________
+Butterflies are cannibals.
+
+Schmetterlinge sind Kannibalen.
+______________________________________________________________________________________________________
+In China, the websites of BBC News, Amnesty International and the Dalai Lama are banned for the citizens.
+
+In China sind die Websites von BBC News, Amnesty International und dem Dalai Lama für die Bürger verboten.
+______________________________________________________________________________________________________
+At Starbucks "laughing" is part of the job description.
+
+Bei Starbucks ist "Lachen" Teil der Stellenbeschreibung.
+______________________________________________________________________________________________________
+Each year around 1000 people die because they are struck by lightning.
+
+Jedes Jahr sterben etwa 1000 Menschen, weil sie vom Blitz getroffen werden.
+______________________________________________________________________________________________________
+According to a study, men from Congo have the largest penises.
+
+Einer Studie zufolge haben Männer aus dem Kongo die größten Penisse.
+______________________________________________________________________________________________________
+If you feel very connected to a person, you can hear their voice in your head when yoiu read messages they have sent.
+
+Wenn Sie sich mit einer Person sehr verbunden fühlen, können Sie ihre Stimme in Ihrem Kopf hören, wenn Sie Nachrichten lesen, die sie gesendet hat.
+______________________________________________________________________________________________________
+It is assumed that so far only four percent of our oceans have been explored.
+
+Man geht davon aus, dass bisher nur vier Prozent unserer Ozeane erforscht sind.
+______________________________________________________________________________________________________
+Kenneth Bainbridge, scientific director of the Manhattan Project, commented at the first test of a nuclear bomb with "Now we are all sons of bitches".
+
+Kenneth Bainbridge, wissenschaftlicher Leiter des Manhattan-Projekts, kommentierte den ersten Test einer Atombombe mit "Jetzt sind wir alle Hurensöhne".
+______________________________________________________________________________________________________
+In 2005 a used pregnancy test belonging to Britney Spears was sold for more than 5000 dollars on Ebay.
+
+Im Jahr 2005 wurde ein gebrauchter Schwangerschaftstest, der Britney Spears gehörte, für mehr als 5000 Dollar auf Ebay verkauft.
+______________________________________________________________________________________________________
+Eight out of then people who have been struck by lightning are male.
+
+Acht von den Menschen, die vom Blitz getroffen wurden, sind männlich.
+______________________________________________________________________________________________________
+Some Survivors of Hiroshima showed an unusual reaction. Due to the high radiation dose they were subjected to, their finger nails became black and bled slightly.
+
+Einige Überlebende von Hiroshima zeigten eine ungewöhnliche Reaktion. Aufgrund der hohen Strahlendosis, der sie ausgesetzt waren, wurden ihre Fingernägel schwarz und bluteten leicht.
+______________________________________________________________________________________________________
+The Zoological Garden in Berlin is the largest zoo in the world.
+
+Der Zoologische Garten in Berlin ist der größte Tierpark der Welt.
+______________________________________________________________________________________________________
+Scorpions can survive for up to one year without food.
+
+Skorpione können bis zu einem Jahr lang ohne Nahrung überleben.
+______________________________________________________________________________________________________
+In the 1960s, the Barbie model "Slumber Party Barbie" was released, which gave children extra tips on how to lose weight. One of them was that you should not eat anything.
+
+In den 1960er Jahren kam das Barbie-Modell "Slumber Party Barbie" heraus, das Kindern extra Tipps zum Abnehmen gab. Einer von ihnen war, dass man nichts essen sollte.
+______________________________________________________________________________________________________
+"Nomophobia" describes the fear of not being available via mobile phone.
+
+"Nomophobie" beschreibt die Angst, über das Mobiltelefon nicht erreichbar zu sein.
+______________________________________________________________________________________________________
+Every 21st inhabitant of New York is a millionaire.
+
+Jeder 21. Einwohner New York ist ein Millionär.
+______________________________________________________________________________________________________
+Blind people are able to dream and to see pictures in their dreams.
+
+Blinde Menschen sind in der Lage zu träumen und Bilder in ihren Träumen zu sehen.
+______________________________________________________________________________________________________
+Ioannis Economou, the chief translator of the European Parliament, speaks 32 languages fluently.
+
+Ioannis Economou, der Chefübersetzer des Europäischen Parlaments, spricht 32 Sprachen fließend.
+______________________________________________________________________________________________________
+During the 19th century in the UK, the sentence for an unseccessful suicide attempt was death by hanging.
+
+Im 19. Jahrhundert war in Großbritannien die Strafe für einen erfolglosen Selbstmordversuch der Tod durch Erhängen.
+______________________________________________________________________________________________________
+In Asian culture, white is a mourning colour. Therefore Asian wedding dresses are never white.
+
+In der asiatischen Kultur ist Weiß eine Trauerfarbe. Daher sind asiatische Hochzeitskleider niemals weiß.
+______________________________________________________________________________________________________
+Living in the White House is not free for the President of the United States. He receives a monthly bill for food and other expenses.
+
+Das Leben im Weißen Haus ist für den Präsidenten der Vereinigten Staaten nicht kostenlos. Er erhält eine monatliche Rechnung für Lebensmittel und andere Ausgaben.
+______________________________________________________________________________________________________
+In 1856 a man from Havana took off in his hot air balloon and was never seen again.
+
+1856 hob ein Mann aus Havanna mit seinem Heißluftballon ab und wurde nie wieder gesehen.
+______________________________________________________________________________________________________
+Translated into Spanish "Colgate" means "hang yourself".
+
+Übersetzt ins Spanische bedeutet "Colgate" "sich aufhängen".
+______________________________________________________________________________________________________
+just one percent of all heart attacks is caused by sex whereas ten percent are bought about by getting up too fast.
+
+Nur ein Prozent aller Herzinfarkte wird durch Sex verursacht, während zehn Prozent durch zu schnelles Aufstehen zustande kommen.
+______________________________________________________________________________________________________
+It is possible to die even 24 hours after drowning. People who die from "dry drowning" do not tend to notice their discomfort while the water continues to spread in their lungs until they die.
+
+Es ist möglich, sogar 24 Stunden nach dem Ertrinken zu sterben. Menschen, die an "trockenem Ertrinken" sterben, neigen dazu, ihr Unwohlsein nicht zu bemerken, während sich das Wasser in der Lunge weiter ausbreitet, bis sie sterben.
+______________________________________________________________________________________________________
+The actor Robin Williams was passionate about video games, which is the reason why he named his daughter "Zelda".
+
+Der Schauspieler Robin Williams war ein leidenschaftlicher Videospieler, weshalb er seine Tochter "Zelda" nannte.
+______________________________________________________________________________________________________
+Because of the large amount of sugar in it, it is impossible for honey to spoil. Even in 1000 years it would still be edible.
+
+Aufgrund der großen Menge an Zucker in ihm ist es unmöglich, dass Honig verdirbt. Selbst in 1000 Jahren wäre er noch genießbar.
+______________________________________________________________________________________________________
+The Sagrada Familia in Barcelona ahs been under construction for over 130 years and is still not finished.
+
+Die Sagrada Familia in Barcelona befindet sich seit über 130 Jahren im Bau und ist immer noch nicht fertig.
+______________________________________________________________________________________________________
+The westernmost point of the USA and the easternmost point of Russia lie just three miles apart.
+
+Der westlichste Punkt der USA und der östlichste Punkt Russlands liegen nur drei Meilen auseinander.
+______________________________________________________________________________________________________
+Pumba from "The Lion King" was the first Disney character who was allowed to fart.
+
+Pumba aus "Der König der Löwen" war die erste Disney-Figur, die furzen durfte.
+______________________________________________________________________________________________________
+In 2012 a British man named Wesley Carrington bought a metal detector and within 20 minutes found gold from the Roman Age worth 100000 pounds.
+
+Im Jahr 2012 kaufte ein Brite namens Wesley Carrington einen Metalldetektor und fand innerhalb von 20 Minuten Gold aus der Römerzeit im Wert von 100000 Pfund.
+______________________________________________________________________________________________________
+Women who frequently play video games have more sex than other women.
+
+Frauen, die häufig Videospiele spielen, haben mehr Sex als andere Frauen.
+______________________________________________________________________________________________________
+At the Marine Mammal Studies Institute, dolphins have been trained to get the audience waste out of the basin. Each time they hand out trash to the animal attendants, they get food for it.
+
+Im Marine Mammal Studies Institute wurden die Delfine darauf trainiert, den Publikumsmüll aus dem Becken zu holen. Jedes Mal, wenn sie den Tierpflegern Müll aushändigen, bekommen sie dafür Futter.
+______________________________________________________________________________________________________
+After James Cameron saw Star Wars for the first time in 1977, he quit his job as a truck driver and began his career in the film industry.
+
+Nachdem James Cameron 1977 zum ersten Mal Star Wars gesehen hatte, kündigte er seinen Job als LKW-Fahrer und begann seine Karriere in der Filmindustrie.
+______________________________________________________________________________________________________
+Slugs are able to sleep three consecutibe years.
+
+Schnecken sind in der Lage, drei aufeinanderfolgende Jahre zu schlafen.
+______________________________________________________________________________________________________
+Neither Hollywood nor Bollywood produced the most movies per year. It is Nollywood in Nigeria, where about 2000 movies are finished a year.
+
+Weder Hollywood noch Bollywood produzieren die meisten Filme pro Jahr. Es ist Nollywood in Nigeria, wo etwa 2000 Filme pro Jahr fertiggestellt werden.
+______________________________________________________________________________________________________
+Goosebumps are a reflex from the times when man had much more hair. When our hair stands up, we appeared bigger and more menacing to enemies.
+
+Gänsehaut ist ein Reflex aus den Zeiten, als der Mensch noch viel mehr Haare hatte. Wenn uns die Haare zu Berge standen, wirkten wir größer und bedrohlicher auf Feinde.
+______________________________________________________________________________________________________
+In 1985, a school child named Ryan White was not allowed to attend class because he had AIDS. About 117 parents and 50 teachers signed a petition for this.
+Some parents even ended their newspaper subscription, as Ryan White was their paper boy and the believed they could get infected.
+
+Im Jahr 1985 durfte ein Schulkind namens Ryan White nicht am Unterricht teilnehmen, weil er AIDS hatte. Etwa 117 Eltern und 50 Lehrer unterschrieben dafür eine Petition.
+Einige Eltern beendeten sogar ihr Zeitungsabo, da Ryan White ihr Zeitungsjunge war und sie glaubten, sie könnten sich anstecken.
+______________________________________________________________________________________________________
+Toilet paper was invented in China in the 13th century.
+
+Das Toilettenpapier wurde im 13. Jahrhundert in China erfunden.
+______________________________________________________________________________________________________
+From a water depth of 33 feet and more there is no more red light. For this reason blood seems to be green at this depth.
+
+Ab einer Wassertiefe von 33 Fuß und mehr gibt es kein rotes Licht mehr. Aus diesem Grund scheint Blut in dieser Tiefe grün zu sein.
+______________________________________________________________________________________________________
+One bite of the Inland-Taipans - the most poisonous snake in the world - injects enough poison into its victim to kill more than 230 people.
+
+Ein Biss der Inland-Taipans - der giftigsten Schlange der Welt - injiziert ihrem Opfer genug Gift, um mehr als 230 Menschen zu töten.
+______________________________________________________________________________________________________
+There is a type of jellyfish which is immortal.
+
+Es gibt eine Art von Quallen, die unsterblich ist.
+______________________________________________________________________________________________________
+The first call with a mobile phone was made by its inventor, Martin Cooper. He called a rival to brag about his achievement.
+
+Der erste Anruf mit einem Mobiltelefon wurde von dessen Erfinder Martin Cooper getätigt. Er rief einen Rivalen an, um mit seiner Leistung zu prahlen.
+______________________________________________________________________________________________________
+Although the Incas had a huge empire, they did not posses money. The inhabitants paid their taxes in the form of man power and got food in exchange for this.
+
+Obwohl die Inkas ein riesiges Reich hatten, besaßen sie kein Geld. Die Einwohner zahlten ihre Steuern in Form von Arbeitskraft und bekamen im Gegenzug dafür Nahrung.
+______________________________________________________________________________________________________
+In 2006, scientists officially delcared that the egg came first, not the chicken.
+
+Im Jahr 2006 haben Wissenschaftler offiziell festgestellt, dass das Ei zuerst da war, nicht das Huhn.
+______________________________________________________________________________________________________
+The Vatican has its own telephone company, its own radio station, its own TV station, its own stamps, its own money and its own army.
+
+Der Vatikan hat seine eigene Telefongesellschaft, seinen eigenen Radiosender, seinen eigenen Fernsehsender, seine eigenen Briefmarken, sein eigenes Geld und seine eigene Armee.
+______________________________________________________________________________________________________
+The penis foreskin of burn patients can be used for healthy skin growth.
+
+Die Penisvorhaut von Verbrennungspatienten kann für ein gesundes Hautwachstum verwendet werden.
+______________________________________________________________________________________________________
+Swans only have one partner in their lifetime.
+
+Schwäne haben nur einen Partner in ihrem Leben.
+______________________________________________________________________________________________________
+The longest distance at which a sniper has killed his target is, 2707 yards. The bullet flew through the air for a total of six seconds.
+
+Die längste Entfernung, aus der ein Scharfschütze sein Ziel getötet hat, beträgt 2707 Meter. Das Geschoss flog insgesamt sechs Sekunden lang durch die Luft.
+______________________________________________________________________________________________________
+At a height of almost 12 miles and above the air pressure is so low, that water in your body would vaporize due your own body temperature.
+
+In einer Höhe von fast 12 Meilen und darüber ist der Luftdruck so niedrig, dass das Wasser in Ihrem Körper aufgrund Ihrer eigenen Körpertemperatur verdampfen würde.
+______________________________________________________________________________________________________
+In Amsterdam there is a gym where you can train naked.
+
+In Amsterdam gibt es ein Fitnessstudio, in dem man nackt trainieren kann.
+______________________________________________________________________________________________________
+Before coffee became popular, beer was served for breakfast in the USA.
+
+Bevor Kaffee populär wurde, wurde in den USA Bier zum Frühstück serviert.
+______________________________________________________________________________________________________
+A study proved that men really have problems understanding women's feelings.
+
+Eine Studie hat bewiesen, dass Männer wirklich Probleme haben, die Gefühle von Frauen zu verstehen.
+______________________________________________________________________________________________________
+GTA originally was meant to be a racing game named "Race'n'Chace" but a glitch made public cars ram into the car of the player.
+This element was so popular with the game testers that whole game was modelled on this principle and GTA was born.
+
+GTA sollte ursprünglich ein Rennspiel namens "Race'n'Chace" sein, aber ein Glitch sorgte dafür, dass öffentliche Autos in das Auto des Spielers rammten.
+Dieses Element war bei den Spieletestern so beliebt, dass das ganze Spiel nach diesem Prinzip modelliert wurde und GTA war geboren.
+______________________________________________________________________________________________________
+if one donates a part of one's liver, the missing part will grow again.
+
+wenn man einen Teil seiner Leber spendet, wächst der fehlende Teil nach.
+______________________________________________________________________________________________________
+Frederic Baur developed the boxing of Pringles Chips. After his death in 2008, his ashes were buried in a Pringles box.
+
+Frederic Baur entwickelte die Verpackung der Pringles Chips. Nach seinem Tod im Jahr 2008 wurde seine Asche in einer Pringles-Box beigesetzt.
+______________________________________________________________________________________________________
+At the beginning of the 20th century, horses created so much dirt with their excrement, that cars were regarded as the "green" alternative.
+
+Zu Beginn des 20. Jahrhunderts verursachten Pferde mit ihren Exkrementen so viel Dreck, dass Autos als die "grüne" Alternative galten.
+______________________________________________________________________________________________________
+An average cloud weights about 1.5 million pounds.
+
+Eine durchschnittliche Wolke wiegt etwa 1,5 Millionen Pfund.
+______________________________________________________________________________________________________
+The starting melody of Windows was composed on a Mac.
+
+Die Anfangsmelodie von Windows wurde auf einem Mac komponiert.
+______________________________________________________________________________________________________
+After Steve Job's secretary was late due to her car breaking down, he later that afternoon gave her the keys to a new Jaguar, and told her, "Here, don't be late anymore."
+
+Nachdem Steve Jobs Sekretärin wegen einer Autopanne zu spät gekommen war, gab er ihr später am Nachmittag die Schlüssel zu einem neuen Jaguar und sagte zu ihr: "Hier, komm nicht mehr zu spät."
+______________________________________________________________________________________________________
+Wildlife goldfishes can live up to 40 years.
+
+Wild lebende Goldfische können bis zu 40 Jahre alt werden.
+______________________________________________________________________________________________________
+When James Cameron was in a Roman hospital due to food poisoning he had a nightmare about a robot from the future trying to kill him. From this idea he created the script for "Terminator".
+
+Als James Cameron wegen einer Lebensmittelvergiftung in einem römischen Krankenhaus lag, hatte er einen Alptraum über einen Roboter aus der Zukunft, der ihn töten wollte. Aus dieser Idee schuf er das Drehbuch für "Terminator".
+______________________________________________________________________________________________________
+Contraceptive pills also work for gorillas.
+
+Verhütungspillen funktionieren auch bei Gorillas.
+______________________________________________________________________________________________________
+When the Egyptians built the pyramids, there were still mommoths roaming the earth.
+
+Als die Ägypter die Pyramiden bauten, streiften noch Motten über die Erde.
+______________________________________________________________________________________________________
+In terms of the number of museums, theatres and libraries, Germany is the country with the most opportunities for cultural activities.
+
+Was die Anzahl der Museen, Theater und Bibliotheken angeht, ist Deutschland das Land mit den meisten Möglichkeiten für kulturelle Aktivitäten.
+______________________________________________________________________________________________________
+Monhar Aich won Mr. Universe in 1952. Today he is more than 100 years old and exercises regularly at the gym.
+
+Monhar Aich gewann 1952 den Mr. Universum. Heute ist er mehr als 100 Jahre alt und trainiert regelmäßig im Fitnessstudio.
+______________________________________________________________________________________________________
+in 2009, Marc Aurus - an expert on the prevention of kidnapping - gave a lecture on the topic of "How to avoid being kidnapped in Mexico" and was kidnapped.
+
+2009 hielt Marc Aurus - ein Experte für die Prävention von Entführungen - einen Vortrag zum Thema "Wie man in Mexiko nicht entführt wird" und wurde entführt.
+______________________________________________________________________________________________________
+In the special edition 3 of the Club Nintendo comic book series, the reader finds out that Kirby smokes, drinks and eats unhealthy fast food.
+
+In der Sonderausgabe 3 der Club Nintendo-Comicserie erfährt der Leser, dass Kirby raucht, trinkt und ungesundes Fast Food isst.
+______________________________________________________________________________________________________
+A study has shown that four percent of all people dream exclusively in black-and-white.
+
+Eine Studie hat gezeigt, dass vier Prozent aller Menschen ausschließlich in Schwarz-Weiß träumen.
+______________________________________________________________________________________________________
+The average distance a man walks on foot during his life is four times around the world.
+
+Die durchschnittliche Strecke, die ein Mensch im Laufe seines Lebens zu Fuß zurücklegt, führt viermal um die Erde.
+______________________________________________________________________________________________________
+About 99,99999999999% of an atom is "nothing". If one would eliminate the empty space of all atoms from the entire human race, the remaining mass would fit in a coffee mug.
+
+Etwa 99,99999999999% eines Atoms ist "Nichts". Würde man den leeren Raum aller Atome von der gesamten Menschheit eliminieren, würde die verbleibende Masse in einen Kaffeebecher passen.
+______________________________________________________________________________________________________
+Redheads are less sensitive to pain and more sensitive to temperature when compared to people with different hair colors.
+
+Rothaarige sind im Vergleich zu Menschen mit anderen Haarfarben weniger schmerzempfindlich und temperaturempfindlicher.
+______________________________________________________________________________________________________
+The production cost of one penny is 1.7 cents.
+
+Die Produktionskosten für einen Penny betragen 1,7 Cent.
+______________________________________________________________________________________________________
+Foxes use the Earth's magnetic field to estimate distances.
+
+Füchse nutzen das Magnetfeld der Erde, um Entfernungen abzuschätzen.
+______________________________________________________________________________________________________
+The first hard disk for Apple II had a capacity of five megabyte.
+
+Die erste Festplatte für den Apple II hatte eine Kapazität von fünf Megabyte.
+______________________________________________________________________________________________________
+The author J.K Rowling was the first person in the world who became a billionaire by selling books.
+
+Die Autorin J.K Rowling war die erste Person auf der Welt, die durch den Verkauf von Büchern zum Milliardär wurde.
+______________________________________________________________________________________________________
+Panama is the only country in the world in which the sun rises above the Pacific Ocean and sets over the Atlantic Ocean.
+
+Panama ist das einzige Land der Welt, in dem die Sonne über dem Pazifischen Ozean aufgeht und über dem Atlantischen Ozean untergeht.
+______________________________________________________________________________________________________
+In Austria there are three toilets, which are listed for preservation.
+
+In Österreich gibt es drei WCs, die unter Denkmalschutz stehen.
+______________________________________________________________________________________________________
+Since 1896, soccer fields in Germany have to be free of trees.
+
+Seit 1896 müssen Fußballplätze in Deutschland frei von Bäumen sein.
+______________________________________________________________________________________________________
+George Washington was known to convince voters with the help of alcohol. At an election campaign with over 400 people, he brought over 500 liters of alcohol to secure their votes.
+
+George Washington war bekannt dafür, Wähler mit Hilfe von Alkohol zu überzeugen. Bei einem Wahlkampf mit über 400 Personen brachte er über 500 Liter Alkohol mit, um sich ihre Stimmen zu sichern.
+______________________________________________________________________________________________________
+New York is located more southern than Rome.
+
+New York ist südlicher gelegen als Rom.
+______________________________________________________________________________________________________
+Each year a lying competition takes palce in Englang. Participants have to tell a made up story for five minutes. To be "fair", politicians and lawyers are not allowed to participate.
+
+Jedes Jahr findet in Englang ein Lügenwettbewerb statt. Die Teilnehmer müssen fünf Minuten lang eine erfundene Geschichte erzählen. Um "fair" zu sein, dürfen Politiker und Anwälte nicht teilnehmen.
+______________________________________________________________________________________________________
+In Iran 70 percent of all science students are female.
+
+Im Iran sind 70 Prozent aller Studenten der Naturwissenschaften weiblich.
+______________________________________________________________________________________________________
+Renfield-Syndrome is characterised by an obsession with drinking blood.
+
+Das Renfield-Syndrom ist gekennzeichnet durch eine Besessenheit, Blut zu trinken.
+______________________________________________________________________________________________________
+So far about 270 people have had their bodies frozen, to be revived in the future.
+
+Bislang wurden die Körper von etwa 270 Menschen eingefroren, um sie in der Zukunft wiederzubeleben.
+______________________________________________________________________________________________________
+The croissant is not a French creation, but an Austrian.
+
+Das Croissant ist keine französische Kreation, sondern eine österreichische.
+______________________________________________________________________________________________________
+The Scottish kilt originally came from France.
+
+Der schottische Kilt kam ursprünglich aus Frankreich.
+______________________________________________________________________________________________________
+The Tammar wallaby has a weight of only one gram at birth.
+
+Das Tammar-Wallaby hat bei der Geburt ein Gewicht von nur einem Gramm.
+______________________________________________________________________________________________________
+A study has shown that people with a lot of body hair have on average a higher IQ than people with less body hair.
+
+Eine Studie hat gezeigt, dass Menschen mit viel Körperbehaarung im Durchschnitt einen höheren IQ haben als Menschen mit weniger Körperbehaarung.
+______________________________________________________________________________________________________
+On average, first-borns have the highest IQ among their siblings.
+
+Erstgeborene haben im Durchschnitt den höchsten IQ unter ihren Geschwistern.
+______________________________________________________________________________________________________
