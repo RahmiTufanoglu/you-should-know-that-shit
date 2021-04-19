@@ -1,6 +1,8 @@
 import { MysqlConnectionOptions } from 'typeorm/driver/mysql/MysqlConnectionOptions';
 import { User } from '../users/entities/user.entity';
 import { Fact } from '../facts/entities/fact.entity';
+import { Claim } from '../claims/entities/claim.entity';
+import { Category } from '../categories/entities/category.entity';
 
 const ormConfig: MysqlConnectionOptions = {
   type: 'mysql',
@@ -9,7 +11,7 @@ const ormConfig: MysqlConnectionOptions = {
   username: 'root',
   password: 'rahmi123',
   database: 'truthy-vs-falsy-db',
-  entities: [User, Fact],
+  entities: [User, Category, Fact, Claim],
   // do not use synchronize in production, use instead migrations
   synchronize: true,
   migrations: [],

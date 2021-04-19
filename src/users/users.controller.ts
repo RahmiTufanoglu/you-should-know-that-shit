@@ -13,7 +13,7 @@ export class UsersController {
 
   @ApiCreatedResponse({ type: User })
   @Post()
-  async create(@Body() createUserDto: CreateUserDto, @Res() res): Promise<User> {
+  async create(@Body() createUserDto: CreateUserDto, @Res() res): Promise<any> {
     const user = await this.usersService.create(createUserDto);
     return res.json({
       message: 'User has been added successfully',
@@ -24,7 +24,7 @@ export class UsersController {
   @ApiOkResponse({ type: User, isArray: true })
   @UseGuards(JwtAuthGuard)
   @Get()
-  async findAll(@Res() res): Promise<User[]> {
+  async findAll(@Res() res): Promise<any[]> {
     const users = await this.usersService.findAll();
     return res.json({
       message: 'All users have been found successfully',
@@ -36,7 +36,7 @@ export class UsersController {
   @ApiNotFoundResponse()
   @UseGuards(JwtAuthGuard)
   @Get(':id')
-  async findOne(@Param('id') id: number, @Res() res): Promise<User> {
+  async findOne(@Param('id') id: number, @Res() res): Promise<any> {
     const user = await this.usersService.findOne(id);
     return res.json({
       message: `User with id #${id} has been found successfully.`,
@@ -47,7 +47,7 @@ export class UsersController {
 
   @UseGuards(JwtAuthGuard)
   @Put(':id')
-  async update(@Param('id') id: number, @Body() updateUserDto: UpdateUserDto, @Res() res): Promise<void> {
+  async update(@Param('id') id: number, @Body() updateUserDto: UpdateUserDto, @Res() res): Promise<any> {
     const user = await this.usersService.update(id, updateUserDto);
     return res.json({
       message: `User with the id #${id} has been updated successfully.`,
@@ -57,7 +57,7 @@ export class UsersController {
 
   @UseGuards(JwtAuthGuard)
   @Delete(':id')
-  async remove(@Param('id') id: number, @Res() res): Promise<void> {
+  async remove(@Param('id') id: number, @Res() res): Promise<any> {
     const user = await this.usersService.remove(id);
     return res.json({
       message: `User with the id #${id} has been deleted successfully.`,
@@ -69,7 +69,7 @@ export class UsersController {
   @ApiNotFoundResponse()
   @UseGuards(JwtAuthGuard)
   @Get()
-  async findByEmail(@Param('email') email: string, @Res() res): Promise<User> {
+  async findByEmail(@Param('email') email: string, @Res() res): Promise<any> {
     const user = await this.usersService.findByEmail(email);
     return res.json({
       message: `User with the email #${email} has been found successfully.`,
@@ -81,7 +81,7 @@ export class UsersController {
   @ApiNotFoundResponse()
   @UseGuards(JwtAuthGuard)
   @Get()
-  async findByUsername(@Param('username') username: string, @Res() res): Promise<User> {
+  async findByUsername(@Param('username') username: string, @Res() res): Promise<any> {
     const user = await this.usersService.findByUsername(username);
     return res.json({
       message: `User with the username #${username} has been found successfully.`,

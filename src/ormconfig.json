@@ -1,0 +1,11 @@
+{
+  "type": "mysql",
+  "host": "localhost",
+  "port": 3306,
+  "username": "root",
+  "password": "rahmi123",
+  "database": "truthy-vs-falsy-db",
+  "entities": "[User, Category, Fact, Claim]",
+  "synchronize": true,
+  "migrations": "[]"
+}

@@ -8,10 +8,6 @@ export class User {
   id: string;
 
   @ApiProperty()
-  @CreateDateColumn({ nullable: false })
-  createdDate: Date;
-
-  @ApiProperty()
   @Column({ nullable: false })
   firstname: string;
 
@@ -33,4 +29,8 @@ export class User {
   @ApiProperty()
   @Column({ nullable: false, select: false })
   password: string;
+
+  @ApiProperty()
+  @CreateDateColumn({ nullable: false })
+  createdAt: Date;
 }

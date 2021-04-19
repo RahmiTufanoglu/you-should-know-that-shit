@@ -10,8 +10,8 @@ export class FactsService {
   constructor(@InjectRepository(Fact) private readonly factRepository: Repository<Fact>) {
   }
 
-  create(fact: CreateFactDto): Promise<Fact> {
-    return this.factRepository.save(fact);
+  create(createFactDto: CreateFactDto): Promise<Fact> {
+    return this.factRepository.save(createFactDto);
   }
 
   findAll(): Promise<Fact[]> {
@@ -19,7 +19,7 @@ export class FactsService {
   }
 
   findOne(id: number): Promise<Fact> {
-    return this.factRepository.findOneOrFail(id);
+    return this.factRepository.findOne(id);
   }
 
   update(id: number, updateFactDto: UpdateFactDto): Promise<UpdateResult> {

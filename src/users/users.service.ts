@@ -25,7 +25,7 @@ export class UsersService {
   }
 
   findOne(id: number): Promise<User> {
-    return this.userRepository.findOneOrFail(id);
+    return this.userRepository.findOne(id);
   }
 
   async update(id: number, user: UpdateUserDto): Promise<UpdateResult> {
@@ -44,14 +44,14 @@ export class UsersService {
   findByEmail(email: string): Promise<User> {
     return this.userRepository.findOne(
       { email },
-      { select: ['id', 'createdDate', 'username', 'firstname', 'lastname', 'email', 'password'] },
+      { select: ['id', 'createdAt', 'username', 'firstname', 'lastname', 'email', 'password'] },
     );
   }
 
   findByUsername(username: string): Promise<User> {
     return this.userRepository.findOne(
       { username },
-      { select: ['id', 'createdDate', 'username', 'firstname', 'lastname', 'email', 'password'] },
+      { select: ['id', 'createdAt', 'username', 'firstname', 'lastname', 'email', 'password'] },
     );
   }
 
