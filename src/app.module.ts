@@ -17,9 +17,9 @@ import { CategoriesModule } from './categories/categories.module';
       // load: [configuration],
       envFilePath: ['.development.env', '.production.env'],
     }),
-    // TypeOrmModule.forRootAsync(ormConfig),
+    // TypeOrmModule.forRoot(),
+    // useFactory: () => ormConfig,
     TypeOrmModule.forRootAsync({
-      // useFactory: () => ormConfig,
       useFactory: () => ({
         type: 'mysql',
         host: process.env.TYPEORM_HOST,

@@ -5,7 +5,7 @@
   "username": "root",
   "password": "rahmi123",
   "database": "truthy-vs-falsy-db",
-  "entities": "[User, Category, Fact, Claim]",
+  "entities": "entity/*.js,modules/**/entity/*.js",
   "synchronize": true,
   "migrations": "[]"
 }
