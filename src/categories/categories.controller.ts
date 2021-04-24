@@ -8,6 +8,7 @@ import { UpdateClaimDto } from '../claims/dto/update-claim.dto';
 
 @Controller('categories')
 export class CategoriesController {
+
   constructor(private readonly categoriesService: CategoriesService) {
   }
 
@@ -63,4 +64,5 @@ export class CategoriesController {
       category,
     });
   }
+
 }

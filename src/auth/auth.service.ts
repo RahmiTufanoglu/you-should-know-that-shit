@@ -6,6 +6,7 @@ import { User } from '../users/entities/user.entity';
 
 @Injectable()
 export class AuthService {
+
   constructor(
     private readonly usersService: UsersService,
     private readonly jwtService: JwtService,
@@ -28,4 +29,5 @@ export class AuthService {
       access_token: this.jwtService.sign(payload),
     };
   }
+
 }

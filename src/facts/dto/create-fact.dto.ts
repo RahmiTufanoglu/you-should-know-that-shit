@@ -2,17 +2,19 @@ import { IsNotEmpty } from 'class-validator';
 import { ApiModelProperty } from '@nestjs/swagger/dist/decorators/api-model-property.decorator';
 
 export class CreateFactDto {
+
   @ApiModelProperty()
   @IsNotEmpty()
   readonly fact: string;
 
   @ApiModelProperty()
-  readonly createdDate: Date;
+  @IsNotEmpty()
+  readonly isTrue: boolean;
 
-  // @ApiModelProperty()
-  // @IsNotEmpty()
-  // readonly category: FACT_CATEGORY_ENUM;
+  @ApiModelProperty()
+  readonly createdDate: Date;
 
   @ApiModelProperty()
   readonly image?: string;
+
 }

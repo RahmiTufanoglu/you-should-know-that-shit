@@ -4,6 +4,7 @@ import { Category } from '../../categories/entities/category.entity';
 
 @Entity({ name: 'facts' })
 export class Fact {
+
   @ApiProperty()
   @PrimaryGeneratedColumn('uuid')
   id: string;
@@ -14,6 +15,10 @@ export class Fact {
   })
   @Column({ nullable: false, unique: true })
   fact: string;
+
+  @ApiProperty()
+  @Column({ nullable: false })
+  isTrue: boolean;
 
   @ApiProperty({
     example: '',
@@ -28,4 +33,5 @@ export class Fact {
 
   @ManyToOne(() => Category, category => category.id)
   category: Category;
+
 }

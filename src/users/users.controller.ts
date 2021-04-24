@@ -1,91 +1,73 @@
-import { Body, Controller, Delete, Get, Param, Post, Put, Res, UseGuards } from '@nestjs/common';
+import { Body, Controller, Delete, Get, Param, Post, Put, UseGuards, UsePipes, ValidationPipe } from '@nestjs/common';
 import { UsersService } from './users.service';
 import { UpdateUserDto } from './dto/update-user.dto';
 import { ApiCreatedResponse, ApiNotFoundResponse, ApiOkResponse } from '@nestjs/swagger';
 import { User } from './entities/user.entity';
 import { JwtAuthGuard } from '../auth/guard/jwt-auth.guard';
 import { CreateUserDto } from './dto/create-user.dto';
+import { SETTINGS } from '../app.utils';
+import { DeleteResult, UpdateResult } from 'typeorm';
 
 @Controller('users')
 export class UsersController {
+
   constructor(private readonly usersService: UsersService) {
   }
 
   @ApiCreatedResponse({ type: User })
   @Post()
-  async create(@Body() createUserDto: CreateUserDto, @Res() res): Promise<any> {
-    const user = await this.usersService.create(createUserDto);
-    return res.json({
-      message: 'User has been added successfully',
-      user,
-    });
+  async create(@Body(SETTINGS.VALIDATION_PIPE) createUserDto: CreateUserDto): Promise<User> {
+    return await this.usersService.create(createUserDto);
   }
 
   @ApiOkResponse({ type: User, isArray: true })
   @UseGuards(JwtAuthGuard)
+  @UsePipes(ValidationPipe)
   @Get()
-  async findAll(@Res() res): Promise<any[]> {
-    const users = await this.usersService.findAll();
-    return res.json({
-      message: 'All users have been found successfully',
-      users,
-    });
+  async findAll(): Promise<User[]> {
+    return await this.usersService.findAll();
   }
 
   @ApiOkResponse({ type: User })
   @ApiNotFoundResponse()
   @UseGuards(JwtAuthGuard)
+  @UsePipes(ValidationPipe)
   @Get(':id')
-  async findOne(@Param('id') id: number, @Res() res): Promise<any> {
-    const user = await this.usersService.findOne(id);
-    return res.json({
-      message: `User with id #${id} has been found successfully.`,
-      user,
-    });
+  async findOne(@Param('id') id: number): Promise<User> {
+    return await this.usersService.findById(id);
   }
 
 
   @UseGuards(JwtAuthGuard)
+  @UsePipes(ValidationPipe)
   @Put(':id')
-  async update(@Param('id') id: number, @Body() updateUserDto: UpdateUserDto, @Res() res): Promise<any> {
-    const user = await this.usersService.update(id, updateUserDto);
-    return res.json({
-      message: `User with the id #${id} has been updated successfully.`,
-      user,
-    });
+  async update(@Param('id') id: number, @Body() updateUserDto: UpdateUserDto): Promise<UpdateResult> {
+    return await this.usersService.update(id, updateUserDto);
   }
 
   @UseGuards(JwtAuthGuard)
+  @UsePipes(ValidationPipe)
   @Delete(':id')
-  async remove(@Param('id') id: number, @Res() res): Promise<any> {
-    const user = await this.usersService.remove(id);
-    return res.json({
-      message: `User with the id #${id} has been deleted successfully.`,
-      user,
-    });
+  async remove(@Param('id') id: number): Promise<DeleteResult> {
+    return await this.usersService.remove(id);
   }
 
   @ApiCreatedResponse({ type: User })
   @ApiNotFoundResponse()
   @UseGuards(JwtAuthGuard)
+  @UsePipes(ValidationPipe)
   @Get()
-  async findByEmail(@Param('email') email: string, @Res() res): Promise<any> {
-    const user = await this.usersService.findByEmail(email);
-    return res.json({
-      message: `User with the email #${email} has been found successfully.`,
-      user,
-    });
+  async findByEmail(@Param('email') email: string): Promise<User> {
+    return await this.usersService.findByEmail(email);
   }
 
   @ApiCreatedResponse({ type: User })
   @ApiNotFoundResponse()
   @UseGuards(JwtAuthGuard)
+  @UsePipes(ValidationPipe)
   @Get()
-  async findByUsername(@Param('username') username: string, @Res() res): Promise<any> {
-    const user = await this.usersService.findByUsername(username);
-    return res.json({
-      message: `User with the username #${username} has been found successfully.`,
-      user,
-    });
+  async findByUsername(@Param('username') username: string): Promise<User> {
+    return await this.usersService.findByUsername(username);
   }
+
 }

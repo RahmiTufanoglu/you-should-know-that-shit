@@ -6,6 +6,7 @@ import { CreateUserDto } from '../../users/dto/create-user.dto';
 
 @Injectable()
 export class LocalStrategy extends PassportStrategy(Strategy) {
+
   constructor(private authService: AuthService) {
     super({ usernameField: 'email' });
   }
@@ -17,4 +18,5 @@ export class LocalStrategy extends PassportStrategy(Strategy) {
     }
     return user;
   }
+
 }

@@ -5,6 +5,7 @@ import { User } from '../../users/entities/user.entity';
 
 @Injectable()
 export class JwtStrategy extends PassportStrategy(Strategy) {
+
   constructor() {
     super({
       jwtFromRequest: ExtractJwt.fromAuthHeaderAsBearerToken(),
@@ -16,4 +17,5 @@ export class JwtStrategy extends PassportStrategy(Strategy) {
   async validate({ id, email }: User): Promise<{ id: string; email: string }> {
     return { id, email };
   }
+
 }

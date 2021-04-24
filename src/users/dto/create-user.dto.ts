@@ -1,7 +1,9 @@
-import { IsEmail, IsNotEmpty, IsString, MaxLength, MinLength } from 'class-validator';
+import { IsEmail, IsNotEmpty, IsOptional, IsString, Matches, MaxLength, MinLength } from 'class-validator';
 import { ApiModelProperty } from '@nestjs/swagger/dist/decorators/api-model-property.decorator';
+import { MESSAGES, REGEX } from '../../app.utils';
 
 export class CreateUserDto {
+
   @ApiModelProperty()
   @IsNotEmpty()
   @IsEmail()
@@ -11,23 +13,30 @@ export class CreateUserDto {
   @ApiModelProperty({ minLength: 4 })
   @IsNotEmpty()
   @MinLength(4)
+  @Matches(REGEX.PASSWORD_RULE, { message: MESSAGES.PASSWORD_RULE_MESSAGE })
   readonly password: string;
+
+  @ApiModelProperty()
+  @IsOptional()
+  @IsString()
+  readonly username: string;
+
+  @ApiModelProperty()
+  @IsOptional()
+  @IsString()
+  readonly firstname: string;
+
+  @ApiModelProperty()
+  @IsOptional()
+  @IsString()
+  readonly lastname: string;
 
   @ApiModelProperty()
   readonly createdDate: Date;
 
   @ApiModelProperty()
-  @IsNotEmpty()
+  @IsOptional()
   @IsString()
-  readonly firstname: string;
+  readonly highscore: number;
 
-  @ApiModelProperty()
-  @IsNotEmpty()
-  @IsString()
-  readonly lastname: string;
-
-  @ApiModelProperty()
-  @IsNotEmpty()
-  @IsString()
-  readonly username: string;
 }

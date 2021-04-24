@@ -5,6 +5,7 @@ import { FACT_CATEGORY_ENUM } from '../../enums/fact.enum';
 
 @Entity({ name: 'categories' })
 export class Category {
+
   @ApiProperty()
   @PrimaryGeneratedColumn('uuid')
   id: string;
@@ -20,4 +21,5 @@ export class Category {
   @ApiProperty()
   @OneToMany(() => Fact, fact => fact.id)
   facts: Fact[];
+
 }

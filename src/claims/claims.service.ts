@@ -7,6 +7,7 @@ import { Claim } from './entities/claim.entity';
 
 @Injectable()
 export class ClaimsService {
+
   constructor(@InjectRepository(Claim) private readonly claimRepository: Repository<Claim>) {
   }
 
@@ -29,4 +30,5 @@ export class ClaimsService {
   remove(id: number): Promise<DeleteResult> {
     return this.claimRepository.delete(id);
   }
+
 }

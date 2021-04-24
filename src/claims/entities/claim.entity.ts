@@ -3,6 +3,7 @@ import { Column, CreateDateColumn, Entity, PrimaryGeneratedColumn } from 'typeor
 
 @Entity({ name: 'claims' })
 export class Claim {
+
   @ApiProperty()
   @PrimaryGeneratedColumn('uuid')
   id: string;
@@ -14,4 +15,5 @@ export class Claim {
   @ApiProperty()
   @CreateDateColumn({ nullable: false })
   createdAt: Date;
+
 }

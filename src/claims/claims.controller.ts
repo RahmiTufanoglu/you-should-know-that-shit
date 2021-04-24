@@ -8,6 +8,7 @@ import { JwtAuthGuard } from '../auth/guard/jwt-auth.guard';
 
 @Controller('claims')
 export class ClaimsController {
+
   constructor(private readonly claimsService: ClaimsService) {
   }
 
@@ -63,4 +64,5 @@ export class ClaimsController {
       claim,
     });
   }
+
 }

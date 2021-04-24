@@ -8,6 +8,7 @@ import { UpdateFactDto } from './dto/update-fact.dto';
 @ApiTags('facts')
 @Controller('facts')
 export class FactsController {
+
   constructor(private readonly factsService: FactsService) {
   }
 
@@ -20,7 +21,7 @@ export class FactsController {
   async create(@Body() createFactDto: CreateFactDto,
                // @UploadedFile() file: Express.Multer.File,
                @Res() res,
-  ): Promise<{ file: string; body: Fact }> {
+  ): Promise<any> {
     const fact = await this.factsService.create(createFactDto);
     // const body = { fact, file: file.buffer.toString() };
     return res.json({
@@ -33,7 +34,7 @@ export class FactsController {
   @ApiOkResponse({ type: Fact, isArray: true })
   @ApiOperation({ summary: 'Show all users' })
   @Get()
-  async findAll(@Res() res): Promise<any[]> {
+  async findAll(@Res() res): Promise<any> {
     const facts = await this.factsService.findAll();
     return res.json({
       message: 'All facts have been found successfully',
@@ -72,4 +73,5 @@ export class FactsController {
       fact,
     });
   }
+
 }

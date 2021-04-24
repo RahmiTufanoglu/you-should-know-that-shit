@@ -7,6 +7,7 @@ import { Category } from './entities/category.entity';
 
 @Injectable()
 export class CategoriesService {
+
   constructor(@InjectRepository(Category) private readonly categoryRepository: Repository<Category>) {
   }
 
@@ -29,4 +30,5 @@ export class CategoriesService {
   remove(id: number): Promise<DeleteResult> {
     return this.categoryRepository.delete(id);
   }
+
 }

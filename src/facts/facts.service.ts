@@ -7,6 +7,7 @@ import { Fact } from './entities/fact.entity';
 
 @Injectable()
 export class FactsService {
+
   constructor(@InjectRepository(Fact) private readonly factRepository: Repository<Fact>) {
   }
 
@@ -29,4 +30,5 @@ export class FactsService {
   remove(id: number): Promise<DeleteResult> {
     return this.factRepository.delete(id);
   }
+
 }
