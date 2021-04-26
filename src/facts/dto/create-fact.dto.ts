@@ -12,9 +12,9 @@ export class CreateFactDto {
   readonly isTrue: boolean;
 
   @ApiModelProperty()
-  readonly createdDate: Date;
+  readonly image: string;
 
   @ApiModelProperty()
-  readonly image?: string;
+  readonly createdDate: Date;
 
 }

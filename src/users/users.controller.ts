@@ -33,7 +33,7 @@ export class UsersController {
   @UseGuards(JwtAuthGuard)
   @UsePipes(ValidationPipe)
   @Get(':id')
-  async findOne(@Param('id') id: number): Promise<User> {
+  async findById(@Param('id') id: number): Promise<User> {
     return await this.usersService.findById(id);
   }
 

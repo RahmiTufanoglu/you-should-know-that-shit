@@ -1,10 +1,13 @@
-import { Body, Controller, Delete, Get, Param, Post, Put, Res, UseGuards } from '@nestjs/common';
+import { Body, Controller, Delete, Get, Param, Post, Put, UseGuards, UsePipes, ValidationPipe } from '@nestjs/common';
 import { CategoriesService } from './categories.service';
 import { CreateCategoryDto } from './dto/create-category.dto';
 import { ApiCreatedResponse, ApiNotFoundResponse, ApiOkResponse } from '@nestjs/swagger';
 import { Claim } from '../claims/entities/claim.entity';
 import { JwtAuthGuard } from '../auth/guard/jwt-auth.guard';
 import { UpdateClaimDto } from '../claims/dto/update-claim.dto';
+import { Category } from './entities/category.entity';
+import { SETTINGS } from '../app.utils';
+import { DeleteResult, UpdateResult } from 'typeorm';
 
 @Controller('categories')
 export class CategoriesController {
@@ -14,55 +17,39 @@ export class CategoriesController {
 
   @ApiCreatedResponse({ type: Claim })
   @Post()
-  async create(@Body() createCategoryDto: CreateCategoryDto, @Res() res): Promise<any> {
-    const category = await this.categoriesService.create(createCategoryDto);
-    return res.json({
-      message: 'Category has been added successfully',
-      category,
-    });
+  async create(@Body(SETTINGS.VALIDATION_PIPE) createCategoryDto: CreateCategoryDto): Promise<Category> {
+    return await this.categoriesService.create(createCategoryDto);
   }
 
   @ApiOkResponse({ type: Claim, isArray: true })
   @UseGuards(JwtAuthGuard)
+  @UsePipes(ValidationPipe)
   @Get()
-  async findAll(@Res() res): Promise<any[]> {
-    const categories = await this.categoriesService.findAll();
-    return res.json({
-      message: 'All categories have been found successfully',
-      categories,
-    });
+  async findAll(): Promise<Category[]> {
+    return await this.categoriesService.findAll();
   }
 
   @ApiOkResponse({ type: Claim })
   @ApiNotFoundResponse()
   @UseGuards(JwtAuthGuard)
+  @UsePipes(ValidationPipe)
   @Get(':id')
-  async findOne(@Param('id') id: number, @Res() res): Promise<any> {
-    const category = await this.categoriesService.findOne(id);
-    return res.json({
-      message: `Category with id #${id} has been found successfully.`,
-      category,
-    });
+  async findById(@Param('id') id: number): Promise<Category> {
+    return await this.categoriesService.findById(id);
   }
 
   @UseGuards(JwtAuthGuard)
+  @UsePipes(ValidationPipe)
   @Put(':id')
-  async update(@Param('id') id: number, @Body() updateClaimDto: UpdateClaimDto, @Res() res): Promise<any> {
-    const category = await this.categoriesService.update(id, updateClaimDto);
-    return res.json({
-      message: `Category with the id #${id} has been updated successfully.`,
-      category,
-    });
+  async update(@Param('id') id: number, @Body() updateClaimDto: UpdateClaimDto): Promise<UpdateResult> {
+    return await this.categoriesService.update(id, updateClaimDto);
   }
 
   @UseGuards(JwtAuthGuard)
+  @UsePipes(ValidationPipe)
   @Delete(':id')
-  async remove(@Param('id') id: number, @Res() res): Promise<any> {
-    const category = await this.categoriesService.remove(id);
-    return res.json({
-      message: `Category with the id #${id} has been deleted successfully.`,
-      category,
-    });
+  async remove(@Param('id') id: number): Promise<DeleteResult> {
+    return await this.categoriesService.remove(id);
   }
 
 }

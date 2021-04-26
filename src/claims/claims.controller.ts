@@ -1,10 +1,12 @@
-import { Body, Controller, Delete, Get, Param, Post, Put, Res, UseGuards } from '@nestjs/common';
+import { Body, Controller, Delete, Get, Param, Post, Put, UseGuards, UsePipes, ValidationPipe } from '@nestjs/common';
 import { ClaimsService } from './claims.service';
 import { CreateClaimDto } from './dto/create-claim.dto';
 import { UpdateClaimDto } from './dto/update-claim.dto';
 import { ApiCreatedResponse, ApiNotFoundResponse, ApiOkResponse } from '@nestjs/swagger';
 import { Claim } from './entities/claim.entity';
 import { JwtAuthGuard } from '../auth/guard/jwt-auth.guard';
+import { DeleteResult, UpdateResult } from 'typeorm';
+import { SETTINGS } from '../app.utils';
 
 @Controller('claims')
 export class ClaimsController {
@@ -14,55 +16,39 @@ export class ClaimsController {
 
   @ApiCreatedResponse({ type: Claim })
   @Post()
-  async create(@Body() createClaimDto: CreateClaimDto, @Res() res): Promise<any> {
-    const claim = await this.claimsService.create(createClaimDto);
-    return res.json({
-      message: 'Claim has been added successfully',
-      claim,
-    });
+  async create(@Body(SETTINGS.VALIDATION_PIPE) createClaimDto: CreateClaimDto): Promise<Claim> {
+    return await this.claimsService.create(createClaimDto);
   }
 
   @ApiOkResponse({ type: Claim, isArray: true })
   @UseGuards(JwtAuthGuard)
+  @UsePipes(ValidationPipe)
   @Get()
-  async findAll(@Res() res): Promise<any[]> {
-    const claims = await this.claimsService.findAll();
-    return res.json({
-      message: 'All claims have been found successfully',
-      claims,
-    });
+  async findAll(): Promise<Claim[]> {
+    return await this.claimsService.findAll();
   }
 
   @ApiOkResponse({ type: Claim })
   @ApiNotFoundResponse()
   @UseGuards(JwtAuthGuard)
+  @UsePipes(ValidationPipe)
   @Get(':id')
-  async findOne(@Param('id') id: number, @Res() res): Promise<any> {
-    const claim = await this.claimsService.findOne(id);
-    return res.json({
-      message: `Claim with id #${id} has been found successfully.`,
-      claim,
-    });
+  async findById(@Param('id') id: number): Promise<Claim> {
+    return await this.claimsService.findById(id);
   }
 
   @UseGuards(JwtAuthGuard)
+  @UsePipes(ValidationPipe)
   @Put(':id')
-  async update(@Param('id') id: number, @Body() updateClaimDto: UpdateClaimDto, @Res() res): Promise<any> {
-    const claim = await this.claimsService.update(id, updateClaimDto);
-    return res.json({
-      message: `Claim with the id #${id} has been updated successfully.`,
-      claim,
-    });
+  async update(@Param('id') id: number, @Body() updateClaimDto: UpdateClaimDto): Promise<UpdateResult> {
+    return await this.claimsService.update(id, updateClaimDto);
   }
 
   @UseGuards(JwtAuthGuard)
+  @UsePipes(ValidationPipe)
   @Delete(':id')
-  async remove(@Param('id') id: number, @Res() res): Promise<any> {
-    const claim = await this.claimsService.remove(id);
-    return res.json({
-      message: `Claim with the id #${id} has been deleted successfully.`,
-      claim,
-    });
+  async remove(@Param('id') id: number): Promise<DeleteResult> {
+    return await this.claimsService.remove(id);
   }
 
 }

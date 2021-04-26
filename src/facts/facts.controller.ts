@@ -1,9 +1,11 @@
-import { Body, Controller, Delete, Get, Param, ParseIntPipe, Post, Put, Res } from '@nestjs/common';
+import { Body, Controller, Delete, Get, Param, Post, Put, Res, UseGuards, UsePipes, ValidationPipe } from '@nestjs/common';
 import { ApiCreatedResponse, ApiNotFoundResponse, ApiOkResponse, ApiOperation, ApiTags } from '@nestjs/swagger';
 import { FactsService } from './facts.service';
 import { Fact } from './entities/fact.entity';
 import { CreateFactDto } from './dto/create-fact.dto';
 import { UpdateFactDto } from './dto/update-fact.dto';
+import { JwtAuthGuard } from '../auth/guard/jwt-auth.guard';
+import { DeleteResult, UpdateResult } from 'typeorm';
 
 @ApiTags('facts')
 @Controller('facts')
@@ -33,45 +35,37 @@ export class FactsController {
 
   @ApiOkResponse({ type: Fact, isArray: true })
   @ApiOperation({ summary: 'Show all users' })
+  @UseGuards(JwtAuthGuard)
+  @UsePipes(ValidationPipe)
   @Get()
-  async findAll(@Res() res): Promise<any> {
-    const facts = await this.factsService.findAll();
-    return res.json({
-      message: 'All facts have been found successfully',
-      facts,
-    });
+  async findAll(): Promise<Fact[]> {
+    return await this.factsService.findAll();
   }
 
   @ApiOkResponse({ type: Fact })
   @ApiNotFoundResponse()
   @ApiOperation({ summary: 'Find a user with a specific id' })
+  @UseGuards(JwtAuthGuard)
+  @UsePipes(ValidationPipe)
   @Get(':id')
-  async findOne(@Param('id') id: number, @Res() res): Promise<any> {
-    const fact = await this.factsService.findOne(id);
-    return res.json({
-      message: `Fact with id #${id} has been found successfully.`,
-      fact,
-    });
+  async findById(@Param('id') id: number): Promise<Fact> {
+    return await this.factsService.findById(id);
   }
 
-  @Put(':id')
   @ApiOperation({ summary: 'Edit a user with a specific id' })
-  async update(@Param('id', ParseIntPipe) id: number, @Body() updateFactDto: UpdateFactDto, @Res() res): Promise<any> {
-    const fact = await this.factsService.update(id, updateFactDto);
-    return res.json({
-      message: `Fact with the id #${id} has been updated successfully.`,
-      fact,
-    });
+  @UseGuards(JwtAuthGuard)
+  @UsePipes(ValidationPipe)
+  @Put(':id')
+  async update(@Param('id') id: number, @Body() updateFactDto: UpdateFactDto): Promise<UpdateResult> {
+    return await this.factsService.update(id, updateFactDto);
   }
 
-  @Delete(':id')
   @ApiOperation({ summary: 'Delete a user with a specific id' })
-  async remove(@Param('id') id: number, @Res() res): Promise<any> {
-    const fact = await this.factsService.remove(id);
-    return res.json({
-      message: `Fact with the id #${id} has been deleted successfully.`,
-      fact,
-    });
+  @UseGuards(JwtAuthGuard)
+  @UsePipes(ValidationPipe)
+  @Delete(':id')
+  async remove(@Param('id') id: number): Promise<DeleteResult> {
+    return await this.factsService.remove(id);
   }
 
 }

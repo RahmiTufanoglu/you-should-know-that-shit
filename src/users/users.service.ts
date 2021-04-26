@@ -5,8 +5,6 @@ import { User } from './entities/user.entity';
 import { InjectRepository } from '@nestjs/typeorm';
 import { DeleteResult, Repository, UpdateResult } from 'typeorm';
 import { IdNotFoundException } from '../exceptions/id-not-found-exception';
-import { EmailNotFoundException } from '../exceptions/email-not-found-exception';
-import { UsernameNotFoundException } from '../exceptions/username-not-found-exception';
 
 @Injectable()
 export class UsersService {
@@ -14,8 +12,8 @@ export class UsersService {
   constructor(@InjectRepository(User) private readonly userRepository: Repository<User>) {
   }
 
-  async create(user: CreateUserDto): Promise<User> {
-    return this.userRepository.save(this.getUser(new User(), user));
+  async create(createUserDto: CreateUserDto): Promise<User> {
+    return this.userRepository.save(this.getUser(new User(), createUserDto));
   }
 
   findAll(): Promise<User[]> {
@@ -26,9 +24,9 @@ export class UsersService {
     return await this.getUserById(id);
   }
 
-  async update(id: number, user: UpdateUserDto): Promise<UpdateResult> {
+  async update(id: number, updateUserDto: UpdateUserDto): Promise<UpdateResult> {
     if (!!await this.getUserById(id)) {
-      return this.userRepository.update(id, this.getUser(new User, user));
+      return this.userRepository.update(id, this.getUser(new User, updateUserDto));
     }
   }
 
@@ -45,7 +43,7 @@ export class UsersService {
         { select: ['id', 'createdAt', 'username', 'firstname', 'lastname', 'email', 'password', 'highscore'] },
       );
     } catch (err) {
-      throw new EmailNotFoundException(email);
+      throw new IdNotFoundException({ email });
     }
   }
 
@@ -56,7 +54,7 @@ export class UsersService {
         { select: ['id', 'createdAt', 'username', 'firstname', 'lastname', 'email', 'password', 'highscore'] },
       );
     } catch (err) {
-      throw new UsernameNotFoundException(username);
+      throw new IdNotFoundException({ username });
     }
   }
 
@@ -74,7 +72,7 @@ export class UsersService {
     try {
       return await this.userRepository.findOneOrFail(id);
     } catch (err) {
-      throw new IdNotFoundException(id);
+      throw new IdNotFoundException({ id });
     }
   }
 

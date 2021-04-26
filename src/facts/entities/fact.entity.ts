@@ -13,22 +13,22 @@ export class Fact {
     example: 'Slugs are able to sleep three consecutibe years.',
     description: 'A fact',
   })
-  @Column({ nullable: false, unique: true })
+  @Column({ unique: true })
   fact: string;
 
   @ApiProperty()
-  @Column({ nullable: false })
+  @Column()
   isTrue: boolean;
 
   @ApiProperty({
     example: '',
     description: 'A fact related image',
   })
-  @Column({ nullable: false, default: 'Default image' })
-  image?: string;
+  @Column()
+  image: string;
 
   @ApiProperty()
-  @CreateDateColumn({ nullable: false })
+  @CreateDateColumn()
   createdAt: Date;
 
   @ManyToOne(() => Category, category => category.id)
