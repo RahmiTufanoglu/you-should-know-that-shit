@@ -4,7 +4,7 @@ import { UpdateFactDto } from './dto/update-fact.dto';
 import { InjectRepository } from '@nestjs/typeorm';
 import { DeleteResult, Repository, UpdateResult } from 'typeorm';
 import { Fact } from './entities/fact.entity';
-import { IdNotFoundException } from '../exceptions/id-not-found-exception';
+import { ObjectNotFoundException } from '../exceptions/object-not-found-exception';
 
 @Injectable()
 export class FactsService {
@@ -21,7 +21,7 @@ export class FactsService {
   }
 
   async findById(id: number): Promise<Fact> {
-    return await this.getFactById(id);
+    return this.getFactById(id);
   }
 
   async update(id: number, updateFactDto: UpdateFactDto): Promise<UpdateResult> {
@@ -47,7 +47,7 @@ export class FactsService {
     try {
       return await this.factRepository.findOneOrFail(id);
     } catch (err) {
-      throw new IdNotFoundException({ id });
+      throw new ObjectNotFoundException({ id });
     }
   }
 

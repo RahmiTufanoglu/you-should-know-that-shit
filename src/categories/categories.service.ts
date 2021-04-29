@@ -4,7 +4,7 @@ import { UpdateCategoryDto } from './dto/update-category.dto';
 import { InjectRepository } from '@nestjs/typeorm';
 import { DeleteResult, Repository, UpdateResult } from 'typeorm';
 import { Category } from './entities/category.entity';
-import { IdNotFoundException } from '../exceptions/id-not-found-exception';
+import { ObjectNotFoundException } from '../exceptions/object-not-found-exception';
 
 @Injectable()
 export class CategoriesService {
@@ -21,7 +21,7 @@ export class CategoriesService {
   }
 
   async findById(id: number): Promise<Category> {
-    return await this.getCategoryById(id);
+    return this.getCategoryById(id);
   }
 
   async update(id: number, updateCategoryDto: UpdateCategoryDto): Promise<UpdateResult> {
@@ -45,7 +45,7 @@ export class CategoriesService {
     try {
       return await this.categoryRepository.findOneOrFail(id);
     } catch (err) {
-      throw new IdNotFoundException({ id });
+      throw new ObjectNotFoundException({ id });
     }
   }
 

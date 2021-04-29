@@ -17,7 +17,7 @@ export class ClaimsController {
   @ApiCreatedResponse({ type: Claim })
   @Post()
   async create(@Body(SETTINGS.VALIDATION_PIPE) createClaimDto: CreateClaimDto): Promise<Claim> {
-    return await this.claimsService.create(createClaimDto);
+    return this.claimsService.create(createClaimDto);
   }
 
   @ApiOkResponse({ type: Claim, isArray: true })
@@ -25,7 +25,7 @@ export class ClaimsController {
   @UsePipes(ValidationPipe)
   @Get()
   async findAll(): Promise<Claim[]> {
-    return await this.claimsService.findAll();
+    return this.claimsService.findAll();
   }
 
   @ApiOkResponse({ type: Claim })
@@ -34,21 +34,21 @@ export class ClaimsController {
   @UsePipes(ValidationPipe)
   @Get(':id')
   async findById(@Param('id') id: number): Promise<Claim> {
-    return await this.claimsService.findById(id);
+    return this.claimsService.findById(id);
   }
 
   @UseGuards(JwtAuthGuard)
   @UsePipes(ValidationPipe)
   @Put(':id')
   async update(@Param('id') id: number, @Body() updateClaimDto: UpdateClaimDto): Promise<UpdateResult> {
-    return await this.claimsService.update(id, updateClaimDto);
+    return this.claimsService.update(id, updateClaimDto);
   }
 
   @UseGuards(JwtAuthGuard)
   @UsePipes(ValidationPipe)
   @Delete(':id')
   async remove(@Param('id') id: number): Promise<DeleteResult> {
-    return await this.claimsService.remove(id);
+    return this.claimsService.remove(id);
   }
 
 }

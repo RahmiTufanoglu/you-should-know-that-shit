@@ -39,7 +39,7 @@ export class FactsController {
   @UsePipes(ValidationPipe)
   @Get()
   async findAll(): Promise<Fact[]> {
-    return await this.factsService.findAll();
+    return this.factsService.findAll();
   }
 
   @ApiOkResponse({ type: Fact })
@@ -49,7 +49,7 @@ export class FactsController {
   @UsePipes(ValidationPipe)
   @Get(':id')
   async findById(@Param('id') id: number): Promise<Fact> {
-    return await this.factsService.findById(id);
+    return this.factsService.findById(id);
   }
 
   @ApiOperation({ summary: 'Edit a user with a specific id' })
@@ -57,7 +57,7 @@ export class FactsController {
   @UsePipes(ValidationPipe)
   @Put(':id')
   async update(@Param('id') id: number, @Body() updateFactDto: UpdateFactDto): Promise<UpdateResult> {
-    return await this.factsService.update(id, updateFactDto);
+    return this.factsService.update(id, updateFactDto);
   }
 
   @ApiOperation({ summary: 'Delete a user with a specific id' })
@@ -65,7 +65,7 @@ export class FactsController {
   @UsePipes(ValidationPipe)
   @Delete(':id')
   async remove(@Param('id') id: number): Promise<DeleteResult> {
-    return await this.factsService.remove(id);
+    return this.factsService.remove(id);
   }
 
 }

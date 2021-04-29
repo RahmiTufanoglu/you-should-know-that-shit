@@ -1,14 +1,14 @@
 import { HttpException, HttpStatus } from '@nestjs/common';
 
 interface ErrorObject {
-  id?: number | string;
-  email?: string;
-  username?: string;
+  id: number | string;
+  email: string;
+  username: string;
 }
 
-export class IdNotFoundException extends HttpException {
+export class ObjectNotFoundException extends HttpException {
 
-  constructor(error: ErrorObject) {
+  constructor(error: Partial<ErrorObject>) {
     let errorMessage: string;
     switch (error) {
       case error.id:
@@ -25,7 +25,6 @@ export class IdNotFoundException extends HttpException {
         break;
     }
     super(errorMessage, HttpStatus.NOT_FOUND);
-    // super(`Id ${id} not found`, HttpStatus.NOT_FOUND);
   }
 
 }

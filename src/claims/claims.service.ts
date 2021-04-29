@@ -4,7 +4,7 @@ import { UpdateClaimDto } from './dto/update-claim.dto';
 import { InjectRepository } from '@nestjs/typeorm';
 import { DeleteResult, Repository, UpdateResult } from 'typeorm';
 import { Claim } from './entities/claim.entity';
-import { IdNotFoundException } from '../exceptions/id-not-found-exception';
+import { ObjectNotFoundException } from '../exceptions/object-not-found-exception';
 
 @Injectable()
 export class ClaimsService {
@@ -45,7 +45,7 @@ export class ClaimsService {
     try {
       return await this.claimRepository.findOneOrFail(id);
     } catch (err) {
-      throw new IdNotFoundException({ id });
+      throw new ObjectNotFoundException({ id });
     }
   }
 

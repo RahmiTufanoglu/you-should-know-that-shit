@@ -6,35 +6,64 @@ import { AuthModule } from './auth/auth.module';
 import { FactsModule } from './facts/facts.module';
 import { ClaimsModule } from './claims/claims.module';
 import { CategoriesModule } from './categories/categories.module';
-import { ConfigModule } from '@nestjs/config';
+import { ConfigModule, ConfigService } from '@nestjs/config';
 import { TypeOrmModule } from '@nestjs/typeorm';
-import { config } from '../ormconfig';
 
 @Module({
   imports: [
     ConfigModule.forRoot({
       isGlobal: true,
-      load: [config],
-      envFilePath: ['.development.env', '.production.env'],
+      envFilePath: ['.env.development', '.env.production'],
     }),
-    TypeOrmModule.forRoot({
-      type: 'mysql',
-      host: 'localhost',
-      port: 3306,
-      username: 'root',
-      password: 'rahmi123',
-      database: 'truthy-vs-falsy-db',
-      synchronize: false,
-      entities: [
-        'dist/src/**/*.entity{.ts,.js}',
-      ],
-      migrations: [
-        'dist/src/db/migrations/*.js',
-      ],
-      cli: {
-        'migrationsDir': 'src/db/migrations',
-      },
+    // TypeOrmModule.forRootAsync({
+    //   imports: [ConfigModule],
+    //   useFactory: (config: ConfigService) => ormConfig(config),
+    //   inject: [ConfigService],
+    // }),
+    //
+    TypeOrmModule.forRootAsync({
+      imports: [ConfigModule],
+      useFactory: (configService: ConfigService) => ({
+        type: 'mysql',
+        host: configService.get('TYPEORM_HOST'),
+        port: configService.get('TYPEORM_PORT'),
+        username: configService.get('TYPEORM_USERNAME'),
+        password: configService.get('TYPEORM_PASSWORD'),
+        database: configService.get('TYPEORM_DATABASE'),
+        synchronize: false,
+        entities: [
+          // 'dist/src/**/*.entity{.ts,.js}',
+          __dirname + '/**/*.entity{.ts,.js}',
+        ],
+        migrations: [
+          // 'dist/src/db/migrations/*.js',
+          __dirname + '/db/migrations/*js',
+        ],
+        cli: {
+          'migrationsDir': 'src/db/migrations',
+        },
+      }),
+      inject: [ConfigService],
     }),
+    //
+    // TypeOrmModule.forRoot({
+    //   type: 'mysql',
+    //   host: process.env.TYPEORM_HOST,
+    //   port: parseInt(process.env.TYPEORM_PORT),
+    //   username: process.env.TYPEORM_USERNAME,
+    //   password: process.env.TYPEORM_PASSWORD,
+    //   database: process.env.TYPEORM_DATABASE,
+    //   synchronize: false,
+    //   entities: [
+    //     'dist/src/**/*.entity{.ts,.js}',
+    //   ],
+    //   migrations: [
+    //     'dist/src/db/migrations/*.js',
+    //   ],
+    //   cli: {
+    //     'migrationsDir': 'src/db/migrations',
+    //   },
+    // }),
     AuthModule,
     UsersModule,
     CategoriesModule,

@@ -4,7 +4,7 @@ import { UpdateUserDto } from './dto/update-user.dto';
 import { User } from './entities/user.entity';
 import { InjectRepository } from '@nestjs/typeorm';
 import { DeleteResult, Repository, UpdateResult } from 'typeorm';
-import { IdNotFoundException } from '../exceptions/id-not-found-exception';
+import { ObjectNotFoundException } from '../exceptions/object-not-found-exception';
 
 @Injectable()
 export class UsersService {
@@ -21,10 +21,16 @@ export class UsersService {
   }
 
   async findById(id: number): Promise<User> {
-    return await this.getUserById(id);
+    return this.getUserById(id);
   }
 
   async update(id: number, updateUserDto: UpdateUserDto): Promise<UpdateResult> {
+    if (!!await this.getUserById(id)) {
+      return this.userRepository.update(id, updateUserDto);
+    }
+  }
+
+  async updateComplete(id: number, updateUserDto: UpdateUserDto): Promise<UpdateResult> {
     if (!!await this.getUserById(id)) {
       return this.userRepository.update(id, this.getUser(new User, updateUserDto));
     }
@@ -43,7 +49,7 @@ export class UsersService {
         { select: ['id', 'createdAt', 'username', 'firstname', 'lastname', 'email', 'password', 'highscore'] },
       );
     } catch (err) {
-      throw new IdNotFoundException({ email });
+      throw new ObjectNotFoundException({ email });
     }
   }
 
@@ -54,7 +60,7 @@ export class UsersService {
         { select: ['id', 'createdAt', 'username', 'firstname', 'lastname', 'email', 'password', 'highscore'] },
       );
     } catch (err) {
-      throw new IdNotFoundException({ username });
+      throw new ObjectNotFoundException({ username });
     }
   }
 
@@ -72,7 +78,7 @@ export class UsersService {
     try {
       return await this.userRepository.findOneOrFail(id);
     } catch (err) {
-      throw new IdNotFoundException({ id });
+      throw new ObjectNotFoundException({ id });
     }
   }
 

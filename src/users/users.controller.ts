@@ -1,4 +1,4 @@
-import { Body, Controller, Delete, Get, Param, Post, Put, UseGuards, UsePipes, ValidationPipe } from '@nestjs/common';
+import { Body, Controller, Delete, Get, Param, Patch, Post, Put, UseGuards, UsePipes, ValidationPipe } from '@nestjs/common';
 import { UsersService } from './users.service';
 import { UpdateUserDto } from './dto/update-user.dto';
 import { ApiCreatedResponse, ApiNotFoundResponse, ApiOkResponse } from '@nestjs/swagger';
@@ -17,7 +17,7 @@ export class UsersController {
   @ApiCreatedResponse({ type: User })
   @Post()
   async create(@Body(SETTINGS.VALIDATION_PIPE) createUserDto: CreateUserDto): Promise<User> {
-    return await this.usersService.create(createUserDto);
+    return this.usersService.create(createUserDto);
   }
 
   @ApiOkResponse({ type: User, isArray: true })
@@ -25,7 +25,7 @@ export class UsersController {
   @UsePipes(ValidationPipe)
   @Get()
   async findAll(): Promise<User[]> {
-    return await this.usersService.findAll();
+    return this.usersService.findAll();
   }
 
   @ApiOkResponse({ type: User })
@@ -34,22 +34,29 @@ export class UsersController {
   @UsePipes(ValidationPipe)
   @Get(':id')
   async findById(@Param('id') id: number): Promise<User> {
-    return await this.usersService.findById(id);
+    return this.usersService.findById(id);
   }
 
 
   @UseGuards(JwtAuthGuard)
   @UsePipes(ValidationPipe)
-  @Put(':id')
+  @Patch(':id')
   async update(@Param('id') id: number, @Body() updateUserDto: UpdateUserDto): Promise<UpdateResult> {
-    return await this.usersService.update(id, updateUserDto);
+    return this.usersService.update(id, updateUserDto);
+  }
+
+  @UseGuards(JwtAuthGuard)
+  @UsePipes(ValidationPipe)
+  @Put(':id')
+  async updateComplete(@Param('id') id: number, @Body() updateUserDto: UpdateUserDto): Promise<UpdateResult> {
+    return this.usersService.updateComplete(id, updateUserDto);
   }
 
   @UseGuards(JwtAuthGuard)
   @UsePipes(ValidationPipe)
   @Delete(':id')
   async remove(@Param('id') id: number): Promise<DeleteResult> {
-    return await this.usersService.remove(id);
+    return this.usersService.remove(id);
   }
 
   @ApiCreatedResponse({ type: User })
@@ -58,7 +65,7 @@ export class UsersController {
   @UsePipes(ValidationPipe)
   @Get()
   async findByEmail(@Param('email') email: string): Promise<User> {
-    return await this.usersService.findByEmail(email);
+    return this.usersService.findByEmail(email);
   }
 
   @ApiCreatedResponse({ type: User })
@@ -67,7 +74,7 @@ export class UsersController {
   @UsePipes(ValidationPipe)
   @Get()
   async findByUsername(@Param('username') username: string): Promise<User> {
-    return await this.usersService.findByUsername(username);
+    return this.usersService.findByUsername(username);
   }
 
 }

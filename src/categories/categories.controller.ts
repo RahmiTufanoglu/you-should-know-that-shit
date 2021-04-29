@@ -15,10 +15,10 @@ export class CategoriesController {
   constructor(private readonly categoriesService: CategoriesService) {
   }
 
-  @ApiCreatedResponse({ type: Claim })
+  @ApiCreatedResponse({ type: Category })
   @Post()
   async create(@Body(SETTINGS.VALIDATION_PIPE) createCategoryDto: CreateCategoryDto): Promise<Category> {
-    return await this.categoriesService.create(createCategoryDto);
+    return this.categoriesService.create(createCategoryDto);
   }
 
   @ApiOkResponse({ type: Claim, isArray: true })
@@ -26,30 +26,30 @@ export class CategoriesController {
   @UsePipes(ValidationPipe)
   @Get()
   async findAll(): Promise<Category[]> {
-    return await this.categoriesService.findAll();
+    return this.categoriesService.findAll();
   }
 
-  @ApiOkResponse({ type: Claim })
+  @ApiOkResponse({ type: Category })
   @ApiNotFoundResponse()
   @UseGuards(JwtAuthGuard)
   @UsePipes(ValidationPipe)
   @Get(':id')
   async findById(@Param('id') id: number): Promise<Category> {
-    return await this.categoriesService.findById(id);
+    return this.categoriesService.findById(id);
   }
 
   @UseGuards(JwtAuthGuard)
   @UsePipes(ValidationPipe)
   @Put(':id')
   async update(@Param('id') id: number, @Body() updateClaimDto: UpdateClaimDto): Promise<UpdateResult> {
-    return await this.categoriesService.update(id, updateClaimDto);
+    return this.categoriesService.update(id, updateClaimDto);
   }
 
   @UseGuards(JwtAuthGuard)
   @UsePipes(ValidationPipe)
   @Delete(':id')
   async remove(@Param('id') id: number): Promise<DeleteResult> {
-    return await this.categoriesService.remove(id);
+    return this.categoriesService.remove(id);
   }
 
 }

@@ -10,7 +10,7 @@ async function bootstrap() {
 
   const config = new DocumentBuilder()
     .setTitle('Truthy VS Falsy API')
-    .setDescription('A game API, which ...')
+    .setDescription('An API, which ...')
     .setVersion('1.0')
     .build();
   const document = SwaggerModule.createDocument(app, config);
