@@ -1,4 +1,4 @@
-import { Body, Controller, Delete, Get, Param, Patch, Post, Put, UseGuards, UsePipes, ValidationPipe } from '@nestjs/common';
+import { Body, Controller, Delete, Get, Param, Patch, Post, UseGuards, UsePipes, ValidationPipe } from '@nestjs/common';
 import { UsersService } from './users.service';
 import { UpdateUserDto } from './dto/update-user.dto';
 import { ApiCreatedResponse, ApiNotFoundResponse, ApiOkResponse } from '@nestjs/swagger';
@@ -45,12 +45,12 @@ export class UsersController {
     return this.usersService.update(id, updateUserDto);
   }
 
-  @UseGuards(JwtAuthGuard)
-  @UsePipes(ValidationPipe)
-  @Put(':id')
-  async updateComplete(@Param('id') id: number, @Body() updateUserDto: UpdateUserDto): Promise<UpdateResult> {
-    return this.usersService.updateComplete(id, updateUserDto);
-  }
+  // @UseGuards(JwtAuthGuard)
+  // @UsePipes(ValidationPipe)
+  // @Put(':id')
+  // async updateFull(@Param('id') id: number, @Body() updateUserDto: UpdateUserDto): Promise<UpdateResult> {
+  //   return this.usersService.updateFull(id, updateUserDto);
+  // }
 
   @UseGuards(JwtAuthGuard)
   @UsePipes(ValidationPipe)

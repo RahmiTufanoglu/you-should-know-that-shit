@@ -15,55 +15,22 @@ import { TypeOrmModule } from '@nestjs/typeorm';
       isGlobal: true,
       envFilePath: ['.env.development', '.env.production'],
     }),
-    // TypeOrmModule.forRootAsync({
-    //   imports: [ConfigModule],
-    //   useFactory: (config: ConfigService) => ormConfig(config),
-    //   inject: [ConfigService],
-    // }),
-    //
     TypeOrmModule.forRootAsync({
       imports: [ConfigModule],
       useFactory: (configService: ConfigService) => ({
-        type: 'mysql',
-        host: configService.get('TYPEORM_HOST'),
-        port: configService.get('TYPEORM_PORT'),
-        username: configService.get('TYPEORM_USERNAME'),
-        password: configService.get('TYPEORM_PASSWORD'),
-        database: configService.get('TYPEORM_DATABASE'),
+        type: 'postgres',
+        host: configService.get('DATABASE_HOST'),
+        port: configService.get('DATABASE_PORT'),
+        username: configService.get('DATABASE_USERNAME'),
+        password: configService.get('DATABASE_PASSWORD'),
+        database: configService.get('DATABASE_NAME'),
         synchronize: false,
-        entities: [
-          // 'dist/src/**/*.entity{.ts,.js}',
-          __dirname + '/**/*.entity{.ts,.js}',
-        ],
-        migrations: [
-          // 'dist/src/db/migrations/*.js',
-          __dirname + '/db/migrations/*js',
-        ],
-        cli: {
-          'migrationsDir': 'src/db/migrations',
-        },
+        retryDelay: 3000,
+        retryAttempts: 5,
+        entities: ['dist/**/*.entity{.ts,.js}'],
       }),
       inject: [ConfigService],
     }),
-    //
-    // TypeOrmModule.forRoot({
-    //   type: 'mysql',
-    //   host: process.env.TYPEORM_HOST,
-    //   port: parseInt(process.env.TYPEORM_PORT),
-    //   username: process.env.TYPEORM_USERNAME,
-    //   password: process.env.TYPEORM_PASSWORD,
-    //   database: process.env.TYPEORM_DATABASE,
-    //   synchronize: false,
-    //   entities: [
-    //     'dist/src/**/*.entity{.ts,.js}',
-    //   ],
-    //   migrations: [
-    //     'dist/src/db/migrations/*.js',
-    //   ],
-    //   cli: {
-    //     'migrationsDir': 'src/db/migrations',
-    //   },
-    // }),
     AuthModule,
     UsersModule,
     CategoriesModule,

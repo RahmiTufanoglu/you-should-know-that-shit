@@ -1,23 +1,18 @@
 import { HttpException, HttpStatus } from '@nestjs/common';
 
-interface ErrorObject {
-  id: number | string;
-  email: string;
-  username: string;
-}
-
 export class ObjectNotFoundException extends HttpException {
 
-  constructor(error: Partial<ErrorObject>) {
+  constructor(error: any) {
+    const key = Object.keys(error);
     let errorMessage: string;
-    switch (error) {
-      case error.id:
+    switch (true) {
+      case key[0] === 'id':
         errorMessage = `ID ${error.id} not found.`;
         break;
-      case error.email:
+      case key[0] === 'email':
         errorMessage = `Email ${error.email} not found.`;
         break;
-      case error.username:
+      case key[0] === 'username':
         errorMessage = `Username ${error.username} not found.`;
         break;
       default:

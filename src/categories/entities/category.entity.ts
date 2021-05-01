@@ -1,7 +1,7 @@
 import { Column, CreateDateColumn, Entity, OneToMany, PrimaryGeneratedColumn } from 'typeorm';
 import { ApiProperty } from '@nestjs/swagger';
 import { Fact } from '../../facts/entities/fact.entity';
-import { FACT_CATEGORY_ENUM } from '../../enums/fact.enum';
+import { FACT_CATEGORY_ENUM } from '../../enums';
 
 @Entity({ name: 'categories' })
 export class Category {

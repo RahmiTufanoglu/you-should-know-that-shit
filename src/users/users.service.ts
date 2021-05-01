@@ -13,7 +13,15 @@ export class UsersService {
   }
 
   async create(createUserDto: CreateUserDto): Promise<User> {
-    return this.userRepository.save(this.getUser(new User(), createUserDto));
+    // return this.userRepository.save(this.getUser(new User(), createUserDto));
+    const newUser = new User();
+    newUser.email = createUserDto.email;
+    newUser.password = createUserDto.password;
+    newUser.username = createUserDto.username ?? null;
+    newUser.firstname = createUserDto.firstname ?? null;
+    newUser.lastname = createUserDto.lastname ?? null;
+    newUser.highscore = createUserDto.highscore ?? null;
+    return this.userRepository.save(newUser);
   }
 
   findAll(): Promise<User[]> {
@@ -30,15 +38,23 @@ export class UsersService {
     }
   }
 
-  async updateComplete(id: number, updateUserDto: UpdateUserDto): Promise<UpdateResult> {
-    if (!!await this.getUserById(id)) {
-      return this.userRepository.update(id, this.getUser(new User, updateUserDto));
-    }
-  }
+  // async updateFull(id: number, updateUserDto: UpdateUserDto): Promise<UpdateResult> {
+  //   if (!!await this.getUserById(id)) {
+  //     return this.userRepository.update(id, this.getUser(new User, updateUserDto));
+  //   }
+  // }
 
   async remove(id: number): Promise<DeleteResult> {
     if (!!await this.getUserById(id)) {
       return this.userRepository.delete(id);
+    }
+  }
+
+  async getUserById(id: number): Promise<User> {
+    try {
+      return await this.userRepository.findOneOrFail(id);
+    } catch (err) {
+      throw new ObjectNotFoundException({ id });
     }
   }
 
@@ -64,22 +80,25 @@ export class UsersService {
     }
   }
 
-  getUser(currentUser: User, user: CreateUserDto | UpdateUserDto): User {
-    currentUser.email = user.email;
-    currentUser.password = user.password;
-    currentUser.username = user.username ?? null;
-    currentUser.firstname = user.firstname ?? null;
-    currentUser.lastname = user.lastname ?? null;
-    currentUser.highscore = user.highscore ?? null;
-    return currentUser;
-  }
+  // async find(item: unknown) {
+  //   try {
+  //     return await this.userRepository.findOneOrFail(
+  //       { item },
+  //       { select: ['id', 'createdAt', 'username', 'firstname', 'lastname', 'email', 'password', 'highscore'] },
+  //     );
+  //   } catch (err) {
+  //     throw new ObjectNotFoundException({ item });
+  //   }
+  // }
 
-  async getUserById(id: number): Promise<User> {
-    try {
-      return await this.userRepository.findOneOrFail(id);
-    } catch (err) {
-      throw new ObjectNotFoundException({ id });
-    }
-  }
+  // getUser(currentUser: User, user: CreateUserDto | UpdateUserDto): User {
+  //   currentUser.email = user.email;
+  //   currentUser.password = user.password;
+  //   currentUser.username = user.username ?? null;
+  //   currentUser.firstname = user.firstname ?? null;
+  //   currentUser.lastname = user.lastname ?? null;
+  //   currentUser.highscore = user.highscore ?? null;
+  //   return currentUser;
+  // }
 
 }
