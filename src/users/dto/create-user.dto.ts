@@ -4,13 +4,13 @@ import { MESSAGES, REGEX } from '../../app.utils';
 
 export class CreateUserDto {
 
-  @ApiModelProperty()
+  @ApiModelProperty({ required: true })
   @IsNotEmpty()
   @IsEmail()
   @MaxLength(300)
   readonly email: string;
 
-  @ApiModelProperty({ minLength: 4 })
+  @ApiModelProperty({ required: true, minLength: 4 })
   @IsNotEmpty()
   @MinLength(4)
   @Matches(REGEX.PASSWORD_RULE, { message: MESSAGES.PASSWORD_RULE_MESSAGE })

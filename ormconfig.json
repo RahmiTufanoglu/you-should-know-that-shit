@@ -9,6 +9,7 @@
   "entities": [
     "src/**/*.entity{.ts,.js}"
   ],
+  "migrationsRun": false,
   "migrationsTableName": "migrations",
   "migrations": [
     "src/db/migrations/*{.ts,.js}"

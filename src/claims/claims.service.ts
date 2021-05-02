@@ -9,11 +9,16 @@ import { ObjectNotFoundException } from '../exceptions/object-not-found-exceptio
 @Injectable()
 export class ClaimsService {
 
-  constructor(@InjectRepository(Claim) private readonly claimRepository: Repository<Claim>) {
+  constructor(
+    @InjectRepository(Claim)
+    private readonly claimRepository: Repository<Claim>,
+  ) {
   }
 
   async create(createClaimDto: CreateClaimDto): Promise<Claim> {
-    return this.claimRepository.save(this.getClaim(new Claim(), createClaimDto));
+    const newClaim = new Claim();
+    newClaim.claim = createClaimDto.claim;
+    return this.claimRepository.save(newClaim);
   }
 
   findAll(): Promise<Claim[]> {
@@ -26,7 +31,9 @@ export class ClaimsService {
 
   async update(id: number, updateClaimDto: UpdateClaimDto): Promise<UpdateResult> {
     if (!!await this.getClaimById(id)) {
-      return this.claimRepository.update(id, this.getClaim(new Claim, updateClaimDto));
+      const claim = new Claim();
+      claim.claim = updateClaimDto.claim;
+      return this.claimRepository.update(id, claim);
     }
   }
 
@@ -34,11 +41,6 @@ export class ClaimsService {
     if (!!await this.getClaimById(id)) {
       return this.claimRepository.delete(id);
     }
-  }
-
-  getClaim(currentClaim: Claim, claim: CreateClaimDto | UpdateClaimDto): Claim {
-    currentClaim.claim = claim.claim;
-    return currentClaim;
   }
 
   async getClaimById(id: number): Promise<Claim> {

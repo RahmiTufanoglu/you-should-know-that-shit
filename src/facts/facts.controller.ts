@@ -1,4 +1,17 @@
-import { Body, Controller, Delete, Get, Param, Post, Put, Res, UseGuards, UsePipes, ValidationPipe } from '@nestjs/common';
+import {
+  Body,
+  Controller,
+  Delete,
+  Get,
+  Param,
+  Patch,
+  Post,
+  UploadedFile,
+  UseGuards,
+  UseInterceptors,
+  UsePipes,
+  ValidationPipe,
+} from '@nestjs/common';
 import { ApiCreatedResponse, ApiNotFoundResponse, ApiOkResponse, ApiOperation, ApiTags } from '@nestjs/swagger';
 import { FactsService } from './facts.service';
 import { Fact } from './entities/fact.entity';
@@ -6,6 +19,7 @@ import { CreateFactDto } from './dto/create-fact.dto';
 import { UpdateFactDto } from './dto/update-fact.dto';
 import { JwtAuthGuard } from '../auth/guard/jwt-auth.guard';
 import { DeleteResult, UpdateResult } from 'typeorm';
+import { FileInterceptor } from '@nestjs/platform-express';
 
 @ApiTags('facts')
 @Controller('facts')
@@ -16,21 +30,16 @@ export class FactsController {
 
   @ApiCreatedResponse({ type: Fact })
   @ApiOperation({ summary: 'Create a fact with an image' })
-  // @UseInterceptors(
-  //   FileInterceptor('file', { storage }),
-  // )
+  @UseInterceptors(FileInterceptor('file'))
   @Post()
   async create(@Body() createFactDto: CreateFactDto,
-               // @UploadedFile() file: Express.Multer.File,
-               @Res() res,
+               @UploadedFile() file: Express.Multer.File,
   ): Promise<any> {
     const fact = await this.factsService.create(createFactDto);
-    // const body = { fact, file: file.buffer.toString() };
-    return res.json({
-      message: 'Fact has been added successfully',
-      // body,
+    return {
       fact,
-    });
+      file: file.buffer.toString(),
+    };
   }
 
   @ApiOkResponse({ type: Fact, isArray: true })
@@ -55,7 +64,7 @@ export class FactsController {
   @ApiOperation({ summary: 'Edit a user with a specific id' })
   @UseGuards(JwtAuthGuard)
   @UsePipes(ValidationPipe)
-  @Put(':id')
+  @Patch(':id')
   async update(@Param('id') id: number, @Body() updateFactDto: UpdateFactDto): Promise<UpdateResult> {
     return this.factsService.update(id, updateFactDto);
   }

@@ -9,17 +9,17 @@ export class User {
   @PrimaryGeneratedColumn('uuid')
   id: string;
 
-  @ApiProperty()
+  @ApiProperty({ required: true })
   @Column({ unique: true, length: 300 })
   email: string;
 
-  @ApiProperty()
+  @ApiProperty({ required: true })
   @Column({ select: false })
   password: string;
 
   @ApiProperty({
     example: 'RaTu',
-    description: 'A pseudonym of a person',
+    description: 'A pseudonym of a person. Used for the ranking list.',
   })
   @Column({ nullable: true, unique: true })
   username: string;

@@ -8,6 +8,7 @@ import { CreateUserDto } from './dto/create-user.dto';
 import { SETTINGS } from '../app.utils';
 import { DeleteResult, UpdateResult } from 'typeorm';
 
+// @UseFilters(HttpExceptionFilter)
 @Controller('users')
 export class UsersController {
 

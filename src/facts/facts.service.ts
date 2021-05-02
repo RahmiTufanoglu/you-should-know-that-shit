@@ -9,11 +9,18 @@ import { ObjectNotFoundException } from '../exceptions/object-not-found-exceptio
 @Injectable()
 export class FactsService {
 
-  constructor(@InjectRepository(Fact) private readonly factRepository: Repository<Fact>) {
+  constructor(
+    @InjectRepository(Fact)
+    private readonly factRepository: Repository<Fact>,
+  ) {
   }
 
   create(createFactDto: CreateFactDto): Promise<Fact> {
-    return this.factRepository.save(this.getFact(new Fact(), createFactDto));
+    const newFact = new Fact();
+    newFact.fact = createFactDto.fact;
+    newFact.isTrue = createFactDto.isTrue;
+    newFact.image = createFactDto.image ?? null;
+    return this.factRepository.save(newFact);
   }
 
   findAll(): Promise<Fact[]> {
@@ -26,7 +33,7 @@ export class FactsService {
 
   async update(id: number, updateFactDto: UpdateFactDto): Promise<UpdateResult> {
     if (!!await this.getFactById(id)) {
-      return this.factRepository.update(id, this.getFact(new Fact, updateFactDto));
+      return this.factRepository.update(id, updateFactDto);
     }
   }
 
@@ -34,13 +41,6 @@ export class FactsService {
     if (!!await this.getFactById(id)) {
       return this.factRepository.delete(id);
     }
-  }
-
-  getFact(currentFact: Fact, fact: CreateFactDto | UpdateFactDto): Fact {
-    currentFact.fact = fact.fact;
-    currentFact.isTrue = fact.isTrue;
-    currentFact.image = fact.image;
-    return currentFact;
   }
 
   async getFactById(id: number): Promise<Fact> {

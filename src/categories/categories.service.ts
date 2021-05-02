@@ -9,11 +9,15 @@ import { ObjectNotFoundException } from '../exceptions/object-not-found-exceptio
 @Injectable()
 export class CategoriesService {
 
-  constructor(@InjectRepository(Category) private readonly categoryRepository: Repository<Category>) {
+  constructor(
+    @InjectRepository(Category) private readonly categoryRepository: Repository<Category>,
+  ) {
   }
 
   async create(createCategoryDto: CreateCategoryDto): Promise<Category> {
-    return this.categoryRepository.save(this.getCategory(new Category(), createCategoryDto));
+    const newCategory = new Category();
+    newCategory.category = createCategoryDto.category;
+    return this.categoryRepository.save(newCategory);
   }
 
   findAll(): Promise<Category[]> {
@@ -26,7 +30,9 @@ export class CategoriesService {
 
   async update(id: number, updateCategoryDto: UpdateCategoryDto): Promise<UpdateResult> {
     if (!!await this.getCategoryById(id)) {
-      return this.categoryRepository.update(id, this.getCategory(new Category, updateCategoryDto));
+      const category = new Category();
+      category.category = updateCategoryDto.category;
+      return this.categoryRepository.update(id, category);
     }
   }
 
@@ -34,11 +40,6 @@ export class CategoriesService {
     if (!!await this.getCategoryById(id)) {
       return this.categoryRepository.delete(id);
     }
-  }
-
-  getCategory(currentCategory: Category, category: CreateCategoryDto | UpdateCategoryDto): Category {
-    currentCategory.category = category.category;
-    return currentCategory;
   }
 
   async getCategoryById(id: number): Promise<Category> {

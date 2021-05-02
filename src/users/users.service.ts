@@ -9,11 +9,13 @@ import { ObjectNotFoundException } from '../exceptions/object-not-found-exceptio
 @Injectable()
 export class UsersService {
 
-  constructor(@InjectRepository(User) private readonly userRepository: Repository<User>) {
+  constructor(
+    @InjectRepository(User)
+    private readonly userRepository: Repository<User>,
+  ) {
   }
 
   async create(createUserDto: CreateUserDto): Promise<User> {
-    // return this.userRepository.save(this.getUser(new User(), createUserDto));
     const newUser = new User();
     newUser.email = createUserDto.email;
     newUser.password = createUserDto.password;
@@ -79,26 +81,5 @@ export class UsersService {
       throw new ObjectNotFoundException({ username });
     }
   }
-
-  // async find(item: unknown) {
-  //   try {
-  //     return await this.userRepository.findOneOrFail(
-  //       { item },
-  //       { select: ['id', 'createdAt', 'username', 'firstname', 'lastname', 'email', 'password', 'highscore'] },
-  //     );
-  //   } catch (err) {
-  //     throw new ObjectNotFoundException({ item });
-  //   }
-  // }
-
-  // getUser(currentUser: User, user: CreateUserDto | UpdateUserDto): User {
-  //   currentUser.email = user.email;
-  //   currentUser.password = user.password;
-  //   currentUser.username = user.username ?? null;
-  //   currentUser.firstname = user.firstname ?? null;
-  //   currentUser.lastname = user.lastname ?? null;
-  //   currentUser.highscore = user.highscore ?? null;
-  //   return currentUser;
-  // }
 
 }
