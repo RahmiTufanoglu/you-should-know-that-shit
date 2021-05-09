@@ -1,4 +1,4 @@
-import { Column, CreateDateColumn, Entity, ManyToOne, PrimaryGeneratedColumn } from 'typeorm';
+import { Column, CreateDateColumn, Entity, JoinColumn, ManyToOne, PrimaryGeneratedColumn, UpdateDateColumn } from 'typeorm';
 import { ApiProperty } from '@nestjs/swagger';
 import { Category } from '../../categories/entities/category.entity';
 
@@ -24,14 +24,24 @@ export class Fact {
     example: '',
     description: 'A fact related image',
   })
-  @Column()
+  @Column({ nullable: true, default: null })
   image: string;
 
   @ApiProperty()
   @CreateDateColumn()
   createdAt: Date;
 
-  @ManyToOne(() => Category, category => category.id)
+  @UpdateDateColumn()
+  updatedAt: Date;
+
+  @Column()
+  categoryId: string;
+
+  @ManyToOne(
+    () => Category,
+    category => category.id,
+  )
+  @JoinColumn({ name: 'categoryId' })
   category: Category;
 
 }

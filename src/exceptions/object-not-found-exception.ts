@@ -9,6 +9,9 @@ export class ObjectNotFoundException extends HttpException {
       case key[0] === 'id':
         errorMessage = `ID ${error.id} not found.`;
         break;
+      case key[0] === 'category':
+        errorMessage = `Category ${error.category} not found.`;
+        break;
       case key[0] === 'email':
         errorMessage = `Email ${error.email} not found.`;
         break;

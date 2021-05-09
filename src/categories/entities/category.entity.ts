@@ -19,7 +19,10 @@ export class Category {
   createdAt: Date;
 
   @ApiProperty()
-  @OneToMany(() => Fact, fact => fact.id)
+  @OneToMany(
+    () => Fact,
+    fact => fact.id,
+  )
   facts: Fact[];
 
 }

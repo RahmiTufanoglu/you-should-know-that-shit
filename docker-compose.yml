@@ -25,7 +25,7 @@ services:
     environment:
       POSTGRES_USER: "${DATABASE_USERNAME}"
       POSTGRES_PASSWORD: "${DATABASE_PASSWORD}"
-      POSTGRES_DATABASE: "${DATABASE_DATABASE}"
+      POSTGRES_DATABASE: "${DATABASE_CONNECTION}"
     ports:
       - 5432:5432
     volumes:

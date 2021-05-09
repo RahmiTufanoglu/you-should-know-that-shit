@@ -6,6 +6,8 @@ import {
   Param,
   Patch,
   Post,
+  Req,
+  Res,
   UploadedFile,
   UseGuards,
   UseInterceptors,
@@ -36,9 +38,10 @@ export class FactsController {
                @UploadedFile() file: Express.Multer.File,
   ): Promise<any> {
     const fact = await this.factsService.create(createFactDto);
+    console.log('Image', file);
     return {
       fact,
-      file: file.buffer.toString(),
+      file: file?.buffer.toString(),
     };
   }
 
@@ -53,7 +56,7 @@ export class FactsController {
 
   @ApiOkResponse({ type: Fact })
   @ApiNotFoundResponse()
-  @ApiOperation({ summary: 'Find a user with a specific id' })
+  @ApiOperation({ summary: 'Find a fact with a specific id' })
   @UseGuards(JwtAuthGuard)
   @UsePipes(ValidationPipe)
   @Get(':id')
@@ -61,7 +64,25 @@ export class FactsController {
     return this.factsService.findById(id);
   }
 
-  @ApiOperation({ summary: 'Edit a user with a specific id' })
+  @ApiOkResponse({ type: Fact })
+  @ApiNotFoundResponse()
+  @ApiOperation({ summary: 'Find a random true and false fact' })
+  @UseGuards(JwtAuthGuard)
+  @UsePipes(ValidationPipe)
+  @Get('vs')
+  async findOneTrueAndFalse(@Req() req): Promise<Fact[]> {
+    console.log(req);
+    return this.factsService.findOneTrueAndFalse();
+  }
+
+  @Get('foo')
+  async foo(@Res() res): Promise<any> {
+    return res.json({
+      message: 'FOO fjksehnfwefwebnfownefi',
+    });
+  }
+
+  @ApiOperation({ summary: 'Edit a fact with a specific id' })
   @UseGuards(JwtAuthGuard)
   @UsePipes(ValidationPipe)
   @Patch(':id')

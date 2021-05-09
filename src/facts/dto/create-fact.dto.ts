@@ -17,4 +17,7 @@ export class CreateFactDto {
   @ApiModelProperty()
   readonly createdDate: Date;
 
+  @ApiModelProperty()
+  readonly categoryId: string;
+
 }
