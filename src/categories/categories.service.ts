@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
 import { CreateCategoryDto } from './dto/create-category.dto';
 import { UpdateCategoryDto } from './dto/update-category.dto';
 import { InjectRepository } from '@nestjs/typeorm';
@@ -15,8 +15,16 @@ export class CategoriesService {
   }
 
   async create(createCategoryDto: CreateCategoryDto): Promise<Category> {
+    const { category } = createCategoryDto;
+
+    const foundCategory = await this.categoryRepository.findOne({ category });
+
+    if (foundCategory) {
+      throw new HttpException('Category exists', HttpStatus.UNPROCESSABLE_ENTITY);
+    }
+
     const newCategory = new Category();
-    newCategory.category = createCategoryDto.category;
+    Object.assign(newCategory, createCategoryDto);
     return this.categoryRepository.save(newCategory);
   }
 

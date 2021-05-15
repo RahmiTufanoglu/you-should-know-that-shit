@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
 import { CreateClaimDto } from './dto/create-claim.dto';
 import { UpdateClaimDto } from './dto/update-claim.dto';
 import { InjectRepository } from '@nestjs/typeorm';
@@ -16,8 +16,15 @@ export class ClaimsService {
   }
 
   async create(createClaimDto: CreateClaimDto): Promise<Claim> {
+    const { claim } = createClaimDto;
+    const foundClaim = await this.claimRepository.findOne({ claim });
+
+    if (foundClaim) {
+      throw new HttpException('Claim exists', HttpStatus.UNPROCESSABLE_ENTITY);
+    }
+
     const newClaim = new Claim();
-    newClaim.claim = createClaimDto.claim;
+    Object.assign(newClaim, createClaimDto);
     return this.claimRepository.save(newClaim);
   }
 

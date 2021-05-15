@@ -4,13 +4,13 @@ import { Injectable } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
 
 @Injectable()
-export class GoogleStrategy extends PassportStrategy(Strategy, 'google') {
+export class FacebookStrategy extends PassportStrategy(Strategy, 'facebook') {
 
   constructor(private configService: ConfigService) {
     super({
-      clientID: configService.get('GOOGLE_CLIENT_ID'),
-      clientSecret: configService.get('GOOGLE_SECRET'),
-      callbackURL: 'http://localhost:3000/api/auth/google/redirect',
+      clientID: configService.get('FACEBOOK_APP_ID'),
+      clientSecret: configService.get('FACEBOOK_APP_SECRET'),
+      callbackURL: 'http://localhost:3000/api/auth/facebook/redirect',
       scope: ['email', 'profile'],
     });
   }

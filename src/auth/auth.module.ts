@@ -7,6 +7,8 @@ import { UsersModule } from '../users/users.module';
 import { AuthService } from './auth.service';
 import { AuthController } from './auth.controller';
 import { ConfigService } from '@nestjs/config';
+import { GoogleStrategy } from './strategies/google.strategy';
+import { FacebookStrategy } from './strategies/facebook.strategy';
 
 @Module({
   imports: [
@@ -16,7 +18,7 @@ import { ConfigService } from '@nestjs/config';
       useFactory: async (configService: ConfigService) => ({
         secret: configService.get('JWT_SECRET'),
         signOptions: {
-          expiresIn: '3600s',
+          expiresIn: configService.get('TOKEN_EXPIRATION'),
         },
       }),
       inject: [ConfigService],
@@ -26,6 +28,8 @@ import { ConfigService } from '@nestjs/config';
     AuthService,
     LocalStrategy,
     JwtStrategy,
+    GoogleStrategy,
+    FacebookStrategy,
   ],
   exports: [
     AuthService,
