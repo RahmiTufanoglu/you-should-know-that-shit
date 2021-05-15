@@ -6,9 +6,8 @@ import {
   Param,
   Patch,
   Post,
-  Req,
-  Res,
   UploadedFile,
+  UseFilters,
   UseGuards,
   UseInterceptors,
   UsePipes,
@@ -22,8 +21,10 @@ import { UpdateFactDto } from './dto/update-fact.dto';
 import { JwtAuthGuard } from '../auth/guard/jwt-auth.guard';
 import { DeleteResult, UpdateResult } from 'typeorm';
 import { FileInterceptor } from '@nestjs/platform-express';
+import { HttpExceptionFilter } from '../filters/http-exception.filter';
 
 @ApiTags('facts')
+@UseGuards(JwtAuthGuard)
 @Controller('facts')
 export class FactsController {
 
@@ -32,6 +33,7 @@ export class FactsController {
 
   @ApiCreatedResponse({ type: Fact })
   @ApiOperation({ summary: 'Create a fact with an image' })
+  @UseFilters(HttpExceptionFilter)
   @UseInterceptors(FileInterceptor('file'))
   @Post()
   async create(@Body() createFactDto: CreateFactDto,
@@ -47,43 +49,29 @@ export class FactsController {
 
   @ApiOkResponse({ type: Fact, isArray: true })
   @ApiOperation({ summary: 'Show all users' })
-  @UseGuards(JwtAuthGuard)
   @UsePipes(ValidationPipe)
   @Get()
   async findAll(): Promise<Fact[]> {
     return this.factsService.findAll();
   }
 
+  @ApiOperation({ summary: 'Find a random true and false fact' })
+  @UsePipes(ValidationPipe)
+  @Get('vs')
+  async findOneTrueAndFalse(): Promise<{ trueFact, falseFact }> {
+    return this.factsService.findOneTrueAndFalse();
+  }
+
   @ApiOkResponse({ type: Fact })
   @ApiNotFoundResponse()
   @ApiOperation({ summary: 'Find a fact with a specific id' })
-  @UseGuards(JwtAuthGuard)
   @UsePipes(ValidationPipe)
   @Get(':id')
   async findById(@Param('id') id: number): Promise<Fact> {
     return this.factsService.findById(id);
   }
 
-  @ApiOkResponse({ type: Fact })
-  @ApiNotFoundResponse()
-  @ApiOperation({ summary: 'Find a random true and false fact' })
-  @UseGuards(JwtAuthGuard)
-  @UsePipes(ValidationPipe)
-  @Get('vs')
-  async findOneTrueAndFalse(@Req() req): Promise<Fact[]> {
-    console.log(req);
-    return this.factsService.findOneTrueAndFalse();
-  }
-
-  @Get('foo')
-  async foo(@Res() res): Promise<any> {
-    return res.json({
-      message: 'FOO fjksehnfwefwebnfownefi',
-    });
-  }
-
   @ApiOperation({ summary: 'Edit a fact with a specific id' })
-  @UseGuards(JwtAuthGuard)
   @UsePipes(ValidationPipe)
   @Patch(':id')
   async update(@Param('id') id: number, @Body() updateFactDto: UpdateFactDto): Promise<UpdateResult> {
@@ -91,7 +79,6 @@ export class FactsController {
   }
 
   @ApiOperation({ summary: 'Delete a user with a specific id' })
-  @UseGuards(JwtAuthGuard)
   @UsePipes(ValidationPipe)
   @Delete(':id')
   async remove(@Param('id') id: number): Promise<DeleteResult> {

@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
 import { CreateUserDto } from './dto/create-user.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
 import { User } from './entities/user.entity';
@@ -16,18 +16,24 @@ export class UsersService {
   }
 
   async create(createUserDto: CreateUserDto): Promise<User> {
-    const { email, password, username, firstname, lastname, highscore } = createUserDto;
+    const { email, username } = createUserDto;
+    const userByEmail = await this.userRepository.findOne({ email });
+    const userByUsername = await this.userRepository.findOne({ username });
+
+    if (userByEmail) {
+      throw new HttpException('Email exists', HttpStatus.UNPROCESSABLE_ENTITY);
+    }
+
+    if (userByUsername) {
+      throw new HttpException('Username exists', HttpStatus.UNPROCESSABLE_ENTITY);
+    }
+
     const newUser = new User();
-    newUser.email = email;
-    newUser.password = password;
-    newUser.username = username ?? null;
-    newUser.firstname = firstname ?? null;
-    newUser.lastname = lastname ?? null;
-    newUser.highscore = highscore ?? null;
+    Object.assign(newUser, createUserDto);
     return this.userRepository.save(newUser);
   }
 
-  findAll(): Promise<User[]> {
+  async findAll(): Promise<User[]> {
     return this.userRepository.find();
   }
 
@@ -40,12 +46,6 @@ export class UsersService {
       return this.userRepository.update(id, updateUserDto);
     }
   }
-
-  // async updateFull(id: number, updateUserDto: UpdateUserDto): Promise<UpdateResult> {
-  //   if (!!await this.getUserById(id)) {
-  //     return this.userRepository.update(id, this.getUser(new User, updateUserDto));
-  //   }
-  // }
 
   async remove(id: number): Promise<DeleteResult> {
     if (!!await this.getUserById(id)) {

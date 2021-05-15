@@ -8,7 +8,17 @@ import { ClaimsModule } from './claims/claims.module';
 import { CategoriesModule } from './categories/categories.module';
 import { ConfigModule, ConfigService } from '@nestjs/config';
 import { TypeOrmModule } from '@nestjs/typeorm';
+import ormconfig from './ormconfig';
 import { ThrottlerModule } from '@nestjs/throttler';
+
+//TODO
+// let envFile = '.env.development';
+//
+// if (process.env.ENIRONMENT === 'PRODUCTION') {
+//   envFile = '.env.production';
+// } else if (process.env.ENVIRONMENT === 'TEST') {
+//   envFile = '.env.test';
+// }
 
 @Module({
   imports: [
@@ -19,18 +29,10 @@ import { ThrottlerModule } from '@nestjs/throttler';
     TypeOrmModule.forRootAsync({
       imports: [ConfigModule],
       inject: [ConfigService],
-      useFactory: (configService: ConfigService) => ({
-        type: 'postgres',
-        host: configService.get('DATABASE_HOST'),
-        port: configService.get('DATABASE_PORT'),
-        username: configService.get('DATABASE_USERNAME'),
-        password: configService.get('DATABASE_PASSWORD'),
-        database: configService.get('DATABASE_NAME'),
-        synchronize: false,
+      useFactory: () => ({
+        ...ormconfig,
         retryDelay: 3000,
         retryAttempts: 5,
-        entities: ['dist/**/*.entity.js'],
-        migrationsRun: false,
       }),
     }),
     ThrottlerModule.forRootAsync({
@@ -54,5 +56,6 @@ import { ThrottlerModule } from '@nestjs/throttler';
     AppService,
   ],
 })
+
 export class AppModule {
 }

@@ -20,7 +20,7 @@ export class CategoriesService {
     return this.categoryRepository.save(newCategory);
   }
 
-  findAll(): Promise<Category[]> {
+  async findAll(): Promise<Category[]> {
     return this.categoryRepository.find();
   }
 

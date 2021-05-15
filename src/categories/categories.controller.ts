@@ -10,6 +10,7 @@ import { SETTINGS } from '../app.utils';
 import { DeleteResult, UpdateResult } from 'typeorm';
 
 @Controller('categories')
+@UseGuards(JwtAuthGuard)
 export class CategoriesController {
 
   constructor(private readonly categoriesService: CategoriesService) {
@@ -22,7 +23,6 @@ export class CategoriesController {
   }
 
   @ApiOkResponse({ type: Claim, isArray: true })
-  @UseGuards(JwtAuthGuard)
   @UsePipes(ValidationPipe)
   @Get()
   async findAll(): Promise<Category[]> {
@@ -31,21 +31,18 @@ export class CategoriesController {
 
   @ApiOkResponse({ type: Category })
   @ApiNotFoundResponse()
-  @UseGuards(JwtAuthGuard)
   @UsePipes(ValidationPipe)
   @Get(':id')
   async findById(@Param('id') id: number): Promise<Category> {
     return this.categoriesService.findById(id);
   }
 
-  @UseGuards(JwtAuthGuard)
   @UsePipes(ValidationPipe)
   @Put(':id')
   async update(@Param('id') id: number, @Body() updateClaimDto: UpdateClaimDto): Promise<UpdateResult> {
     return this.categoriesService.update(id, updateClaimDto);
   }
 
-  @UseGuards(JwtAuthGuard)
   @UsePipes(ValidationPipe)
   @Delete(':id')
   async remove(@Param('id') id: number): Promise<DeleteResult> {

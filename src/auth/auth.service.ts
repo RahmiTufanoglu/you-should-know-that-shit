@@ -17,14 +17,14 @@ export class AuthService {
     const user = await this.usersService.findByEmail(email);
     const isMatch = await bcrypt.compare(pass, user.password);
     if (user && isMatch) {
-      const { password, ...result } = user;
+      const { password, username, ...result } = user;
       return result;
     }
     return null;
   }
 
-  async login({ id, password }: User): Promise<{ access_token: string }> {
-    const payload = { id, password };
+  async login(user: User): Promise<{ access_token: string }> {
+    const payload = { username: user.username, sub: user.id };
     return {
       access_token: this.jwtService.sign(payload),
     };

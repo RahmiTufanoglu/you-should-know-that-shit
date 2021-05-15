@@ -21,11 +21,11 @@ export class ClaimsService {
     return this.claimRepository.save(newClaim);
   }
 
-  findAll(): Promise<Claim[]> {
+  async findAll(): Promise<Claim[]> {
     return this.claimRepository.find();
   }
 
-  findById(id: number): Promise<Claim> {
+  async findById(id: number): Promise<Claim> {
     return this.claimRepository.findOne(id);
   }
 

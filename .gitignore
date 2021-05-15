@@ -39,7 +39,7 @@ lerna-debug.log*
 .env.production
 
 # orm
-ormconfig.json
+foo-ormconfig.json
 
 # postgres
 /postgres_data

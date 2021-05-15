@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
 import { CreateFactDto } from './dto/create-fact.dto';
 import { UpdateFactDto } from './dto/update-fact.dto';
 import { InjectRepository } from '@nestjs/typeorm';
@@ -15,18 +15,40 @@ export class FactsService {
   ) {
   }
 
-  create(createFactDto: CreateFactDto): Promise<Fact> {
-    const { fact, isTrue, image, categoryId } = createFactDto;
+  async create(createFactDto: CreateFactDto): Promise<Fact> {
+    const { fact } = createFactDto;
+    const foundFact = await this.factRepository.findOne({ fact });
+
+    if (foundFact) {
+      throw new HttpException('Fact exists', HttpStatus.UNPROCESSABLE_ENTITY);
+    }
+
     const newFact = new Fact();
-    newFact.fact = fact;
-    newFact.isTrue = isTrue;
-    newFact.image = image ?? null;
-    newFact.categoryId = categoryId;
+    Object.assign(newFact, createFactDto);
     return this.factRepository.save(newFact);
   }
 
-  findAll(): Promise<Fact[]> {
+  async findAll(): Promise<Fact[]> {
     return this.factRepository.find();
+  }
+
+  async findOneTrueAndFalse(): Promise<{ trueFact: string, falseFact: string }> {
+    try {
+      const availableFacts = await this.findAll();
+      return {
+        trueFact: this.filterRandomFact(availableFacts, true),
+        falseFact: this.filterRandomFact(availableFacts, false),
+      };
+    } catch (err) {
+    }
+  }
+
+  filterRandomFact(availableFacts: Fact[], isFactTrue: boolean): string {
+    const facts = availableFacts
+      .filter(({ isTrue }: Fact) => isTrue === isFactTrue)
+      .map(({ fact }: Fact) => fact);
+
+    return facts[Math.floor(Math.random() * facts.length)];
   }
 
   async findById(id: number): Promise<Fact> {
@@ -45,29 +67,6 @@ export class FactsService {
     }
   }
 
-  async findOneTrueAndFalse(): Promise<Fact[]> {
-    try {
-      const availableFacts = await this.findAll();
-      const idFacts = availableFacts.map(({ id }: Fact) => id);
-
-      const factsLength = idFacts.length;
-
-      const randomTrueFact = idFacts[Math.floor(Math.random() * factsLength)];
-      let randomFalseFact = idFacts[Math.floor(Math.random() * factsLength)];
-
-      while (randomTrueFact === randomFalseFact) {
-        randomFalseFact = idFacts[Math.floor(Math.random() * factsLength)];
-      }
-
-      const trueAndFalseFact = [];
-      trueAndFalseFact.push(await this.factRepository.findOneOrFail(randomTrueFact));
-      trueAndFalseFact.push(await this.factRepository.findOneOrFail(randomFalseFact));
-
-      return trueAndFalseFact;
-    } catch (err) {
-      // throw new ObjectNotFoundException({ id });
-    }
-  }
 
   async getFactById(id: number): Promise<Fact> {
     try {

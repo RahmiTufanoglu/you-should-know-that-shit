@@ -9,6 +9,7 @@ import { DeleteResult, UpdateResult } from 'typeorm';
 import { SETTINGS } from '../app.utils';
 
 @Controller('claims')
+@UseGuards(JwtAuthGuard)
 export class ClaimsController {
 
   constructor(private readonly claimsService: ClaimsService) {
@@ -21,7 +22,6 @@ export class ClaimsController {
   }
 
   @ApiOkResponse({ type: Claim, isArray: true })
-  @UseGuards(JwtAuthGuard)
   @UsePipes(ValidationPipe)
   @Get()
   async findAll(): Promise<Claim[]> {
@@ -30,21 +30,18 @@ export class ClaimsController {
 
   @ApiOkResponse({ type: Claim })
   @ApiNotFoundResponse()
-  @UseGuards(JwtAuthGuard)
   @UsePipes(ValidationPipe)
   @Get(':id')
   async findById(@Param('id') id: number): Promise<Claim> {
     return this.claimsService.findById(id);
   }
 
-  @UseGuards(JwtAuthGuard)
   @UsePipes(ValidationPipe)
   @Put(':id')
   async update(@Param('id') id: number, @Body() updateClaimDto: UpdateClaimDto): Promise<UpdateResult> {
     return this.claimsService.update(id, updateClaimDto);
   }
 
-  @UseGuards(JwtAuthGuard)
   @UsePipes(ValidationPipe)
   @Delete(':id')
   async remove(@Param('id') id: number): Promise<DeleteResult> {
