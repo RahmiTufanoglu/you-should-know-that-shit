@@ -1,9 +1,9 @@
-import { BeforeInsert, BeforeUpdate, Column, CreateDateColumn, Entity, PrimaryGeneratedColumn, UpdateDateColumn } from 'typeorm';
+import { BeforeInsert, BeforeUpdate, Column, CreateDateColumn, Entity, PrimaryGeneratedColumn } from 'typeorm';
 import { ApiProperty } from '@nestjs/swagger';
 import * as bcrypt from 'bcrypt';
 
 @Entity({ name: 'users' })
-export class User {
+export class UserEntity {
 
   @ApiProperty()
   @PrimaryGeneratedColumn('uuid')
@@ -41,11 +41,11 @@ export class User {
   signedInWith: boolean;
 
   @ApiProperty()
-  @CreateDateColumn()
+  @CreateDateColumn({ nullable: false })
   createdAt: Date;
 
   @ApiProperty()
-  @UpdateDateColumn()
+  @CreateDateColumn({ nullable: false })
   updatedAt: Date;
 
   @BeforeInsert()
@@ -59,6 +59,11 @@ export class User {
   async hashPassword() {
     const salt = await bcrypt.genSalt(10);
     this.password = await bcrypt.hash(this.password, salt);
+  }
+
+  @BeforeUpdate()
+  updateTimestamp(): void {
+    this.updatedAt = new Date();
   }
 
 }

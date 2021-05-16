@@ -2,10 +2,10 @@ import { Body, Controller, Delete, Get, Param, Post, Put, UseGuards, UsePipes, V
 import { CategoriesService } from './categories.service';
 import { CreateCategoryDto } from './dto/create-category.dto';
 import { ApiCreatedResponse, ApiNotFoundResponse, ApiOkResponse } from '@nestjs/swagger';
-import { Claim } from '../claims/entities/claim.entity';
+import { Claim } from '../claims/claim.entity';
 import { JwtAuthGuard } from '../auth/guard/jwt-auth.guard';
 import { UpdateClaimDto } from '../claims/dto/update-claim.dto';
-import { Category } from './entities/category.entity';
+import { Category } from './category.entity';
 import { SETTINGS } from '../app.utils';
 import { DeleteResult, UpdateResult } from 'typeorm';
 

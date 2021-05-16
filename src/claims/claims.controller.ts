@@ -3,7 +3,7 @@ import { ClaimsService } from './claims.service';
 import { CreateClaimDto } from './dto/create-claim.dto';
 import { UpdateClaimDto } from './dto/update-claim.dto';
 import { ApiCreatedResponse, ApiNotFoundResponse, ApiOkResponse } from '@nestjs/swagger';
-import { Claim } from './entities/claim.entity';
+import { Claim } from './claim.entity';
 import { JwtAuthGuard } from '../auth/guard/jwt-auth.guard';
 import { DeleteResult, UpdateResult } from 'typeorm';
 import { SETTINGS } from '../app.utils';

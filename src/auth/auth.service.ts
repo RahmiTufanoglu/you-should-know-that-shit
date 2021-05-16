@@ -2,7 +2,7 @@ import { BadRequestException, HttpStatus, Injectable } from '@nestjs/common';
 import { UsersService } from '../users/users.service';
 import { JwtService } from '@nestjs/jwt';
 import * as bcrypt from 'bcrypt';
-import { User } from '../users/entities/user.entity';
+import { User } from '../users/user.interface';
 
 @Injectable()
 export class AuthService {
@@ -17,8 +17,8 @@ export class AuthService {
     const user = await this.usersService.findByEmail(email);
     const isMatch = await bcrypt.compare(pass, user.password);
     if (user && isMatch) {
-      const { password, ...result } = user;
-      return result;
+      const { password, ...rest } = user;
+      return rest;
     }
     return null;
   }

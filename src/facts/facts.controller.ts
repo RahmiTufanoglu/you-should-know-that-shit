@@ -15,14 +15,14 @@ import {
 } from '@nestjs/common';
 import { ApiCreatedResponse, ApiNotFoundResponse, ApiOkResponse, ApiOperation, ApiTags } from '@nestjs/swagger';
 import { FactsService } from './facts.service';
-import { Fact } from './entities/fact.entity';
+import { FactEnitity } from './fact.entity';
 import { CreateFactDto } from './dto/create-fact.dto';
 import { UpdateFactDto } from './dto/update-fact.dto';
 import { JwtAuthGuard } from '../auth/guard/jwt-auth.guard';
 import { DeleteResult, UpdateResult } from 'typeorm';
 import { FileInterceptor } from '@nestjs/platform-express';
 import { HttpExceptionFilter } from '../filters/http-exception.filter';
-import { FactWithoutSolution } from './facts-without-solution.model';
+import { Fact, FactWithoutIsCorrect } from './fact.model';
 
 @ApiTags('facts')
 @UseGuards(JwtAuthGuard)
@@ -32,7 +32,7 @@ export class FactsController {
   constructor(private readonly factsService: FactsService) {
   }
 
-  @ApiCreatedResponse({ type: Fact })
+  @ApiCreatedResponse({ type: FactEnitity })
   @ApiOperation({ summary: 'Create a fact with an image' })
   @UseFilters(HttpExceptionFilter)
   @UseInterceptors(FileInterceptor('file'))
@@ -48,23 +48,30 @@ export class FactsController {
     };
   }
 
-  @ApiOkResponse({ type: Fact, isArray: true })
-  @ApiOperation({ summary: 'Show all users' })
+  @ApiOkResponse({ type: FactEnitity, isArray: true })
+  @ApiOperation({ summary: 'Show all facts' })
   @UsePipes(ValidationPipe)
   @Get()
-  // async findAll(): Promise<Fact[]> {
-  async findAll(): Promise<FactWithoutSolution[]> {
+  async findAll(): Promise<Fact[]> {
     return this.factsService.findAll();
   }
 
-  // @ApiOperation({ summary: 'Find a random true and false fact' })
-  // @UsePipes(ValidationPipe)
-  // @Get('vs')
-  // async findOneTrueAndFalse(): Promise<{ trueFact, falseFact }> {
-  //   return this.factsService.findOneTrueAndFalse();
-  // }
+  @ApiOkResponse({ type: FactEnitity, isArray: true })
+  @ApiOperation({ summary: 'Show all facts without solutions' })
+  @UsePipes(ValidationPipe)
+  @Get()
+  async findAllWithoutSolution(): Promise<FactWithoutIsCorrect[]> {
+    return this.factsService.findAllWithoutSolution();
+  }
 
-  @ApiOkResponse({ type: Fact })
+  @ApiCreatedResponse({ type: FactEnitity })
+  @ApiOperation({ summary: 'Check if the selection is correct' })
+  @Post()
+  async checkIfCorrect(): Promise<any> {
+    return this.factsService.checkIfCorrect();
+  }
+
+  @ApiOkResponse({ type: FactEnitity })
   @ApiNotFoundResponse()
   @ApiOperation({ summary: 'Find a fact with a specific id' })
   @UsePipes(ValidationPipe)

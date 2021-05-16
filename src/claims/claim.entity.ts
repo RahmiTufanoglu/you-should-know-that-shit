@@ -1,5 +1,5 @@
 import { ApiProperty } from '@nestjs/swagger';
-import { Column, CreateDateColumn, Entity, PrimaryGeneratedColumn, UpdateDateColumn } from 'typeorm';
+import { BeforeUpdate, Column, CreateDateColumn, Entity, PrimaryGeneratedColumn } from 'typeorm';
 
 @Entity({ name: 'claims' })
 export class Claim {
@@ -16,7 +16,13 @@ export class Claim {
   @CreateDateColumn({ nullable: false })
   createdAt: Date;
 
-  @UpdateDateColumn()
+  @ApiProperty()
+  @CreateDateColumn({ nullable: false })
   updatedAt: Date;
+
+  @BeforeUpdate()
+  updateTimestamp(): void {
+    this.updatedAt = new Date();
+  }
 
 }

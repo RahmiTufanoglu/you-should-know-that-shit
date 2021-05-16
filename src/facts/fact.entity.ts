@@ -1,9 +1,9 @@
-import { Column, CreateDateColumn, Entity, JoinColumn, ManyToOne, PrimaryGeneratedColumn, UpdateDateColumn } from 'typeorm';
+import { BeforeUpdate, Column, CreateDateColumn, Entity, JoinColumn, ManyToOne, PrimaryGeneratedColumn } from 'typeorm';
 import { ApiProperty } from '@nestjs/swagger';
-import { Category } from '../../categories/entities/category.entity';
+import { Category } from '../categories/category.entity';
 
 @Entity({ name: 'facts' })
-export class Fact {
+export class FactEnitity {
 
   @ApiProperty()
   @PrimaryGeneratedColumn('uuid')
@@ -28,12 +28,14 @@ export class Fact {
   image: string;
 
   @ApiProperty()
-  @CreateDateColumn()
+  @CreateDateColumn({ nullable: false })
   createdAt: Date;
 
-  @UpdateDateColumn()
+  @ApiProperty()
+  @CreateDateColumn({ nullable: false })
   updatedAt: Date;
 
+  @ApiProperty()
   @Column()
   categoryId: string;
 
@@ -43,5 +45,11 @@ export class Fact {
   )
   @JoinColumn({ name: 'categoryId' })
   category: Category;
+
+
+  @BeforeUpdate()
+  updateTimestamp(): void {
+    this.updatedAt = new Date();
+  }
 
 }

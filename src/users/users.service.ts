@@ -1,11 +1,12 @@
 import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
 import { CreateUserDto } from './dto/create-user.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
-import { User } from './entities/user.entity';
+import { UserEntity } from './user.entity';
 import { InjectRepository } from '@nestjs/typeorm';
 import { DeleteResult, Repository, UpdateResult } from 'typeorm';
 import { ObjectNotFoundException } from '../exceptions/object-not-found-exception';
 import { SocialUserDto } from './dto/social-user.dto';
+import { User } from './user.interface';
 
 @Injectable()
 export class UsersService {
@@ -13,8 +14,8 @@ export class UsersService {
   selectArr = ['id', 'createdAt', 'username', 'firstname', 'lastname', 'email', 'password', 'highscore', 'signedInWith'];
 
   constructor(
-    @InjectRepository(User)
-    private readonly userRepository: Repository<User>,
+    @InjectRepository(UserEntity)
+    private readonly userRepository: Repository<UserEntity>,
   ) {
   }
 
@@ -26,7 +27,7 @@ export class UsersService {
       throw new HttpException('Email exists', HttpStatus.UNPROCESSABLE_ENTITY);
     }
 
-    const newUser = new User();
+    const newUser = new UserEntity();
     Object.assign(newUser, createUserDto);
     return this.userRepository.save(newUser);
   }

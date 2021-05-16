@@ -3,7 +3,7 @@ import { CreateClaimDto } from './dto/create-claim.dto';
 import { UpdateClaimDto } from './dto/update-claim.dto';
 import { InjectRepository } from '@nestjs/typeorm';
 import { DeleteResult, Repository, UpdateResult } from 'typeorm';
-import { Claim } from './entities/claim.entity';
+import { Claim } from './claim.entity';
 import { ObjectNotFoundException } from '../exceptions/object-not-found-exception';
 
 @Injectable()

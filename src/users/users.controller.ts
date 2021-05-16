@@ -2,11 +2,12 @@ import { Body, Controller, Delete, Get, Param, Patch, Post, UseGuards } from '@n
 import { UsersService } from './users.service';
 import { UpdateUserDto } from './dto/update-user.dto';
 import { ApiCreatedResponse, ApiNotFoundResponse, ApiOkResponse } from '@nestjs/swagger';
-import { User } from './entities/user.entity';
+import { UserEntity } from './user.entity';
 import { JwtAuthGuard } from '../auth/guard/jwt-auth.guard';
 import { CreateUserDto } from './dto/create-user.dto';
 import { SETTINGS } from '../app.utils';
 import { DeleteResult, UpdateResult } from 'typeorm';
+import { User } from './user.interface';
 
 @Controller('users')
 export class UsersController {
@@ -14,20 +15,20 @@ export class UsersController {
   constructor(private readonly usersService: UsersService) {
   }
 
-  @ApiCreatedResponse({ type: User })
+  @ApiCreatedResponse({ type: UserEntity })
   @Post()
   async create(@Body(SETTINGS.VALIDATION_PIPE) createUserDto: CreateUserDto): Promise<User> {
     return this.usersService.create(createUserDto);
   }
 
-  @ApiOkResponse({ type: User, isArray: true })
+  @ApiOkResponse({ type: UserEntity, isArray: true })
   @UseGuards(JwtAuthGuard)
   @Get()
   async findAll(): Promise<User[]> {
     return this.usersService.findAll();
   }
 
-  @ApiOkResponse({ type: User })
+  @ApiOkResponse({ type: UserEntity })
   @ApiNotFoundResponse()
   @UseGuards(JwtAuthGuard)
   @Get(':id')
@@ -47,7 +48,7 @@ export class UsersController {
     return this.usersService.remove(id);
   }
 
-  @ApiCreatedResponse({ type: User })
+  @ApiCreatedResponse({ type: UserEntity })
   @ApiNotFoundResponse()
   @UseGuards(JwtAuthGuard)
   @Get()
@@ -55,7 +56,7 @@ export class UsersController {
     return this.usersService.findByEmail(email);
   }
 
-  @ApiCreatedResponse({ type: User })
+  @ApiCreatedResponse({ type: UserEntity })
   @ApiNotFoundResponse()
   @UseGuards(JwtAuthGuard)
   @Get()
