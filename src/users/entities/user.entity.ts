@@ -14,7 +14,7 @@ export class User {
   email: string;
 
   @ApiProperty({ required: true })
-  @Column({ select: false })
+  @Column({ select: false, nullable: true })
   password: string;
 
   @ApiProperty({
@@ -37,9 +37,14 @@ export class User {
   highscore: number;
 
   @ApiProperty()
+  @Column({ nullable: true, default: false })
+  signedInWith: boolean;
+
+  @ApiProperty()
   @CreateDateColumn()
   createdAt: Date;
 
+  @ApiProperty()
   @UpdateDateColumn()
   updatedAt: Date;
 

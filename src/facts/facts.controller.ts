@@ -22,6 +22,7 @@ import { JwtAuthGuard } from '../auth/guard/jwt-auth.guard';
 import { DeleteResult, UpdateResult } from 'typeorm';
 import { FileInterceptor } from '@nestjs/platform-express';
 import { HttpExceptionFilter } from '../filters/http-exception.filter';
+import { FactWithoutSolution } from './facts-without-solution.model';
 
 @ApiTags('facts')
 @UseGuards(JwtAuthGuard)
@@ -51,16 +52,17 @@ export class FactsController {
   @ApiOperation({ summary: 'Show all users' })
   @UsePipes(ValidationPipe)
   @Get()
-  async findAll(): Promise<Fact[]> {
+  // async findAll(): Promise<Fact[]> {
+  async findAll(): Promise<FactWithoutSolution[]> {
     return this.factsService.findAll();
   }
 
-  @ApiOperation({ summary: 'Find a random true and false fact' })
-  @UsePipes(ValidationPipe)
-  @Get('vs')
-  async findOneTrueAndFalse(): Promise<{ trueFact, falseFact }> {
-    return this.factsService.findOneTrueAndFalse();
-  }
+  // @ApiOperation({ summary: 'Find a random true and false fact' })
+  // @UsePipes(ValidationPipe)
+  // @Get('vs')
+  // async findOneTrueAndFalse(): Promise<{ trueFact, falseFact }> {
+  //   return this.factsService.findOneTrueAndFalse();
+  // }
 
   @ApiOkResponse({ type: Fact })
   @ApiNotFoundResponse()

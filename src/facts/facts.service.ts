@@ -5,6 +5,7 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { DeleteResult, Repository, UpdateResult } from 'typeorm';
 import { Fact } from './entities/fact.entity';
 import { ObjectNotFoundException } from '../exceptions/object-not-found-exception';
+import { FactWithoutSolution } from './facts-without-solution.model';
 
 @Injectable()
 export class FactsService {
@@ -28,20 +29,24 @@ export class FactsService {
     return this.factRepository.save(newFact);
   }
 
-  async findAll(): Promise<Fact[]> {
-    return this.factRepository.find();
+  // async findAll(): Promise<Fact[]> {
+  async findAll(): Promise<FactWithoutSolution[]> {
+    // return this.factRepository.find();
+    const facts = await this.factRepository.find();
+    return facts.map(({ isTrue, ...rest }: Fact) => rest);
   }
 
-  async findOneTrueAndFalse(): Promise<{ trueFact: string, falseFact: string }> {
-    try {
-      const availableFacts = await this.findAll();
-      return {
-        trueFact: this.filterRandomFact(availableFacts, true),
-        falseFact: this.filterRandomFact(availableFacts, false),
-      };
-    } catch (err) {
-    }
-  }
+  //TODO
+  // async findOneTrueAndFalse(): Promise<{ trueFact: string, falseFact: string }> {
+  //   try {
+  //     const availableFacts = await this.findAll();
+  //     return {
+  //       trueFact: this.filterRandomFact(availableFacts, true),
+  //       falseFact: this.filterRandomFact(availableFacts, false),
+  //     };
+  //   } catch (err) {
+  //   }
+  // }
 
   filterRandomFact(availableFacts: Fact[], isFactTrue: boolean): string {
     const facts = availableFacts

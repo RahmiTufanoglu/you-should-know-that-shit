@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { BadRequestException, HttpStatus, Injectable } from '@nestjs/common';
 import { UsersService } from '../users/users.service';
 import { JwtService } from '@nestjs/jwt';
 import * as bcrypt from 'bcrypt';
@@ -17,7 +17,7 @@ export class AuthService {
     const user = await this.usersService.findByEmail(email);
     const isMatch = await bcrypt.compare(pass, user.password);
     if (user && isMatch) {
-      const { password, username, ...result } = user;
+      const { password, ...result } = user;
       return result;
     }
     return null;
@@ -30,15 +30,24 @@ export class AuthService {
     };
   }
 
-  // googleLogin(req): any {
-  //   if (!req.user) {
-  //     return 'No user from google';
-  //   }
-  //
-  //   return {
-  //     message: 'User information from google',
-  //     user: req.user,
-  //   };
-  // }
+  async signInWith(req: any) {
+    if (!req.user) {
+      throw new BadRequestException();
+    }
+
+    const email = await this.usersService.findByEmail(req.user.email, true);
+    if (!email) {
+      const user = {
+        ...req.user,
+        signedInWithSocialMedia: true,
+      };
+      await this.usersService.createSocial(user);
+    }
+
+    return {
+      statusCode: HttpStatus.OK,
+      data: req.user,
+    };
+  }
 
 }

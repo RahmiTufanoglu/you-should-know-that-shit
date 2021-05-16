@@ -28,26 +28,26 @@ export class AuthController {
 
   @UseGuards(AuthGuard('google'))
   @Get('google')
-  async googleAuth(): Promise<HttpStatus> {
+  async signInWithGoogle(): Promise<HttpStatus> {
     return HttpStatus.OK;
   }
 
   @UseGuards(AuthGuard('google'))
   @Get('google/redirect')
-  async googleAuthRedirect(@Req() req: ExpressRequest): Promise<LoginWithResponseData> {
-    return this.responseData(HttpStatus.OK, req.user);
+  async signInWithGoogleRedirect(@Req() req: ExpressRequest): Promise<LoginWithResponseData> {
+    return this.authService.signInWith(req);
   }
 
   @UseGuards(AuthGuard('facebook'))
   @Get('facebook')
-  async facebookLogin(): Promise<HttpStatus> {
+  async signInWithFacebook(): Promise<HttpStatus> {
     return HttpStatus.OK;
   }
 
   @UseGuards(AuthGuard('facebook'))
   @Get('facebook/redirect')
-  async facebookAuthRedirect(@Req() req: ExpressRequest): Promise<LoginWithResponseData> {
-    return this.responseData(HttpStatus.OK, req.user);
+  async signInWithFacebookRedirect(@Req() req: ExpressRequest): Promise<LoginWithResponseData> {
+    return this.authService.signInWith(req);
   }
 
   responseData(statusCode: HttpStatus, data: Express.User): LoginWithResponseData {

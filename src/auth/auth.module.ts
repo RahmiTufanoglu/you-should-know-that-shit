@@ -9,6 +9,8 @@ import { AuthController } from './auth.controller';
 import { ConfigService } from '@nestjs/config';
 import { GoogleStrategy } from './strategies/google.strategy';
 import { FacebookStrategy } from './strategies/facebook.strategy';
+import { TypeOrmModule } from '@nestjs/typeorm';
+import { User } from '../users/entities/user.entity';
 
 @Module({
   imports: [
@@ -23,6 +25,7 @@ import { FacebookStrategy } from './strategies/facebook.strategy';
       }),
       inject: [ConfigService],
     }),
+    TypeOrmModule.forFeature([User]),
   ],
   providers: [
     AuthService,
