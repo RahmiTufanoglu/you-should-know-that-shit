@@ -3,7 +3,7 @@ version: '3.8'
 services:
 
   api:
-    container_name: truthy-vs-falsy_api
+    container_name: nest_api
     image: rahmi-tufanoglu/truthy-vs-falsy-api
     restart: always
     build:
@@ -30,3 +30,12 @@ services:
       - 5436:5432
     volumes:
       - ./postgres_data:/var/lib/postgresql
+
+
+# lokal:dienst
+#ports:
+#  - 8080:3000
+
+
+# Container bei Bedarf neu starten
+#restart:always

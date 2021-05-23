@@ -2,7 +2,7 @@ import { ApiProperty } from '@nestjs/swagger';
 import { BeforeUpdate, Column, CreateDateColumn, Entity, PrimaryGeneratedColumn } from 'typeorm';
 
 @Entity({ name: 'claims' })
-export class Claim {
+export class ClaimEntity {
 
   @ApiProperty()
   @PrimaryGeneratedColumn('uuid')

@@ -2,12 +2,13 @@ import { Body, Controller, Delete, Get, Param, Post, Put, UseGuards, UsePipes, V
 import { CategoriesService } from './categories.service';
 import { CreateCategoryDto } from './dto/create-category.dto';
 import { ApiCreatedResponse, ApiNotFoundResponse, ApiOkResponse } from '@nestjs/swagger';
-import { Claim } from '../claims/claim.entity';
+import { ClaimEntity } from '../claims/entities/claim.entity';
 import { JwtAuthGuard } from '../auth/guard/jwt-auth.guard';
 import { UpdateClaimDto } from '../claims/dto/update-claim.dto';
-import { Category } from './category.entity';
+import { CategoryEntity } from './entities/category.entity';
 import { SETTINGS } from '../app.utils';
 import { DeleteResult, UpdateResult } from 'typeorm';
+// import { Category } from './interfaces/category.interface';
 
 @Controller('categories')
 @UseGuards(JwtAuthGuard)
@@ -16,30 +17,33 @@ export class CategoriesController {
   constructor(private readonly categoriesService: CategoriesService) {
   }
 
-  @ApiCreatedResponse({ type: Category })
+  @ApiCreatedResponse({ type: CategoryEntity })
   @Post()
-  async create(@Body(SETTINGS.VALIDATION_PIPE) createCategoryDto: CreateCategoryDto): Promise<Category> {
+  async create(@Body(SETTINGS.VALIDATION_PIPE) createCategoryDto: CreateCategoryDto): Promise<CategoryEntity> {
     return this.categoriesService.create(createCategoryDto);
   }
 
-  @ApiOkResponse({ type: Claim, isArray: true })
+  @ApiOkResponse({ type: ClaimEntity, isArray: true })
   @UsePipes(ValidationPipe)
   @Get()
-  async findAll(): Promise<Category[]> {
+  async findAll(): Promise<CategoryEntity[]> {
     return this.categoriesService.findAll();
   }
 
-  @ApiOkResponse({ type: Category })
+  @ApiOkResponse({ type: CategoryEntity })
   @ApiNotFoundResponse()
   @UsePipes(ValidationPipe)
   @Get(':id')
-  async findById(@Param('id') id: number): Promise<Category> {
+  async findById(@Param('id') id: number): Promise<CategoryEntity> {
     return this.categoriesService.findById(id);
   }
 
   @UsePipes(ValidationPipe)
   @Put(':id')
-  async update(@Param('id') id: number, @Body() updateClaimDto: UpdateClaimDto): Promise<UpdateResult> {
+  async update(
+    @Param('id') id: number,
+    @Body() updateClaimDto: UpdateClaimDto,
+  ): Promise<UpdateResult> {
     return this.categoriesService.update(id, updateClaimDto);
   }
 

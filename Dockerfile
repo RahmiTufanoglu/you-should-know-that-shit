@@ -22,4 +22,5 @@ RUN npm run build
 EXPOSE 8080
 
 # Start the appo
-CMD ["npm", "run", "start:dev"]
+#CMD ["npm", "run", "start:dev"]
+CMD ["node", "dist/main"]

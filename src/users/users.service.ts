@@ -1,12 +1,12 @@
 import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
 import { CreateUserDto } from './dto/create-user.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
-import { UserEntity } from './user.entity';
+import { UserEntity } from './entities/user.entity';
 import { InjectRepository } from '@nestjs/typeorm';
 import { DeleteResult, Repository, UpdateResult } from 'typeorm';
 import { ObjectNotFoundException } from '../exceptions/object-not-found-exception';
 import { SocialUserDto } from './dto/social-user.dto';
-import { User } from './user.interface';
+// import { User } from './interfaces/user.interface';
 
 @Injectable()
 export class UsersService {
@@ -19,7 +19,7 @@ export class UsersService {
   ) {
   }
 
-  async create(createUserDto: CreateUserDto): Promise<User> {
+  async create(createUserDto: CreateUserDto): Promise<UserEntity> {
     const { email } = createUserDto;
     const userByEmail = await this.userRepository.findOne({ email });
 
@@ -32,7 +32,7 @@ export class UsersService {
     return this.userRepository.save(newUser);
   }
 
-  async createSocial(socialUserDto: SocialUserDto): Promise<User> {
+  async createSocial(socialUserDto: SocialUserDto): Promise<UserEntity> {
     const { email } = socialUserDto;
     const userByEmail = await this.userRepository.findOne({ email });
 
@@ -43,11 +43,11 @@ export class UsersService {
     return this.userRepository.save(socialUserDto);
   }
 
-  async findAll(): Promise<User[]> {
+  async findAll(): Promise<UserEntity[]> {
     return this.userRepository.find();
   }
 
-  async findById(id: number): Promise<User> {
+  async findById(id: number): Promise<UserEntity> {
     return this.getUserById(id);
   }
 
@@ -63,7 +63,7 @@ export class UsersService {
     }
   }
 
-  async getUserById(id: number): Promise<User> {
+  async getUserById(id: number): Promise<UserEntity> {
     try {
       return await this.userRepository.findOneOrFail(id);
     } catch (err) {
@@ -71,7 +71,7 @@ export class UsersService {
     }
   }
 
-  async findByEmail(email: string, isSignedInWith?: boolean): Promise<User> {
+  async findByEmail(email: string, isSignedInWith?: boolean): Promise<UserEntity> {
     if (!isSignedInWith) {
       try {
         return await this.userRepository.findOneOrFail(
@@ -86,7 +86,7 @@ export class UsersService {
     }
   }
 
-  async findByUsername(username: string): Promise<User> {
+  async findByUsername(username: string): Promise<UserEntity> {
     try {
       return await this.userRepository.findOneOrFail(
         { username },

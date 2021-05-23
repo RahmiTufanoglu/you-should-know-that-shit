@@ -3,9 +3,10 @@ import { CreateFactDto } from './dto/create-fact.dto';
 import { UpdateFactDto } from './dto/update-fact.dto';
 import { InjectRepository } from '@nestjs/typeorm';
 import { DeleteResult, Repository, UpdateResult } from 'typeorm';
-import { FactEnitity } from './fact.entity';
+import { FactEnitity } from './entities/fact.entity';
+// import { Fact, FactWithoutIsCorrect } from './interfaces/fact.interface';
 import { ObjectNotFoundException } from '../exceptions/object-not-found-exception';
-import { Fact, FactWithoutIsCorrect } from './fact.model';
+import { FactType } from './types/fact.type';
 
 @Injectable()
 export class FactsService {
@@ -16,7 +17,15 @@ export class FactsService {
   ) {
   }
 
-  async create(createFactDto: CreateFactDto): Promise<Fact> {
+  private static shuffle(facts: FactEnitity[]): FactEnitity[] {
+    for (let i = facts.length - 1; i > 0; i--) {
+      const j = Math.floor(Math.random() * (i + 1));
+      [facts[i], facts[j]] = [facts[j], facts[i]];
+    }
+    return facts;
+  }
+
+  async create(createFactDto: CreateFactDto): Promise<FactEnitity> {
     const { fact } = createFactDto;
     const foundFact = await this.factRepository.findOne({ fact });
 
@@ -24,35 +33,36 @@ export class FactsService {
       throw new HttpException('Fact exists', HttpStatus.UNPROCESSABLE_ENTITY);
     }
 
-    const newFact: Fact = new FactEnitity();
-    Object.assign(newFact, newFact);
+    const newFact = new FactEnitity();
+    Object.assign(newFact, createFactDto);
     return this.factRepository.save(newFact);
   }
 
-  async findAll(): Promise<Fact[]> {
+  async findAll(): Promise<FactEnitity[]> {
     return this.factRepository.find();
   }
 
-  async findAllWithoutSolution(): Promise<FactWithoutIsCorrect[]> {
+  async findAllWithoutSolution(): Promise<FactType[]> {
     const facts = await this.factRepository.find();
-    const shuffledFacts = this.shuffle(facts);
-    return shuffledFacts.map(({ isTrue, ...rest }: Fact) => rest);
+    const shuffledFacts = FactsService.shuffle(facts);
+    return shuffledFacts.map(({ isTrue, ...rest }: FactEnitity) => rest);
   }
 
-  filterRandomFact(availableFacts: Fact[], isFactTrue: boolean): string {
-    const facts = availableFacts
-      .filter(({ isTrue }: Fact) => isTrue === isFactTrue)
-      .map(({ fact }: Fact) => fact);
+  async filterRandom(): Promise<FactEnitity> {
+    const facts = await this.factRepository.find();
+    facts
+      .filter(({ isTrue }: FactEnitity) => isTrue)
+      .forEach(({ fact }: FactEnitity) => fact);
 
     return facts[Math.floor(Math.random() * facts.length)];
   }
 
-  // TODO
-  async checkIfCorrect(): Promise<any> {
-    return false;
+  async checkIfCorrect(factId: number): Promise<boolean> {
+    const fact = await this.getFactById(factId);
+    return fact.isTrue;
   }
 
-  async findById(id: number): Promise<Fact> {
+  async findById(id: number): Promise<FactEnitity> {
     return this.getFactById(id);
   }
 
@@ -68,20 +78,12 @@ export class FactsService {
     }
   }
 
-  async getFactById(id: number): Promise<Fact> {
+  async getFactById(id: number): Promise<FactEnitity> {
     try {
       return await this.factRepository.findOneOrFail(id);
     } catch (err) {
       throw new ObjectNotFoundException({ id });
     }
-  }
-
-  private shuffle(facts: Fact[]): Fact[] {
-    for (let i = facts.length - 1; i > 0; i--) {
-      const j = Math.floor(Math.random() * (i + 1));
-      [facts[i], facts[j]] = [facts[j], facts[i]];
-    }
-    return facts;
   }
 
 }

@@ -3,7 +3,7 @@ import { FactsService } from './facts.service';
 import { FactsController } from './facts.controller';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { MulterModule } from '@nestjs/platform-express';
-import { FactEnitity } from './fact.entity';
+import { FactEnitity } from './entities/fact.entity';
 import { ConfigModule, ConfigService } from '@nestjs/config';
 import { extname } from 'path';
 

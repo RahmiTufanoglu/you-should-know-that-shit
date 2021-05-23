@@ -11,26 +11,21 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 import ormconfig from './ormconfig';
 import { ThrottlerModule } from '@nestjs/throttler';
 
-//TODO
-// let envFile = '.env.development';
-//
-// if (process.env.ENIRONMENT === 'PRODUCTION') {
-//   envFile = '.env.production';
-// } else if (process.env.ENVIRONMENT === 'TEST') {
-//   envFile = '.env.test';
-// }
+const ENV = process.env.NODE_ENV;
 
 @Module({
   imports: [
     ConfigModule.forRoot({
       isGlobal: true,
-      envFilePath: ['.env.development', '.env.production'],
+      envFilePath: !ENV ? '.env' : `.env.${ENV}`,
+      // envFilePath: ['.env.development', '.env.production'],
     }),
     TypeOrmModule.forRootAsync({
       imports: [ConfigModule],
       inject: [ConfigService],
       useFactory: () => ({
         ...ormconfig,
+        autoLoadEntities: true, // ???
         retryDelay: 3000,
         retryAttempts: 5,
       }),
