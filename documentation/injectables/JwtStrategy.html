@@ -132,7 +132,7 @@
             <tr>
                 <td class="col-md-4">
                     <span class="modifier-icon icon ion-ios-reset"></span>
-                    <code>validate(undefined: <a href="../classes/User.html">User</a>)</code>
+                    <code>validate(undefined: <a href="../classes/User.html">UserEntity</a>)</code>
                 </td>
             </tr>
 
@@ -161,7 +161,7 @@
                             <tbody>
                                 <tr>
                                     <td>
-                                                <code><a href="../classes/User.html" target="_self" >User</a></code>
+                                                <code><a href="../classes/User.html" target="_self" >UserEntity</a></code>
                                     </td>
 
                                     <td>
@@ -195,7 +195,7 @@
         <pre class="line-numbers compodoc-sourcecode"><code class="language-typescript">import { ExtractJwt, Strategy } from &#x27;passport-jwt&#x27;;
 import { PassportStrategy } from &#x27;@nestjs/passport&#x27;;
 import { Injectable } from &#x27;@nestjs/common&#x27;;
-import { User } from &#x27;../../users/entities/user.entity&#x27;;
+import { UserEntity } from &#x27;../../users/entities/user.entity&#x27;;
 
 @Injectable()
 export class JwtStrategy extends PassportStrategy(Strategy) {
@@ -207,7 +207,7 @@ export class JwtStrategy extends PassportStrategy(Strategy) {
     });
   }
 
-  async validate({ id, email }: User): Promise&lt;{ id: string; email: string }&gt; {
+  async validate({ id, email }: UserEntity): Promise&lt;{ id: string; email: string }&gt; {
     return { id, email };
   }
 }

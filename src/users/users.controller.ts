@@ -2,12 +2,12 @@ import { Body, Controller, Delete, Get, Param, Patch, Post, UseGuards } from '@n
 import { UsersService } from './users.service';
 import { UpdateUserDto } from './dto/update-user.dto';
 import { ApiCreatedResponse, ApiNotFoundResponse, ApiOkResponse } from '@nestjs/swagger';
-import { UserEntity } from './entities/user.entity';
+import { User } from './entities/user';
 import { JwtAuthGuard } from '../auth/guard/jwt-auth.guard';
 import { CreateUserDto } from './dto/create-user.dto';
 import { SETTINGS } from '../app.utils';
 import { DeleteResult, UpdateResult } from 'typeorm';
-// import { User } from './interfaces/user.interface';
+// import { UserEntity } from './interfaces/user.interface';
 
 @Controller('users')
 export class UsersController {
@@ -15,24 +15,24 @@ export class UsersController {
   constructor(private readonly usersService: UsersService) {
   }
 
-  @ApiCreatedResponse({ type: UserEntity })
+  @ApiCreatedResponse({ type: User })
   @Post()
-  async create(@Body(SETTINGS.VALIDATION_PIPE) createUserDto: CreateUserDto): Promise<UserEntity> {
+  async create(@Body(SETTINGS.VALIDATION_PIPE) createUserDto: CreateUserDto): Promise<User> {
     return this.usersService.create(createUserDto);
   }
 
-  @ApiOkResponse({ type: UserEntity, isArray: true })
+  @ApiOkResponse({ type: User, isArray: true })
   @UseGuards(JwtAuthGuard)
   @Get()
-  async findAll(): Promise<UserEntity[]> {
+  async findAll(): Promise<User[]> {
     return this.usersService.findAll();
   }
 
-  @ApiOkResponse({ type: UserEntity })
+  @ApiOkResponse({ type: User })
   @ApiNotFoundResponse()
   @UseGuards(JwtAuthGuard)
   @Get(':id')
-  async findById(@Param('id') id: number): Promise<UserEntity> {
+  async findById(@Param('id') id: number): Promise<User> {
     return this.usersService.findById(id);
   }
 
@@ -48,19 +48,19 @@ export class UsersController {
     return this.usersService.remove(id);
   }
 
-  @ApiCreatedResponse({ type: UserEntity })
+  @ApiCreatedResponse({ type: User })
   @ApiNotFoundResponse()
   @UseGuards(JwtAuthGuard)
   @Get()
-  async findByEmail(@Param('email') email: string): Promise<UserEntity> {
+  async findByEmail(@Param('email') email: string): Promise<User> {
     return this.usersService.findByEmail(email);
   }
 
-  @ApiCreatedResponse({ type: UserEntity })
+  @ApiCreatedResponse({ type: User })
   @ApiNotFoundResponse()
   @UseGuards(JwtAuthGuard)
   @Get()
-  async findByUsername(@Param('username') username: string): Promise<UserEntity> {
+  async findByUsername(@Param('username') username: string): Promise<User> {
     return this.usersService.findByUsername(username);
   }
 

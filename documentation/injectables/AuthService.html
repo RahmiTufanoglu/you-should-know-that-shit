@@ -178,7 +178,7 @@
             <tr>
                 <td class="col-md-4">
                     <span class="modifier-icon icon ion-ios-reset"></span>
-                    <code>login(undefined: <a href="../classes/User.html">User</a>)</code>
+                    <code>login(undefined: <a href="../classes/User.html">UserEntity</a>)</code>
                 </td>
             </tr>
 
@@ -207,7 +207,7 @@
                             <tbody>
                                 <tr>
                                     <td>
-                                                <code><a href="../classes/User.html" target="_self" >User</a></code>
+                                                <code><a href="../classes/User.html" target="_self" >UserEntity</a></code>
                                     </td>
 
                                     <td>
@@ -326,7 +326,7 @@
 import { UsersService } from &#x27;../users/users.service&#x27;;
 import { JwtService } from &#x27;@nestjs/jwt&#x27;;
 import * as bcrypt from &#x27;bcrypt&#x27;;
-import { User } from &#x27;../users/entities/user.entity&#x27;;
+import { UserEntity } from &#x27;../users/entities/user.entity&#x27;;
 
 @Injectable()
 export class AuthService {
@@ -346,7 +346,7 @@ export class AuthService {
     return null;
   }
 
-  async login({ id, password }: User): Promise&lt;{ access_token: string }&gt; {
+  async login({ id, password }: UserEntity): Promise&lt;{ access_token: string }&gt; {
     const payload &#x3D; { id, password };
     return {
       access_token: this.jwtService.sign(payload),

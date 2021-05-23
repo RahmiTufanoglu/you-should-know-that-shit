@@ -42,7 +42,7 @@
 
 <ol class="breadcrumb">
   <li>Classes</li>
-  <li>Claim</li>
+  <li>ClaimEntity</li>
 </ol>
 
 <ul class="nav nav-tabs" role="tablist">
@@ -231,7 +231,7 @@
 import { Column, CreateDateColumn, Entity, PrimaryGeneratedColumn } from &#x27;typeorm&#x27;;
 
 @Entity({ name: &#x27;claims&#x27; })
-export class Claim {
+export class ClaimEntity {
   @ApiProperty()
   @PrimaryGeneratedColumn(&#x27;uuid&#x27;)
   id: string;

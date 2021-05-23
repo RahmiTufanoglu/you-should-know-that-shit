@@ -42,7 +42,7 @@
 
 <ol class="breadcrumb">
   <li>Classes</li>
-  <li>User</li>
+  <li>UserEntity</li>
 </ol>
 
 <ul class="nav nav-tabs" role="tablist">
@@ -387,7 +387,7 @@
 import { ApiProperty } from &#x27;@nestjs/swagger&#x27;;
 
 @Entity({ name: &#x27;users&#x27; })
-export class User {
+export class UserEntity {
   @ApiProperty()
   @PrimaryGeneratedColumn(&#x27;uuid&#x27;)
   id: string;

@@ -3,7 +3,7 @@ import { ApiProperty } from '@nestjs/swagger';
 import * as bcrypt from 'bcrypt';
 
 @Entity({ name: 'users' })
-export class UserEntity {
+export class User {
 
   @ApiProperty()
   @PrimaryGeneratedColumn('uuid')

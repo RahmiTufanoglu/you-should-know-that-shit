@@ -3,7 +3,7 @@ import { FactsService } from './facts.service';
 import { FactsController } from './facts.controller';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { MulterModule } from '@nestjs/platform-express';
-import { FactEnitity } from './entities/fact.entity';
+import { Fact } from './entities/fact.entity';
 import { ConfigModule, ConfigService } from '@nestjs/config';
 import { extname } from 'path';
 
@@ -19,7 +19,7 @@ const imageFilter = (req, file, cb) => {
 
 @Module({
   imports: [
-    TypeOrmModule.forFeature([FactEnitity]),
+    TypeOrmModule.forFeature([Fact]),
     MulterModule.registerAsync({
       imports: [ConfigModule],
       inject: [ConfigService],

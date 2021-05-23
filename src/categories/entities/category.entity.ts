@@ -1,10 +1,10 @@
 import { BeforeUpdate, Column, CreateDateColumn, Entity, OneToMany, PrimaryGeneratedColumn } from 'typeorm';
 import { ApiProperty } from '@nestjs/swagger';
-import { FactEnitity } from '../../facts/entities/fact.entity';
+import { Fact } from '../../facts/entities/fact.entity';
 import { FACT_CATEGORY_ENUM } from '../../enums';
 
 @Entity({ name: 'categories' })
-export class CategoryEntity {
+export class Category {
 
   @ApiProperty()
   @PrimaryGeneratedColumn()
@@ -24,10 +24,10 @@ export class CategoryEntity {
 
   @ApiProperty()
   @OneToMany(
-    () => FactEnitity,
+    () => Fact,
     fact => fact.id,
   )
-  facts: FactEnitity[];
+  facts: Fact[];
 
   @BeforeUpdate()
   updateTimestamp(): void {

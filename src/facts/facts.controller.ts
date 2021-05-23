@@ -6,6 +6,7 @@ import {
   Param,
   Patch,
   Post,
+  Query,
   UploadedFile,
   UseFilters,
   UseGuards,
@@ -15,7 +16,7 @@ import {
 } from '@nestjs/common';
 import { ApiCreatedResponse, ApiNotFoundResponse, ApiOkResponse, ApiOperation, ApiTags } from '@nestjs/swagger';
 import { FactsService } from './facts.service';
-import { FactEnitity } from './entities/fact.entity';
+import { Fact } from './entities/fact.entity';
 import { CreateFactDto } from './dto/create-fact.dto';
 import { UpdateFactDto } from './dto/update-fact.dto';
 import { JwtAuthGuard } from '../auth/guard/jwt-auth.guard';
@@ -23,7 +24,8 @@ import { DeleteResult, UpdateResult } from 'typeorm';
 import { FileInterceptor } from '@nestjs/platform-express';
 import { HttpExceptionFilter } from '../filters/http-exception.filter';
 import { FactType } from './types/fact.type';
-// import { Fact, FactWithoutIsCorrect } from './interfaces/fact.interface';
+import { Category } from '../categories/entities/category.entity';
+import { TrueAndFalseFact } from './interfaces/true-and-false-fact.model';
 
 @ApiTags('facts')
 @UseGuards(JwtAuthGuard)
@@ -33,7 +35,7 @@ export class FactsController {
   constructor(private readonly factsService: FactsService) {
   }
 
-  @ApiCreatedResponse({ type: FactEnitity })
+  @ApiCreatedResponse({ type: Fact })
   @ApiOperation({ summary: 'Create a fact with an image' })
   @UseFilters(HttpExceptionFilter)
   @UseInterceptors(FileInterceptor('file'))
@@ -49,44 +51,60 @@ export class FactsController {
     };
   }
 
-  @ApiOkResponse({ type: FactEnitity, isArray: true })
+  @ApiOkResponse({ type: Fact, isArray: true })
   @ApiOperation({ summary: 'Show all facts' })
   @UsePipes(ValidationPipe)
-  @Get()
-  async findAll(): Promise<FactEnitity[]> {
+  @Get('all')
+  async findAll(): Promise<Fact[]> {
     return this.factsService.findAll();
   }
 
-  @ApiOkResponse({ type: FactEnitity, isArray: true })
-  @ApiOperation({ summary: 'Show random true fact' })
-  @UsePipes(ValidationPipe)
-  @Get('random')
-  async findRandom(): Promise<FactEnitity> {
-    return this.factsService.filterRandom();
-  }
-
-  @ApiOkResponse({ type: FactEnitity, isArray: true })
-  @ApiOperation({ summary: 'Show all facts without solutions' })
+  @ApiOkResponse({ type: Fact, isArray: true })
+  @ApiOperation({ summary: 'Show random true and false fact couples' })
   @UsePipes(ValidationPipe)
   @Get()
-  async findAllWithoutSolution(): Promise<FactType[]> {
-    return this.factsService.findAllWithoutSolution();
+  async findRandomFacts(): Promise<TrueAndFalseFact[]> {
+    return this.factsService.findRandomFacts();
   }
 
-  @ApiCreatedResponse({ type: FactEnitity })
+  @ApiOkResponse({ type: Fact, isArray: true })
+  @ApiOperation({ summary: 'Show random true fact' })
+  @UsePipes(ValidationPipe)
+  @Get('correct')
+  async findRandomCorrectFact(): Promise<Fact> {
+    return this.factsService.findRandomCorrectFact();
+  }
+
+  @ApiOkResponse({ type: Fact, isArray: true })
+  @ApiOperation({ summary: 'Filter by category' })
+  @UsePipes(ValidationPipe)
+  @Get()
+  async filterByCategory(@Query('category') category: Category) {
+    return this.factsService.filterByCategory(category);
+  }
+
+  // @ApiOkResponse({ type: Fact, isArray: true })
+  // @ApiOperation({ summary: 'Show all facts without solutions' })
+  // @UsePipes(ValidationPipe)
+  // @Get('without')
+  // async findAllWithoutSolution(): Promise<FactType[]> {
+  //   return this.factsService.findAllWithoutSolution();
+  // }
+
+  @ApiCreatedResponse({ type: Fact })
   @ApiOperation({ summary: 'Check if the selection is correct' })
   @UsePipes(ValidationPipe)
-  @Post('correct')
+  @Post('check')
   async checkIfCorrect(@Param('id') id: number): Promise<boolean> {
     return this.factsService.checkIfCorrect(id);
   }
 
-  @ApiOkResponse({ type: FactEnitity })
+  @ApiOkResponse({ type: Fact })
   @ApiNotFoundResponse()
   @ApiOperation({ summary: 'Find a fact with a specific id' })
   @UsePipes(ValidationPipe)
   @Get(':id')
-  async findById(@Param('id') id: number): Promise<FactEnitity> {
+  async findById(@Param('id') id: number): Promise<Fact> {
     return this.factsService.findById(id);
   }
 

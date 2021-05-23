@@ -151,7 +151,7 @@
                 <td class="col-md-4">
                     <b>Decorators : </b>
                     <br />
-                    <code>@ApiCreatedResponse({type: User})<br />@Post()<br /></code>
+                    <code>@ApiCreatedResponse({type: UserEntity})<br />@Post()<br /></code>
                 </td>
             </tr>
 
@@ -241,7 +241,7 @@
                 <td class="col-md-4">
                     <b>Decorators : </b>
                     <br />
-                    <code>@ApiOkResponse({type: User, isArray: true})<br />@UseGuards(JwtAuthGuard)<br />@Get()<br /></code>
+                    <code>@ApiOkResponse({type: UserEntity, isArray: true})<br />@UseGuards(JwtAuthGuard)<br />@Get()<br /></code>
                 </td>
             </tr>
 
@@ -316,7 +316,7 @@
                 <td class="col-md-4">
                     <b>Decorators : </b>
                     <br />
-                    <code>@ApiCreatedResponse({type: User})<br />@ApiNotFoundResponse()<br />@UseGuards(JwtAuthGuard)<br />@Get()<br /></code>
+                    <code>@ApiCreatedResponse({type: UserEntity})<br />@ApiNotFoundResponse()<br />@UseGuards(JwtAuthGuard)<br />@Get()<br /></code>
                 </td>
             </tr>
 
@@ -406,7 +406,7 @@
                 <td class="col-md-4">
                     <b>Decorators : </b>
                     <br />
-                    <code>@ApiCreatedResponse({type: User})<br />@ApiNotFoundResponse()<br />@UseGuards(JwtAuthGuard)<br />@Get()<br /></code>
+                    <code>@ApiCreatedResponse({type: UserEntity})<br />@ApiNotFoundResponse()<br />@UseGuards(JwtAuthGuard)<br />@Get()<br /></code>
                 </td>
             </tr>
 
@@ -496,7 +496,7 @@
                 <td class="col-md-4">
                     <b>Decorators : </b>
                     <br />
-                    <code>@ApiOkResponse({type: User})<br />@ApiNotFoundResponse()<br />@UseGuards(JwtAuthGuard)<br />@Get(&#x27;:id&#x27;)<br /></code>
+                    <code>@ApiOkResponse({type: UserEntity})<br />@ApiNotFoundResponse()<br />@UseGuards(JwtAuthGuard)<br />@Get(&#x27;:id&#x27;)<br /></code>
                 </td>
             </tr>
 
@@ -761,7 +761,7 @@
 import { UsersService } from &#x27;./users.service&#x27;;
 import { UpdateUserDto } from &#x27;./dto/update-user.dto&#x27;;
 import { ApiCreatedResponse, ApiNotFoundResponse, ApiOkResponse } from &#x27;@nestjs/swagger&#x27;;
-import { User } from &#x27;./entities/user.entity&#x27;;
+import { UserEntity } from &#x27;./entities/user.entity&#x27;;
 import { JwtAuthGuard } from &#x27;../auth/guard/jwt-auth.guard&#x27;;
 import { CreateUserDto } from &#x27;./dto/create-user.dto&#x27;;
 
@@ -770,17 +770,17 @@ export class UsersController {
   constructor(private readonly usersService: UsersService) {
   }
 
-  @ApiCreatedResponse({ type: User })
+  @ApiCreatedResponse({ type: UserEntity })
   @Post()
   async create(@Body() createUserDto: CreateUserDto, @Res() res): Promise&lt;any&gt; {
     const user &#x3D; await this.usersService.create(createUserDto);
     return res.json({
-      message: &#x27;User has been added successfully&#x27;,
+      message: &#x27;UserEntity has been added successfully&#x27;,
       user,
     });
   }
 
-  @ApiOkResponse({ type: User, isArray: true })
+  @ApiOkResponse({ type: UserEntity, isArray: true })
   @UseGuards(JwtAuthGuard)
   @Get()
   async findAll(@Res() res): Promise&lt;any[]&gt; {
@@ -791,14 +791,14 @@ export class UsersController {
     });
   }
 
-  @ApiOkResponse({ type: User })
+  @ApiOkResponse({ type: UserEntity })
   @ApiNotFoundResponse()
   @UseGuards(JwtAuthGuard)
   @Get(&#x27;:id&#x27;)
   async findOne(@Param(&#x27;id&#x27;) id: number, @Res() res): Promise&lt;any&gt; {
     const user &#x3D; await this.usersService.findOne(id);
     return res.json({
-      message: &#x60;User with id #${id} has been found successfully.&#x60;,
+      message: &#x60;UserEntity with id #${id} has been found successfully.&#x60;,
       user,
     });
   }
@@ -809,7 +809,7 @@ export class UsersController {
   async update(@Param(&#x27;id&#x27;) id: number, @Body() updateUserDto: UpdateUserDto, @Res() res): Promise&lt;any&gt; {
     const user &#x3D; await this.usersService.update(id, updateUserDto);
     return res.json({
-      message: &#x60;User with the id #${id} has been updated successfully.&#x60;,
+      message: &#x60;UserEntity with the id #${id} has been updated successfully.&#x60;,
       user,
     });
   }
@@ -819,31 +819,31 @@ export class UsersController {
   async remove(@Param(&#x27;id&#x27;) id: number, @Res() res): Promise&lt;any&gt; {
     const user &#x3D; await this.usersService.remove(id);
     return res.json({
-      message: &#x60;User with the id #${id} has been deleted successfully.&#x60;,
+      message: &#x60;UserEntity with the id #${id} has been deleted successfully.&#x60;,
       user,
     });
   }
 
-  @ApiCreatedResponse({ type: User })
+  @ApiCreatedResponse({ type: UserEntity })
   @ApiNotFoundResponse()
   @UseGuards(JwtAuthGuard)
   @Get()
   async findByEmail(@Param(&#x27;email&#x27;) email: string, @Res() res): Promise&lt;any&gt; {
     const user &#x3D; await this.usersService.findByEmail(email);
     return res.json({
-      message: &#x60;User with the email #${email} has been found successfully.&#x60;,
+      message: &#x60;UserEntity with the email #${email} has been found successfully.&#x60;,
       user,
     });
   }
 
-  @ApiCreatedResponse({ type: User })
+  @ApiCreatedResponse({ type: UserEntity })
   @ApiNotFoundResponse()
   @UseGuards(JwtAuthGuard)
   @Get()
   async findByUsername(@Param(&#x27;username&#x27;) username: string, @Res() res): Promise&lt;any&gt; {
     const user &#x3D; await this.usersService.findByUsername(username);
     return res.json({
-      message: &#x60;User with the username #${username} has been found successfully.&#x60;,
+      message: &#x60;UserEntity with the username #${username} has been found successfully.&#x60;,
       user,
     });
   }

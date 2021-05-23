@@ -5,7 +5,7 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { DeleteResult, Repository, UpdateResult } from 'typeorm';
 import { ClaimEntity } from './entities/claim.entity';
 import { ObjectNotFoundException } from '../exceptions/object-not-found-exception';
-// import { Claim } from './interfaces/claim.interface';
+// import { ClaimEntity } from './interfaces/claim.interface';
 
 @Injectable()
 export class ClaimsService {
@@ -21,7 +21,7 @@ export class ClaimsService {
     const foundClaim = await this.claimRepository.findOne({ claim });
 
     if (foundClaim) {
-      throw new HttpException('Claim exists', HttpStatus.UNPROCESSABLE_ENTITY);
+      throw new HttpException('ClaimEntity exists', HttpStatus.UNPROCESSABLE_ENTITY);
     }
 
     const newClaim = new ClaimEntity();

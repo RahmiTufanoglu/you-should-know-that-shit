@@ -146,7 +146,7 @@
                                                         <td>userRepository</td>
                                                   
                                                         <td>
-                                                                        <code><a href="../classes/User.html" target="_self" >Repository&lt;User&gt;</a></code>
+                                                                        <code><a href="../classes/User.html" target="_self" >Repository&lt;UserEntity&gt;</a></code>
                                                         </td>
                                                   
                                                     <td>
@@ -230,7 +230,7 @@
                     <div>
                     </div>
                     <div class="io-description">
-                        <b>Returns : </b>        <code><a href="../classes/User.html" target="_self" >Promise&lt;User&gt;</a></code>
+                        <b>Returns : </b>        <code><a href="../classes/User.html" target="_self" >Promise&lt;UserEntity&gt;</a></code>
 
                     </div>
                     <div class="io-description">
@@ -272,7 +272,7 @@
                 <td class="col-md-4">
 
                     <div class="io-description">
-                        <b>Returns : </b>        <code><a href="../classes/User.html" target="_self" >Promise&lt;User[]&gt;</a></code>
+                        <b>Returns : </b>        <code><a href="../classes/User.html" target="_self" >Promise&lt;UserEntity[]&gt;</a></code>
 
                     </div>
                 </td>
@@ -339,7 +339,7 @@
                     <div>
                     </div>
                     <div class="io-description">
-                        <b>Returns : </b>        <code><a href="../classes/User.html" target="_self" >Promise&lt;User&gt;</a></code>
+                        <b>Returns : </b>        <code><a href="../classes/User.html" target="_self" >Promise&lt;UserEntity&gt;</a></code>
 
                     </div>
                     <div class="io-description">
@@ -409,7 +409,7 @@
                     <div>
                     </div>
                     <div class="io-description">
-                        <b>Returns : </b>        <code><a href="../classes/User.html" target="_self" >Promise&lt;User&gt;</a></code>
+                        <b>Returns : </b>        <code><a href="../classes/User.html" target="_self" >Promise&lt;UserEntity&gt;</a></code>
 
                     </div>
                     <div class="io-description">
@@ -479,7 +479,7 @@
                     <div>
                     </div>
                     <div class="io-description">
-                        <b>Returns : </b>        <code><a href="../classes/User.html" target="_self" >Promise&lt;User&gt;</a></code>
+                        <b>Returns : </b>        <code><a href="../classes/User.html" target="_self" >Promise&lt;UserEntity&gt;</a></code>
 
                     </div>
                     <div class="io-description">
@@ -724,17 +724,17 @@
         <pre class="line-numbers compodoc-sourcecode"><code class="language-typescript">import { Injectable } from &#x27;@nestjs/common&#x27;;
 import { CreateUserDto } from &#x27;./dto/create-user.dto&#x27;;
 import { UpdateUserDto } from &#x27;./dto/update-user.dto&#x27;;
-import { User } from &#x27;./entities/user.entity&#x27;;
+import { UserEntity } from &#x27;./entities/user.entity&#x27;;
 import { InjectRepository } from &#x27;@nestjs/typeorm&#x27;;
 import { DeleteResult, Repository, UpdateResult } from &#x27;typeorm&#x27;;
 import * as bcrypt from &#x27;bcrypt&#x27;;
 
 @Injectable()
 export class UsersService {
-  constructor(@InjectRepository(User) private readonly userRepository: Repository&lt;User&gt;) {
+  constructor(@InjectRepository(UserEntity) private readonly userRepository: Repository&lt;UserEntity&gt;) {
   }
 
-  async create(user: CreateUserDto): Promise&lt;User&gt; {
+  async create(user: CreateUserDto): Promise&lt;UserEntity&gt; {
     user &#x3D; {
       ...user,
       email: user.email.toLowerCase(),
@@ -743,11 +743,11 @@ export class UsersService {
     return this.userRepository.save(user);
   }
 
-  findAll(): Promise&lt;User[]&gt; {
+  findAll(): Promise&lt;UserEntity[]&gt; {
     return this.userRepository.find();
   }
 
-  findOne(id: number): Promise&lt;User&gt; {
+  findOne(id: number): Promise&lt;UserEntity&gt; {
     return this.userRepository.findOne(id);
   }
 
@@ -764,14 +764,14 @@ export class UsersService {
     return this.userRepository.delete(id);
   }
 
-  findByEmail(email: string): Promise&lt;User&gt; {
+  findByEmail(email: string): Promise&lt;UserEntity&gt; {
     return this.userRepository.findOne(
       { email },
       { select: [&#x27;id&#x27;, &#x27;createdAt&#x27;, &#x27;username&#x27;, &#x27;firstname&#x27;, &#x27;lastname&#x27;, &#x27;email&#x27;, &#x27;password&#x27;] },
     );
   }
 
-  findByUsername(username: string): Promise&lt;User&gt; {
+  findByUsername(username: string): Promise&lt;UserEntity&gt; {
     return this.userRepository.findOne(
       { username },
       { select: [&#x27;id&#x27;, &#x27;createdAt&#x27;, &#x27;username&#x27;, &#x27;firstname&#x27;, &#x27;lastname&#x27;, &#x27;email&#x27;, &#x27;password&#x27;] },

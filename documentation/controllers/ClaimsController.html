@@ -143,7 +143,7 @@
                 <td class="col-md-4">
                     <b>Decorators : </b>
                     <br />
-                    <code>@ApiCreatedResponse({type: Claim})<br />@Post()<br /></code>
+                    <code>@ApiCreatedResponse({type: ClaimEntity})<br />@Post()<br /></code>
                 </td>
             </tr>
 
@@ -233,7 +233,7 @@
                 <td class="col-md-4">
                     <b>Decorators : </b>
                     <br />
-                    <code>@ApiOkResponse({type: Claim, isArray: true})<br />@UseGuards(JwtAuthGuard)<br />@Get()<br /></code>
+                    <code>@ApiOkResponse({type: ClaimEntity, isArray: true})<br />@UseGuards(JwtAuthGuard)<br />@Get()<br /></code>
                 </td>
             </tr>
 
@@ -308,7 +308,7 @@
                 <td class="col-md-4">
                     <b>Decorators : </b>
                     <br />
-                    <code>@ApiOkResponse({type: Claim})<br />@ApiNotFoundResponse()<br />@UseGuards(JwtAuthGuard)<br />@Get(&#x27;:id&#x27;)<br /></code>
+                    <code>@ApiOkResponse({type: ClaimEntity})<br />@ApiNotFoundResponse()<br />@UseGuards(JwtAuthGuard)<br />@Get(&#x27;:id&#x27;)<br /></code>
                 </td>
             </tr>
 
@@ -574,7 +574,7 @@ import { ClaimsService } from &#x27;./claims.service&#x27;;
 import { CreateClaimDto } from &#x27;./dto/create-claim.dto&#x27;;
 import { UpdateClaimDto } from &#x27;./dto/update-claim.dto&#x27;;
 import { ApiCreatedResponse, ApiNotFoundResponse, ApiOkResponse } from &#x27;@nestjs/swagger&#x27;;
-import { Claim } from &#x27;./entities/claim.entity&#x27;;
+import { ClaimEntity } from &#x27;./entities/claim.entity&#x27;;
 import { JwtAuthGuard } from &#x27;../auth/guard/jwt-auth.guard&#x27;;
 
 @Controller(&#x27;claims&#x27;)
@@ -582,17 +582,17 @@ export class ClaimsController {
   constructor(private readonly claimsService: ClaimsService) {
   }
 
-  @ApiCreatedResponse({ type: Claim })
+  @ApiCreatedResponse({ type: ClaimEntity })
   @Post()
   async create(@Body() createClaimDto: CreateClaimDto, @Res() res): Promise&lt;any&gt; {
     const claim &#x3D; await this.claimsService.create(createClaimDto);
     return res.json({
-      message: &#x27;Claim has been added successfully&#x27;,
+      message: &#x27;ClaimEntity has been added successfully&#x27;,
       claim,
     });
   }
 
-  @ApiOkResponse({ type: Claim, isArray: true })
+  @ApiOkResponse({ type: ClaimEntity, isArray: true })
   @UseGuards(JwtAuthGuard)
   @Get()
   async findAll(@Res() res): Promise&lt;any[]&gt; {
@@ -603,14 +603,14 @@ export class ClaimsController {
     });
   }
 
-  @ApiOkResponse({ type: Claim })
+  @ApiOkResponse({ type: ClaimEntity })
   @ApiNotFoundResponse()
   @UseGuards(JwtAuthGuard)
   @Get(&#x27;:id&#x27;)
   async findOne(@Param(&#x27;id&#x27;) id: number, @Res() res): Promise&lt;any&gt; {
     const claim &#x3D; await this.claimsService.findOne(id);
     return res.json({
-      message: &#x60;Claim with id #${id} has been found successfully.&#x60;,
+      message: &#x60;ClaimEntity with id #${id} has been found successfully.&#x60;,
       claim,
     });
   }
@@ -620,7 +620,7 @@ export class ClaimsController {
   async update(@Param(&#x27;id&#x27;) id: number, @Body() updateClaimDto: UpdateClaimDto, @Res() res): Promise&lt;any&gt; {
     const claim &#x3D; await this.claimsService.update(id, updateClaimDto);
     return res.json({
-      message: &#x60;Claim with the id #${id} has been updated successfully.&#x60;,
+      message: &#x60;ClaimEntity with the id #${id} has been updated successfully.&#x60;,
       claim,
     });
   }
@@ -630,7 +630,7 @@ export class ClaimsController {
   async remove(@Param(&#x27;id&#x27;) id: number, @Res() res): Promise&lt;any&gt; {
     const claim &#x3D; await this.claimsService.remove(id);
     return res.json({
-      message: &#x60;Claim with the id #${id} has been deleted successfully.&#x60;,
+      message: &#x60;ClaimEntity with the id #${id} has been deleted successfully.&#x60;,
       claim,
     });
   }

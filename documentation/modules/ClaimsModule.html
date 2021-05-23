@@ -155,11 +155,11 @@
 import { ClaimsService } from &#x27;./claims.service&#x27;;
 import { ClaimsController } from &#x27;./claims.controller&#x27;;
 import { TypeOrmModule } from &#x27;@nestjs/typeorm&#x27;;
-import { Claim } from &#x27;./entities/claim.entity&#x27;;
+import { ClaimEntity } from &#x27;./entities/claim.entity&#x27;;
 
 @Module({
   imports: [
-    TypeOrmModule.forFeature([Claim]),
+    TypeOrmModule.forFeature([ClaimEntity]),
   ],
   controllers: [
     ClaimsController,

@@ -134,7 +134,7 @@
                                                         <td>claimRepository</td>
                                                   
                                                         <td>
-                                                                        <code><a href="../classes/Claim.html" target="_self" >Repository&lt;Claim&gt;</a></code>
+                                                                        <code><a href="../classes/Claim.html" target="_self" >Repository&lt;ClaimEntity&gt;</a></code>
                                                         </td>
                                                   
                                                     <td>
@@ -216,7 +216,7 @@
                     <div>
                     </div>
                     <div class="io-description">
-                        <b>Returns : </b>        <code><a href="../classes/Claim.html" target="_self" >Promise&lt;Claim&gt;</a></code>
+                        <b>Returns : </b>        <code><a href="../classes/Claim.html" target="_self" >Promise&lt;ClaimEntity&gt;</a></code>
 
                     </div>
                     <div class="io-description">
@@ -258,7 +258,7 @@
                 <td class="col-md-4">
 
                     <div class="io-description">
-                        <b>Returns : </b>        <code><a href="../classes/Claim.html" target="_self" >Promise&lt;Claim[]&gt;</a></code>
+                        <b>Returns : </b>        <code><a href="../classes/Claim.html" target="_self" >Promise&lt;ClaimEntity[]&gt;</a></code>
 
                     </div>
                 </td>
@@ -325,7 +325,7 @@
                     <div>
                     </div>
                     <div class="io-description">
-                        <b>Returns : </b>        <code><a href="../classes/Claim.html" target="_self" >Promise&lt;Claim&gt;</a></code>
+                        <b>Returns : </b>        <code><a href="../classes/Claim.html" target="_self" >Promise&lt;ClaimEntity&gt;</a></code>
 
                     </div>
                     <div class="io-description">
@@ -498,22 +498,22 @@ import { CreateClaimDto } from &#x27;./dto/create-claim.dto&#x27;;
 import { UpdateClaimDto } from &#x27;./dto/update-claim.dto&#x27;;
 import { InjectRepository } from &#x27;@nestjs/typeorm&#x27;;
 import { DeleteResult, Repository, UpdateResult } from &#x27;typeorm&#x27;;
-import { Claim } from &#x27;./entities/claim.entity&#x27;;
+import { ClaimEntity } from &#x27;./entities/claim.entity&#x27;;
 
 @Injectable()
 export class ClaimsService {
-  constructor(@InjectRepository(Claim) private readonly claimRepository: Repository&lt;Claim&gt;) {
+  constructor(@InjectRepository(ClaimEntity) private readonly claimRepository: Repository&lt;ClaimEntity&gt;) {
   }
 
-  create(createClaimDto: CreateClaimDto): Promise&lt;Claim&gt; {
+  create(createClaimDto: CreateClaimDto): Promise&lt;ClaimEntity&gt; {
     return this.claimRepository.save(createClaimDto);
   }
 
-  findAll(): Promise&lt;Claim[]&gt; {
+  findAll(): Promise&lt;ClaimEntity[]&gt; {
     return this.claimRepository.find();
   }
 
-  findOne(id: number): Promise&lt;Claim&gt; {
+  findOne(id: number): Promise&lt;ClaimEntity&gt; {
     return this.claimRepository.findOne(id);
   }
 

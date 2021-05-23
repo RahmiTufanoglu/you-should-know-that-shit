@@ -5,7 +5,7 @@ import { ApiCreatedResponse, ApiNotFoundResponse, ApiOkResponse } from '@nestjs/
 import { ClaimEntity } from '../claims/entities/claim.entity';
 import { JwtAuthGuard } from '../auth/guard/jwt-auth.guard';
 import { UpdateClaimDto } from '../claims/dto/update-claim.dto';
-import { CategoryEntity } from './entities/category.entity';
+import { Category } from './entities/category.entity';
 import { SETTINGS } from '../app.utils';
 import { DeleteResult, UpdateResult } from 'typeorm';
 // import { Category } from './interfaces/category.interface';
@@ -17,24 +17,24 @@ export class CategoriesController {
   constructor(private readonly categoriesService: CategoriesService) {
   }
 
-  @ApiCreatedResponse({ type: CategoryEntity })
+  @ApiCreatedResponse({ type: Category })
   @Post()
-  async create(@Body(SETTINGS.VALIDATION_PIPE) createCategoryDto: CreateCategoryDto): Promise<CategoryEntity> {
+  async create(@Body(SETTINGS.VALIDATION_PIPE) createCategoryDto: CreateCategoryDto): Promise<Category> {
     return this.categoriesService.create(createCategoryDto);
   }
 
   @ApiOkResponse({ type: ClaimEntity, isArray: true })
   @UsePipes(ValidationPipe)
   @Get()
-  async findAll(): Promise<CategoryEntity[]> {
+  async findAll(): Promise<Category[]> {
     return this.categoriesService.findAll();
   }
 
-  @ApiOkResponse({ type: CategoryEntity })
+  @ApiOkResponse({ type: Category })
   @ApiNotFoundResponse()
   @UsePipes(ValidationPipe)
   @Get(':id')
-  async findById(@Param('id') id: number): Promise<CategoryEntity> {
+  async findById(@Param('id') id: number): Promise<Category> {
     return this.categoriesService.findById(id);
   }
 

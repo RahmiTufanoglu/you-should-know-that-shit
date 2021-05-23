@@ -3,7 +3,7 @@ import { CreateCategoryDto } from './dto/create-category.dto';
 import { UpdateCategoryDto } from './dto/update-category.dto';
 import { InjectRepository } from '@nestjs/typeorm';
 import { DeleteResult, getRepository, Repository, UpdateResult } from 'typeorm';
-import { CategoryEntity } from './entities/category.entity';
+import { Category } from './entities/category.entity';
 import { ObjectNotFoundException } from '../exceptions/object-not-found-exception';
 // import { Category } from './interfaces/category.interface';
 
@@ -11,12 +11,12 @@ import { ObjectNotFoundException } from '../exceptions/object-not-found-exceptio
 export class CategoriesService {
 
   constructor(
-    @InjectRepository(CategoryEntity)
-    private readonly categoryRepository: Repository<CategoryEntity>,
+    @InjectRepository(Category)
+    private readonly categoryRepository: Repository<Category>,
   ) {
   }
 
-  async create(createCategoryDto: CreateCategoryDto): Promise<CategoryEntity> {
+  async create(createCategoryDto: CreateCategoryDto): Promise<Category> {
     const { category } = createCategoryDto;
 
     const foundCategory = await this.categoryRepository.findOne({ category });
@@ -25,16 +25,16 @@ export class CategoriesService {
       throw new HttpException('Category exists', HttpStatus.UNPROCESSABLE_ENTITY);
     }
 
-    const newCategory = new CategoryEntity();
+    const newCategory = new Category();
     Object.assign(newCategory, createCategoryDto);
     return this.categoryRepository.save(newCategory);
   }
 
-  async findAll(): Promise<CategoryEntity[]> {
+  async findAll(): Promise<Category[]> {
     return this.categoryRepository.find();
   }
 
-  async findById(id: number): Promise<CategoryEntity> {
+  async findById(id: number): Promise<Category> {
     return this.getCategoryById(id);
   }
 
@@ -50,7 +50,7 @@ export class CategoriesService {
     }
   }
 
-  async getCategoryById(id: number): Promise<CategoryEntity> {
+  async getCategoryById(id: number): Promise<Category> {
     try {
       return await this.categoryRepository.findOneOrFail(id);
     } catch (err) {

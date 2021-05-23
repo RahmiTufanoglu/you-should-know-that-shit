@@ -1,4 +1,4 @@
-// export interface Claim {
+// export interface ClaimEntity {
 //   id: string;
 //   claim: string;
 //   createdAt: Date;

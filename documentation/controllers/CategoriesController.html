@@ -143,7 +143,7 @@
                 <td class="col-md-4">
                     <b>Decorators : </b>
                     <br />
-                    <code>@ApiCreatedResponse({type: Claim})<br />@Post()<br /></code>
+                    <code>@ApiCreatedResponse({type: ClaimEntity})<br />@Post()<br /></code>
                 </td>
             </tr>
 
@@ -233,7 +233,7 @@
                 <td class="col-md-4">
                     <b>Decorators : </b>
                     <br />
-                    <code>@ApiOkResponse({type: Claim, isArray: true})<br />@UseGuards(JwtAuthGuard)<br />@Get()<br /></code>
+                    <code>@ApiOkResponse({type: ClaimEntity, isArray: true})<br />@UseGuards(JwtAuthGuard)<br />@Get()<br /></code>
                 </td>
             </tr>
 
@@ -308,7 +308,7 @@
                 <td class="col-md-4">
                     <b>Decorators : </b>
                     <br />
-                    <code>@ApiOkResponse({type: Claim})<br />@ApiNotFoundResponse()<br />@UseGuards(JwtAuthGuard)<br />@Get(&#x27;:id&#x27;)<br /></code>
+                    <code>@ApiOkResponse({type: ClaimEntity})<br />@ApiNotFoundResponse()<br />@UseGuards(JwtAuthGuard)<br />@Get(&#x27;:id&#x27;)<br /></code>
                 </td>
             </tr>
 
@@ -573,7 +573,7 @@
 import { CategoriesService } from &#x27;./categories.service&#x27;;
 import { CreateCategoryDto } from &#x27;./dto/create-category.dto&#x27;;
 import { ApiCreatedResponse, ApiNotFoundResponse, ApiOkResponse } from &#x27;@nestjs/swagger&#x27;;
-import { Claim } from &#x27;../claims/entities/claim.entity&#x27;;
+import { ClaimEntity } from &#x27;../claims/entities/claim.entity&#x27;;
 import { JwtAuthGuard } from &#x27;../auth/guard/jwt-auth.guard&#x27;;
 import { UpdateClaimDto } from &#x27;../claims/dto/update-claim.dto&#x27;;
 
@@ -582,7 +582,7 @@ export class CategoriesController {
   constructor(private readonly categoriesService: CategoriesService) {
   }
 
-  @ApiCreatedResponse({ type: Claim })
+  @ApiCreatedResponse({ type: ClaimEntity })
   @Post()
   async create(@Body() createCategoryDto: CreateCategoryDto, @Res() res): Promise&lt;any&gt; {
     const category &#x3D; await this.categoriesService.create(createCategoryDto);
@@ -592,7 +592,7 @@ export class CategoriesController {
     });
   }
 
-  @ApiOkResponse({ type: Claim, isArray: true })
+  @ApiOkResponse({ type: ClaimEntity, isArray: true })
   @UseGuards(JwtAuthGuard)
   @Get()
   async findAll(@Res() res): Promise&lt;any[]&gt; {
@@ -603,7 +603,7 @@ export class CategoriesController {
     });
   }
 
-  @ApiOkResponse({ type: Claim })
+  @ApiOkResponse({ type: ClaimEntity })
   @ApiNotFoundResponse()
   @UseGuards(JwtAuthGuard)
   @Get(&#x27;:id&#x27;)
