@@ -1,13 +1,15 @@
-import { IsNotEmpty } from 'class-validator';
+import { IsDefined, IsNotEmpty } from 'class-validator';
 import { ApiModelProperty } from '@nestjs/swagger/dist/decorators/api-model-property.decorator';
 
 export class CreateFactDto {
 
   @ApiModelProperty()
+  @IsDefined()
   @IsNotEmpty()
   readonly fact: string;
 
   @ApiModelProperty()
+  @IsDefined()
   @IsNotEmpty()
   readonly isTrue: boolean;
 
@@ -15,7 +17,10 @@ export class CreateFactDto {
   readonly image: string;
 
   @ApiModelProperty()
-  readonly createdDate: Date;
+  readonly createdAt: Date;
+
+  @ApiModelProperty()
+  readonly updatedAt: Date;
 
   @ApiModelProperty()
   readonly categoryId: string;

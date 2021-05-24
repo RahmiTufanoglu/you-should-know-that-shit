@@ -1,13 +1,14 @@
 import { Body, Controller, Delete, Get, Param, Post, Put, UseGuards, UsePipes, ValidationPipe } from '@nestjs/common';
 import { CategoriesService } from './categories.service';
 import { CreateCategoryDto } from './dto/create-category.dto';
-import { ApiCreatedResponse, ApiNotFoundResponse, ApiOkResponse } from '@nestjs/swagger';
+import { ApiCreatedResponse, ApiNotFoundResponse, ApiOkResponse, ApiOperation } from '@nestjs/swagger';
 import { ClaimEntity } from '../claims/entities/claim.entity';
 import { JwtAuthGuard } from '../auth/guard/jwt-auth.guard';
-import { UpdateClaimDto } from '../claims/dto/update-claim.dto';
 import { Category } from './entities/category.entity';
 import { SETTINGS } from '../app.utils';
 import { DeleteResult, UpdateResult } from 'typeorm';
+import { UpdateCategoryDto } from './dto/update-category.dto';
+
 // import { Category } from './interfaces/category.interface';
 
 @Controller('categories')
@@ -38,13 +39,14 @@ export class CategoriesController {
     return this.categoriesService.findById(id);
   }
 
+  @ApiOperation({ summary: 'Edit a category with a specific id' })
   @UsePipes(ValidationPipe)
   @Put(':id')
   async update(
     @Param('id') id: number,
-    @Body() updateClaimDto: UpdateClaimDto,
+    @Body() updateCategoryDto: UpdateCategoryDto,
   ): Promise<UpdateResult> {
-    return this.categoriesService.update(id, updateClaimDto);
+    return this.categoriesService.update(id, updateCategoryDto);
   }
 
   @UsePipes(ValidationPipe)

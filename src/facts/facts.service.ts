@@ -5,9 +5,10 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { DeleteResult, Repository, UpdateResult } from 'typeorm';
 import { Fact } from './entities/fact.entity';
 import { ObjectNotFoundException } from '../exceptions/object-not-found-exception';
-import { Category } from '../categories/entities/category.entity';
 import { TrueAndFalseFact } from './interfaces/true-and-false-fact.model';
 import { FactIdType } from './types/fact-id.type';
+import { Category } from '../categories/entities/category.entity';
+import { FACT_CATEGORY_ENUM } from '../enums';
 
 @Injectable()
 export class FactsService {
@@ -15,16 +16,10 @@ export class FactsService {
   constructor(
     @InjectRepository(Fact)
     private readonly factRepository: Repository<Fact>,
+    @InjectRepository(Category)
+    private readonly categoryRepository: Repository<Category>,
   ) {
   }
-
-  // private static shuffle(facts: Fact[]): Fact[] {
-  //   for (let i = facts.length - 1; i > 0; i--) {
-  //     const j = Math.floor(Math.random() * (i + 1));
-  //     [facts[i], facts[j]] = [facts[j], facts[i]];
-  //   }
-  //   return facts;
-  // }
 
   async create(createFactDto: CreateFactDto): Promise<Fact> {
     const { fact } = createFactDto;
@@ -43,9 +38,42 @@ export class FactsService {
     return this.factRepository.find();
   }
 
-  //TODO
-  async filterByCategory(category: Category) {
-    return null;
+  async findAllSpecificFacts(isCorrectStr: string): Promise<Fact[]> {
+    const facts = await this.factRepository.find();
+    if (isCorrectStr === 'true') {
+      return facts.filter(({ isTrue }: Fact) => isTrue);
+    } else if (isCorrectStr === 'false') {
+      return facts.filter(({ isTrue }: Fact) => !isTrue);
+    } else {
+      throw new HttpException('Query does not exists', HttpStatus.UNPROCESSABLE_ENTITY);
+    }
+  }
+
+  async filterByCategory(category: string) {
+    const facts = await this.factRepository.find();
+
+    if (!this.getEnumId(category)) {
+      throw new HttpException('Category not available', HttpStatus.UNPROCESSABLE_ENTITY);
+    }
+
+    return facts.filter(({ categoryId }: Fact) => {
+      return parseInt(categoryId) === this.getEnumId(category);
+    });
+  }
+
+  getEnumId(category: string): number {
+    switch (category) {
+      case FACT_CATEGORY_ENUM.History:
+        return 3;
+      case FACT_CATEGORY_ENUM.Sport:
+        return 2;
+      case FACT_CATEGORY_ENUM.Politics:
+        return 1;
+      case FACT_CATEGORY_ENUM.Science:
+        return 4;
+      default:
+        break;
+    }
   }
 
   async findRandomFacts(): Promise<TrueAndFalseFact[]> {
@@ -82,12 +110,6 @@ export class FactsService {
     const correctFacts = facts.filter(({ isTrue }: Fact) => isTrue);
     return correctFacts[Math.floor(Math.random() * correctFacts.length)];
   }
-
-  // async findAllWithoutSolution(): Promise<FactType[]> {
-  //   const facts = await this.factRepository.find();
-  //   const shuffledFacts = FactsService.shuffle(facts);
-  //   return shuffledFacts.map(({ isTrue, ...rest }: Fact) => rest);
-  // }
 
   async checkIfCorrect(factId: number): Promise<boolean> {
     const fact = await this.getFactById(factId);

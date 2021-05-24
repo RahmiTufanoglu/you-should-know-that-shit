@@ -2,10 +2,9 @@ import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
 import { CreateCategoryDto } from './dto/create-category.dto';
 import { UpdateCategoryDto } from './dto/update-category.dto';
 import { InjectRepository } from '@nestjs/typeorm';
-import { DeleteResult, getRepository, Repository, UpdateResult } from 'typeorm';
+import { DeleteResult, Repository, UpdateResult } from 'typeorm';
 import { Category } from './entities/category.entity';
 import { ObjectNotFoundException } from '../exceptions/object-not-found-exception';
-// import { Category } from './interfaces/category.interface';
 
 @Injectable()
 export class CategoriesService {
@@ -18,7 +17,6 @@ export class CategoriesService {
 
   async create(createCategoryDto: CreateCategoryDto): Promise<Category> {
     const { category } = createCategoryDto;
-
     const foundCategory = await this.categoryRepository.findOne({ category });
 
     if (foundCategory) {

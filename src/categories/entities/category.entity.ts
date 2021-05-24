@@ -11,7 +11,12 @@ export class Category {
   id: string;
 
   @ApiProperty()
-  @Column({ nullable: false, unique: true })
+  @Column({
+    type: 'enum',
+    enum: FACT_CATEGORY_ENUM,
+    nullable: false,
+    unique: true,
+  })
   category: FACT_CATEGORY_ENUM;
 
   @ApiProperty()

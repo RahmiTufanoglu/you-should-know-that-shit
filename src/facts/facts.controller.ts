@@ -23,9 +23,9 @@ import { JwtAuthGuard } from '../auth/guard/jwt-auth.guard';
 import { DeleteResult, UpdateResult } from 'typeorm';
 import { FileInterceptor } from '@nestjs/platform-express';
 import { HttpExceptionFilter } from '../filters/http-exception.filter';
-import { FactType } from './types/fact.type';
-import { Category } from '../categories/entities/category.entity';
 import { TrueAndFalseFact } from './interfaces/true-and-false-fact.model';
+import { FilterCorrectFactDto } from './dto/filter-correct-fact.dto';
+import { CategoryValidationPipe } from '../shared/pipes/category-validation.pipe';
 
 @ApiTags('facts')
 @UseGuards(JwtAuthGuard)
@@ -55,7 +55,11 @@ export class FactsController {
   @ApiOperation({ summary: 'Show all facts' })
   @UsePipes(ValidationPipe)
   @Get('all')
-  async findAll(): Promise<Fact[]> {
+  async findAll(@Query() filterCorrectFacts: FilterCorrectFactDto): Promise<Fact[]> {
+    const isCorrectStr = String(filterCorrectFacts.isTrue);
+    if (Object.keys(filterCorrectFacts).length) {
+      return this.factsService.findAllSpecificFacts(isCorrectStr);
+    }
     return this.factsService.findAll();
   }
 
@@ -78,18 +82,10 @@ export class FactsController {
   @ApiOkResponse({ type: Fact, isArray: true })
   @ApiOperation({ summary: 'Filter by category' })
   @UsePipes(ValidationPipe)
-  @Get()
-  async filterByCategory(@Query('category') category: Category) {
+  @Get('foo')
+  async filterByCategory(@Query('category', CategoryValidationPipe) category: string) {
     return this.factsService.filterByCategory(category);
   }
-
-  // @ApiOkResponse({ type: Fact, isArray: true })
-  // @ApiOperation({ summary: 'Show all facts without solutions' })
-  // @UsePipes(ValidationPipe)
-  // @Get('without')
-  // async findAllWithoutSolution(): Promise<FactType[]> {
-  //   return this.factsService.findAllWithoutSolution();
-  // }
 
   @ApiCreatedResponse({ type: Fact })
   @ApiOperation({ summary: 'Check if the selection is correct' })

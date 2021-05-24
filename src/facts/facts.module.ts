@@ -6,6 +6,7 @@ import { MulterModule } from '@nestjs/platform-express';
 import { Fact } from './entities/fact.entity';
 import { ConfigModule, ConfigService } from '@nestjs/config';
 import { extname } from 'path';
+import { Category } from '../categories/entities/category.entity';
 
 const imageFilter = (req, file, cb) => {
   if (!file.originalname.match(/\.(jpg|jpeg|png)$/)) {
@@ -19,7 +20,7 @@ const imageFilter = (req, file, cb) => {
 
 @Module({
   imports: [
-    TypeOrmModule.forFeature([Fact]),
+    TypeOrmModule.forFeature([Fact, Category]),
     MulterModule.registerAsync({
       imports: [ConfigModule],
       inject: [ConfigService],

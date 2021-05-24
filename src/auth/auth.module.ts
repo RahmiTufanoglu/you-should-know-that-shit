@@ -10,7 +10,7 @@ import { ConfigService } from '@nestjs/config';
 import { GoogleStrategy } from './strategies/google.strategy';
 import { FacebookStrategy } from './strategies/facebook.strategy';
 import { TypeOrmModule } from '@nestjs/typeorm';
-import { User } from '../users/entities/user';
+import { UserEntity } from '../users/entities/user.entity';
 
 @Module({
   imports: [
@@ -25,7 +25,7 @@ import { User } from '../users/entities/user';
       }),
       inject: [ConfigService],
     }),
-    TypeOrmModule.forFeature([User]),
+    TypeOrmModule.forFeature([UserEntity]),
   ],
   providers: [
     AuthService,

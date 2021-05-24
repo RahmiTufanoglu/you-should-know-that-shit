@@ -3,7 +3,7 @@ import { ApiProperty } from '@nestjs/swagger';
 import * as bcrypt from 'bcrypt';
 
 @Entity({ name: 'users' })
-export class User {
+export class UserEntity {
 
   @ApiProperty()
   @PrimaryGeneratedColumn('uuid')
@@ -56,7 +56,7 @@ export class User {
 
   @BeforeInsert()
   @BeforeUpdate()
-  async hashPassword() {
+  async hashPassword(): Promise<void> {
     const salt = await bcrypt.genSalt(10);
     this.password = await bcrypt.hash(this.password, salt);
   }
