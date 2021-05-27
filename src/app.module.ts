@@ -25,7 +25,6 @@ const ENV = process.env.NODE_ENV;
       inject: [ConfigService],
       useFactory: () => ({
         ...ormconfig,
-        autoLoadEntities: true, // ???
         retryDelay: 3000,
         retryAttempts: 5,
       }),

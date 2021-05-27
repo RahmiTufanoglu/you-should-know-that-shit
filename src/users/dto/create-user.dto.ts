@@ -44,7 +44,6 @@ export class CreateUserDto {
   @IsString()
   readonly highscore: number;
 
-
   @ApiModelProperty()
   @IsOptional()
   @IsBoolean()

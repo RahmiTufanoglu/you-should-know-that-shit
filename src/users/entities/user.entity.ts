@@ -1,9 +1,10 @@
 import { BeforeInsert, BeforeUpdate, Column, CreateDateColumn, Entity, PrimaryGeneratedColumn } from 'typeorm';
 import { ApiProperty } from '@nestjs/swagger';
+import { Exclude } from 'class-transformer';
 import * as bcrypt from 'bcrypt';
 
 @Entity({ name: 'users' })
-export class UserEntity {
+export class User {
 
   @ApiProperty()
   @PrimaryGeneratedColumn('uuid')
@@ -14,7 +15,9 @@ export class UserEntity {
   email: string;
 
   @ApiProperty({ required: true })
-  @Column({ select: false, nullable: true })
+  @Exclude()
+  // @Column({ select: false, nullable: true })
+  @Column({ nullable: true })
   password: string;
 
   @ApiProperty({

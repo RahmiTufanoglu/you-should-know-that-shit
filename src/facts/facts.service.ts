@@ -2,7 +2,7 @@ import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
 import { CreateFactDto } from './dto/create-fact.dto';
 import { UpdateFactDto } from './dto/update-fact.dto';
 import { InjectRepository } from '@nestjs/typeorm';
-import { DeleteResult, Repository, UpdateResult } from 'typeorm';
+import { DeleteResult, getRepository, Repository, UpdateResult } from 'typeorm';
 import { Fact } from './entities/fact.entity';
 import { ObjectNotFoundException } from '../exceptions/object-not-found-exception';
 import { TrueAndFalseFact } from './interfaces/true-and-false-fact.model';
@@ -39,15 +39,28 @@ export class FactsService {
   }
 
   async findAllSpecificFacts(isCorrectStr: string): Promise<Fact[]> {
-    const facts = await this.factRepository.find();
-    if (isCorrectStr === 'true') {
-      return facts.filter(({ isTrue }: Fact) => isTrue);
-    } else if (isCorrectStr === 'false') {
-      return facts.filter(({ isTrue }: Fact) => !isTrue);
-    } else {
-      throw new HttpException('Query does not exists', HttpStatus.UNPROCESSABLE_ENTITY);
+    const query = getRepository(Fact)
+      .createQueryBuilder('fact')
+      // .select('fact')
+      // .from('facts', 'fact');
+
+    if (isCorrectStr === 'true' || isCorrectStr === 'false') {
+      query.andWhere('fact.isTrue = :isTrue', { isTrue: isCorrectStr });
     }
+
+    return await query.getMany();
   }
+
+  // async findAllSpecificFacts(isCorrectStr: string): Promise<Fact[]> {
+  //   const facts = await this.factRepository.find();
+  //   if (isCorrectStr === 'true') {
+  //     return facts.filter(({ isTrue }: Fact) => isTrue);
+  //   } else if (isCorrectStr === 'false') {
+  //     return facts.filter(({ isTrue }: Fact) => !isTrue);
+  //   } else {
+  //     throw new HttpException('Query does not exists', HttpStatus.UNPROCESSABLE_ENTITY);
+  //   }
+  // }
 
   async filterByCategory(category: string) {
     const facts = await this.factRepository.find();

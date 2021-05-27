@@ -17,7 +17,7 @@ export class Fact {
   fact: string;
 
   @ApiProperty()
-  @Column()
+  @Column({ nullable: false })
   isTrue: boolean;
 
   @ApiProperty({

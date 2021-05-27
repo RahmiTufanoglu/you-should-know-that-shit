@@ -1,8 +1,8 @@
-import { BadRequestException, HttpStatus, Injectable } from '@nestjs/common';
+import { BadRequestException, HttpStatus, Injectable, UnauthorizedException } from '@nestjs/common';
 import { UsersService } from '../users/users.service';
 import { JwtService } from '@nestjs/jwt';
 import * as bcrypt from 'bcrypt';
-import { UserEntity } from '../users/entities/user.entity';
+import { User } from '../users/entities/user.entity';
 
 @Injectable()
 export class AuthService {
@@ -20,10 +20,11 @@ export class AuthService {
       const { password, ...rest } = user;
       return rest;
     }
+    // throw new UnauthorizedException(('Please check your login credentials.'));
     return null;
   }
 
-  async login(user: UserEntity): Promise<{ access_token: string }> {
+  async login(user: User): Promise<{ access_token: string }> {
     const payload = { username: user.username, sub: user.id };
     return {
       access_token: this.jwtService.sign(payload),

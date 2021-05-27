@@ -53,14 +53,10 @@ export class FactsController {
 
   @ApiOkResponse({ type: Fact, isArray: true })
   @ApiOperation({ summary: 'Show all facts' })
-  @UsePipes(ValidationPipe)
+  // @UsePipes(ValidationPipe)
   @Get('all')
   async findAll(@Query() filterCorrectFacts: FilterCorrectFactDto): Promise<Fact[]> {
-    const isCorrectStr = String(filterCorrectFacts.isTrue);
-    if (Object.keys(filterCorrectFacts).length) {
-      return this.factsService.findAllSpecificFacts(isCorrectStr);
-    }
-    return this.factsService.findAll();
+    return this.factsService.findAllSpecificFacts(String(filterCorrectFacts.isTrue));
   }
 
   @ApiOkResponse({ type: Fact, isArray: true })
