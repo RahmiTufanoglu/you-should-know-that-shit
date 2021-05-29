@@ -3,6 +3,7 @@ import {
   Controller,
   Delete,
   Get,
+  Logger,
   Param,
   Patch,
   Post,
@@ -26,11 +27,15 @@ import { HttpExceptionFilter } from '../filters/http-exception.filter';
 import { TrueAndFalseFact } from './interfaces/true-and-false-fact.model';
 import { FilterCorrectFactDto } from './dto/filter-correct-fact.dto';
 import { CategoryValidationPipe } from '../shared/pipes/category-validation.pipe';
+import { GetUser } from '../auth/get-user.decorator';
+import { User } from '../users/entities/user.entity';
 
 @ApiTags('facts')
 @UseGuards(JwtAuthGuard)
 @Controller('facts')
 export class FactsController {
+
+  private logger = new Logger('FactsController');
 
   constructor(private readonly factsService: FactsService) {
   }
@@ -64,6 +69,7 @@ export class FactsController {
   @UsePipes(ValidationPipe)
   @Get()
   async findRandomFacts(): Promise<TrueAndFalseFact[]> {
+    this.logger.verbose(`Retrieving random facts`);
     return this.factsService.findRandomFacts();
   }
 
@@ -78,7 +84,7 @@ export class FactsController {
   @ApiOkResponse({ type: Fact, isArray: true })
   @ApiOperation({ summary: 'Filter by category' })
   @UsePipes(ValidationPipe)
-  @Get('foo')
+  @Get('filter')
   async filterByCategory(@Query('category', CategoryValidationPipe) category: string) {
     return this.factsService.filterByCategory(category);
   }
@@ -86,9 +92,13 @@ export class FactsController {
   @ApiCreatedResponse({ type: Fact })
   @ApiOperation({ summary: 'Check if the selection is correct' })
   @UsePipes(ValidationPipe)
-  @Post('check')
-  async checkIfCorrect(@Param('id') id: number): Promise<boolean> {
-    return this.factsService.checkIfCorrect(id);
+  @Get('check/:id')
+  async checkIfCorrect(
+    @Param('id') id: number,
+    @GetUser() user: User,
+    // @Req() req: RequestWithUser,
+  ): Promise<boolean> {
+    return this.factsService.checkIfCorrect(id, user);
   }
 
   @ApiOkResponse({ type: Fact })

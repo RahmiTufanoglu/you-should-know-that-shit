@@ -8,8 +8,9 @@ import { ClaimsModule } from './claims/claims.module';
 import { CategoriesModule } from './categories/categories.module';
 import { ConfigModule, ConfigService } from '@nestjs/config';
 import { TypeOrmModule } from '@nestjs/typeorm';
-import ormconfig from './ormconfig';
 import { ThrottlerModule } from '@nestjs/throttler';
+import { configValidationSchema } from './config.schema';
+import ormconfig from './ormconfig';
 
 const ENV = process.env.NODE_ENV;
 
@@ -18,7 +19,7 @@ const ENV = process.env.NODE_ENV;
     ConfigModule.forRoot({
       isGlobal: true,
       envFilePath: !ENV ? '.env' : `.env.${ENV}`,
-      // envFilePath: ['.env.development', '.env.production'],
+      validationSchema: configValidationSchema,
     }),
     TypeOrmModule.forRootAsync({
       imports: [ConfigModule],

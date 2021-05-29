@@ -12,6 +12,8 @@ import { FacebookStrategy } from './strategies/facebook.strategy';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { User } from '../users/entities/user.entity';
 
+const TOKEN_EXPIRATION = 10000000;
+
 @Module({
   imports: [
     UsersModule,
@@ -20,7 +22,8 @@ import { User } from '../users/entities/user.entity';
       useFactory: async (configService: ConfigService) => ({
         secret: configService.get('JWT_SECRET'),
         signOptions: {
-          expiresIn: configService.get('TOKEN_EXPIRATION'),
+          // expiresIn: configService.get('TOKEN_EXPIRATION'),
+          expiresIn: TOKEN_EXPIRATION,
         },
       }),
       inject: [ConfigService],

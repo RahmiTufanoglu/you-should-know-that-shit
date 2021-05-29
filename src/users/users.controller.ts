@@ -50,7 +50,10 @@ export class UsersController {
 
   @UseGuards(JwtAuthGuard)
   @Patch(':id')
-  async update(@Param('id', ParseIntPipe) id: number, @Body() updateUserDto: UpdateUserDto): Promise<UpdateResult> {
+  async update(
+    @Param('id', ParseIntPipe) id: number,
+    @Body() updateUserDto: UpdateUserDto,
+  ): Promise<UpdateResult> {
     return this.usersService.update(id, updateUserDto);
   }
 
@@ -60,20 +63,20 @@ export class UsersController {
     return this.usersService.remove(id);
   }
 
-  @ApiCreatedResponse({ type: User })
-  @ApiNotFoundResponse()
-  @UseGuards(JwtAuthGuard)
-  @Get()
-  async findByEmail(@Param('email') email: string): Promise<User> {
-    return this.usersService.findByEmail(email);
-  }
+  // @ApiCreatedResponse({ type: User })
+  // @ApiNotFoundResponse()
+  // @UseGuards(JwtAuthGuard)
+  // @Get()
+  // async findByEmail(@Param('email') email: string): Promise<User> {
+  //   return this.usersService.findByEmail(email);
+  // }
 
-  @ApiCreatedResponse({ type: User })
-  @ApiNotFoundResponse()
-  @UseGuards(JwtAuthGuard)
-  @Get()
-  async findByUsername(@Param('username') username: string): Promise<User> {
-    return this.usersService.findByUsername(username);
-  }
+  // @ApiCreatedResponse({ type: User })
+  // @ApiNotFoundResponse()
+  // @UseGuards(JwtAuthGuard)
+  // @Get()
+  // async findByUsername(@Param('username') username: string): Promise<User> {
+  //   return this.usersService.findByUsername(username);
+  // }
 
 }

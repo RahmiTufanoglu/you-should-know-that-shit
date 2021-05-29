@@ -1,4 +1,4 @@
-import { ConflictException, HttpException, HttpStatus, Injectable, InternalServerErrorException } from '@nestjs/common';
+import { ConflictException, HttpException, HttpStatus, Injectable } from '@nestjs/common';
 import { CreateUserDto } from './dto/create-user.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
 import { InjectRepository } from '@nestjs/typeorm';
@@ -23,7 +23,7 @@ export class UsersService {
     const userByEmail = await this.userRepository.findOne({ email });
 
     if (userByEmail) {
-      throw new HttpException('Email exists', HttpStatus.UNPROCESSABLE_ENTITY);
+      throw new ConflictException(`Email ${email} already exists`);
     }
 
     const newUser = new User();
@@ -95,15 +95,15 @@ export class UsersService {
     }
   }
 
-  async findByUsername(username: string): Promise<User> {
-    try {
-      return await this.userRepository.findOneOrFail(
-        { username },
-        // { select: this.selectArr as any },
-      );
-    } catch (err) {
-      throw new ObjectNotFoundException({ username });
-    }
-  }
+  // async findByUsername(username: string): Promise<User> {
+  //   try {
+  //     return await this.userRepository.findOneOrFail(
+  //       { username },
+  //       // { select: this.selectArr as any },
+  //     );
+  //   } catch (err) {
+  //     throw new ObjectNotFoundException({ username });
+  //   }
+  // }
 
 }

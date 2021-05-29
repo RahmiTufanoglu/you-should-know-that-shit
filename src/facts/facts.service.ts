@@ -1,4 +1,4 @@
-import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
+import { HttpException, HttpStatus, Injectable, Logger } from '@nestjs/common';
 import { CreateFactDto } from './dto/create-fact.dto';
 import { UpdateFactDto } from './dto/update-fact.dto';
 import { InjectRepository } from '@nestjs/typeorm';
@@ -9,15 +9,20 @@ import { TrueAndFalseFact } from './interfaces/true-and-false-fact.model';
 import { FactIdType } from './types/fact-id.type';
 import { Category } from '../categories/entities/category.entity';
 import { FACT_CATEGORY_ENUM } from '../enums';
+import { User } from '../users/entities/user.entity';
 
 @Injectable()
 export class FactsService {
+
+  private logger = new Logger('FactsService');
 
   constructor(
     @InjectRepository(Fact)
     private readonly factRepository: Repository<Fact>,
     @InjectRepository(Category)
     private readonly categoryRepository: Repository<Category>,
+    @InjectRepository(User)
+    private readonly userRepository: Repository<User>,
   ) {
   }
 
@@ -38,17 +43,17 @@ export class FactsService {
     return this.factRepository.find();
   }
 
-  async findAllSpecificFacts(isCorrectStr: string): Promise<Fact[]> {
+  async findAllSpecificFacts(isTrue: string): Promise<Fact[]> {
     const query = getRepository(Fact)
-      .createQueryBuilder('fact')
-      // .select('fact')
-      // .from('facts', 'fact');
+      .createQueryBuilder('fact');
+    // .select('fact')
+    // .from('facts', 'fact');
 
-    if (isCorrectStr === 'true' || isCorrectStr === 'false') {
-      query.andWhere('fact.isTrue = :isTrue', { isTrue: isCorrectStr });
+    if (isTrue === 'true' || isTrue === 'false') {
+      query.andWhere('fact.isTrue = :isTrue', { isTrue });
     }
 
-    return await query.getMany();
+    return query.getMany();
   }
 
   // async findAllSpecificFacts(isCorrectStr: string): Promise<Fact[]> {
@@ -124,8 +129,22 @@ export class FactsService {
     return correctFacts[Math.floor(Math.random() * correctFacts.length)];
   }
 
-  async checkIfCorrect(factId: number): Promise<boolean> {
+  async checkIfCorrect(factId: number, user: User): Promise<boolean> {
+    console.log(user.id);
+    const loggedInUser = await this.userRepository.findOne(user.id);
+    console.log(loggedInUser);
+
+    // const lastScore = loggedInUser.currentScore;
+
     const fact = await this.getFactById(factId);
+
+    if (fact.isTrue) {
+      // loggedInUser.currentScore++;
+      const newUser = new User();
+      Object.assign(newUser, loggedInUser);
+      await this.userRepository.update(user.id, loggedInUser);
+    }
+
     return fact.isTrue;
   }
 
@@ -149,6 +168,7 @@ export class FactsService {
     try {
       return await this.factRepository.findOneOrFail(id);
     } catch (err) {
+      this.logger.error(`Failed to find fact by ${id}`, err.stack);
       throw new ObjectNotFoundException({ id });
     }
   }

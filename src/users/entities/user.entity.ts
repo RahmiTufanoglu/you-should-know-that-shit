@@ -35,6 +35,10 @@ export class User {
   @Column({ nullable: true })
   lastname: string;
 
+  // @ApiProperty()
+  // @Column({ nullable: true })
+  // currentScore: number;
+
   @ApiProperty()
   @Column({ nullable: true })
   highscore: number;

@@ -18,10 +18,10 @@ const config: PostgresConnectionOptions = {
   username: DATABASE_USERNAME,
   password: DATABASE_PASSWORD,
   database: DATABASE_NAME,
+  logging: false,
   // development = ts , production = js
   entities: [__dirname + '/**/*.entity{.ts,.js}'],
   synchronize: false,
-  logging: true,
   migrationsTableName: 'migrations',
   migrations: [__dirname + '/migrations/**/*.{.ts,.js}'],
   cli: {
