@@ -16,7 +16,6 @@ export class User {
 
   @ApiProperty({ required: true })
   @Exclude()
-  // @Column({ select: false, nullable: true })
   @Column({ nullable: true })
   password: string;
 
@@ -35,12 +34,12 @@ export class User {
   @Column({ nullable: true })
   lastname: string;
 
-  // @ApiProperty()
-  // @Column({ nullable: true })
-  // currentScore: number;
+  @ApiProperty()
+  @Column({ nullable: true, default: 0 })
+  currentScore: number;
 
   @ApiProperty()
-  @Column({ nullable: true })
+  @Column({ nullable: true, default: 0 })
   highscore: number;
 
   @ApiProperty()

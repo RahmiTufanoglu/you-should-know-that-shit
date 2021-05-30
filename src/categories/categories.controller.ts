@@ -9,8 +9,6 @@ import { SETTINGS } from '../app.utils';
 import { DeleteResult, UpdateResult } from 'typeorm';
 import { UpdateCategoryDto } from './dto/update-category.dto';
 
-// import { Category } from './interfaces/category.interface';
-
 @Controller('categories')
 @UseGuards(JwtAuthGuard)
 export class CategoriesController {

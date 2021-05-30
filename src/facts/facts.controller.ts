@@ -26,7 +26,6 @@ import { FileInterceptor } from '@nestjs/platform-express';
 import { HttpExceptionFilter } from '../filters/http-exception.filter';
 import { TrueAndFalseFact } from './interfaces/true-and-false-fact.model';
 import { FilterCorrectFactDto } from './dto/filter-correct-fact.dto';
-import { CategoryValidationPipe } from '../shared/pipes/category-validation.pipe';
 import { GetUser } from '../auth/get-user.decorator';
 import { User } from '../users/entities/user.entity';
 
@@ -44,12 +43,12 @@ export class FactsController {
   @ApiOperation({ summary: 'Create a fact with an image' })
   @UseFilters(HttpExceptionFilter)
   @UseInterceptors(FileInterceptor('file'))
-  @Post()
+  @Post('create')
   async create(@Body() createFactDto: CreateFactDto,
                @UploadedFile() file: Express.Multer.File,
   ): Promise<any> {
     const fact = await this.factsService.create(createFactDto);
-    console.log('Image', file);
+    this.logger.log(`Image: ${file}`);
     return {
       fact,
       file: file?.buffer.toString(),
@@ -57,48 +56,30 @@ export class FactsController {
   }
 
   @ApiOkResponse({ type: Fact, isArray: true })
-  @ApiOperation({ summary: 'Show all facts' })
-  // @UsePipes(ValidationPipe)
+  @ApiOperation({ summary: 'Show all or specific facts' })
   @Get('all')
   async findAll(@Query() filterCorrectFacts: FilterCorrectFactDto): Promise<Fact[]> {
-    return this.factsService.findAllSpecificFacts(String(filterCorrectFacts.isTrue));
+    return this.factsService.findAll(
+      String(filterCorrectFacts.correct),
+      filterCorrectFacts.category,
+    );
   }
 
   @ApiOkResponse({ type: Fact, isArray: true })
   @ApiOperation({ summary: 'Show random true and false fact couples' })
   @UsePipes(ValidationPipe)
   @Get()
-  async findRandomFacts(): Promise<TrueAndFalseFact[]> {
+  async findRandomTrueAndFalseFact(): Promise<TrueAndFalseFact[]> {
     this.logger.verbose(`Retrieving random facts`);
-    return this.factsService.findRandomFacts();
+    return this.factsService.findRandomTrueAndFalseFact();
   }
 
   @ApiOkResponse({ type: Fact, isArray: true })
   @ApiOperation({ summary: 'Show random true fact' })
   @UsePipes(ValidationPipe)
-  @Get('correct')
+  @Get('random')
   async findRandomCorrectFact(): Promise<Fact> {
     return this.factsService.findRandomCorrectFact();
-  }
-
-  @ApiOkResponse({ type: Fact, isArray: true })
-  @ApiOperation({ summary: 'Filter by category' })
-  @UsePipes(ValidationPipe)
-  @Get('filter')
-  async filterByCategory(@Query('category', CategoryValidationPipe) category: string) {
-    return this.factsService.filterByCategory(category);
-  }
-
-  @ApiCreatedResponse({ type: Fact })
-  @ApiOperation({ summary: 'Check if the selection is correct' })
-  @UsePipes(ValidationPipe)
-  @Get('check/:id')
-  async checkIfCorrect(
-    @Param('id') id: number,
-    @GetUser() user: User,
-    // @Req() req: RequestWithUser,
-  ): Promise<boolean> {
-    return this.factsService.checkIfCorrect(id, user);
   }
 
   @ApiOkResponse({ type: Fact })
@@ -108,6 +89,17 @@ export class FactsController {
   @Get(':id')
   async findById(@Param('id') id: number): Promise<Fact> {
     return this.factsService.findById(id);
+  }
+
+  @ApiCreatedResponse({ type: Fact })
+  @ApiOperation({ summary: 'Check if the selection is correct' })
+  @UsePipes(ValidationPipe)
+  @Post(':id')
+  async checkIfFactIsCorrect(
+    @Param('id') id: number,
+    @GetUser() user: User,
+  ): Promise<{ correct: boolean, newScore: number }> {
+    return this.factsService.checkIfFactIsCorrect(id, user);
   }
 
   @ApiOperation({ summary: 'Edit a fact with a specific id' })
@@ -123,8 +115,8 @@ export class FactsController {
   @ApiOperation({ summary: 'Delete a user with a specific id' })
   @UsePipes(ValidationPipe)
   @Delete(':id')
-  async remove(@Param('id') id: number): Promise<DeleteResult> {
-    return this.factsService.remove(id);
+  async delete(@Param('id') id: number): Promise<DeleteResult> {
+    return this.factsService.delete(id);
   }
 
 }

@@ -21,7 +21,7 @@ const config: PostgresConnectionOptions = {
   logging: false,
   // development = ts , production = js
   entities: [__dirname + '/**/*.entity{.ts,.js}'],
-  synchronize: false,
+  synchronize: true,
   migrationsTableName: 'migrations',
   migrations: [__dirname + '/migrations/**/*.{.ts,.js}'],
   cli: {

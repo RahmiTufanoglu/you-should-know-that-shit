@@ -39,10 +39,10 @@ export class CreateUserDto {
   @ApiModelProperty()
   readonly updatedAt: Date;
 
-  // @ApiModelProperty()
-  // @IsOptional()
-  // @IsString()
-  // readonly currentScore: number;
+  @ApiModelProperty()
+  @IsOptional()
+  @IsString()
+  readonly currentScore: number;
 
   @ApiModelProperty()
   @IsOptional()

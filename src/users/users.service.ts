@@ -1,4 +1,4 @@
-import { ConflictException, HttpException, HttpStatus, Injectable } from '@nestjs/common';
+import { ConflictException, HttpException, HttpStatus, Injectable, Logger } from '@nestjs/common';
 import { CreateUserDto } from './dto/create-user.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
 import { InjectRepository } from '@nestjs/typeorm';
@@ -10,7 +10,7 @@ import { User } from './entities/user.entity';
 @Injectable()
 export class UsersService {
 
-  // selectArr = ['id', 'createdAt', 'username', 'firstname', 'lastname', 'email', 'password', 'highscore', 'signedInWith'];
+  private logger = new Logger('UsersService');
 
   constructor(
     @InjectRepository(User)
@@ -23,21 +23,12 @@ export class UsersService {
     const userByEmail = await this.userRepository.findOne({ email });
 
     if (userByEmail) {
+      this.logger.verbose(`Email ${email} already exists`);
       throw new ConflictException(`Email ${email} already exists`);
     }
 
     const newUser = new User();
     Object.assign(newUser, createUserDto);
-
-    // try {
-    //   return await this.userRepository.save(newUser);
-    // } catch (error) {
-    //   if (error.code === '23505') {
-    //     throw new ConflictException(`Email ${email} already exists`);
-    //   }
-    //   throw new InternalServerErrorException();
-    // }
-
     return this.userRepository.save(newUser);
   }
 
@@ -46,6 +37,7 @@ export class UsersService {
     const userByEmail = await this.userRepository.findOne({ email });
 
     if (userByEmail) {
+      this.logger.verbose(`Email ${email} already exists`);
       throw new HttpException('Email exists', HttpStatus.UNPROCESSABLE_ENTITY);
     }
 
@@ -83,10 +75,7 @@ export class UsersService {
   async findByEmail(email: string, isSignedInWith?: boolean): Promise<User> {
     if (!isSignedInWith) {
       try {
-        return await this.userRepository.findOneOrFail(
-          { email },
-          // { select: this.selectArr as any },
-        );
+        return await this.userRepository.findOneOrFail({ email });
       } catch (err) {
         throw new ObjectNotFoundException({ email });
       }
@@ -94,16 +83,5 @@ export class UsersService {
       return this.userRepository.findOne({ email });
     }
   }
-
-  // async findByUsername(username: string): Promise<User> {
-  //   try {
-  //     return await this.userRepository.findOneOrFail(
-  //       { username },
-  //       // { select: this.selectArr as any },
-  //     );
-  //   } catch (err) {
-  //     throw new ObjectNotFoundException({ username });
-  //   }
-  // }
 
 }

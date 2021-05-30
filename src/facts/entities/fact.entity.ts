@@ -18,7 +18,7 @@ export class Fact {
 
   @ApiProperty()
   @Column({ nullable: false })
-  isTrue: boolean;
+  correct: boolean;
 
   @ApiProperty({
     example: '',
@@ -26,6 +26,14 @@ export class Fact {
   })
   @Column({ nullable: true, default: null })
   image: string;
+
+  @ApiProperty()
+  @Column({ nullable: true })
+  imageLink: string;
+
+  @ApiProperty()
+  @Column({ nullable: true })
+  source: string;
 
   @ApiProperty()
   @CreateDateColumn({ nullable: false })
@@ -45,7 +53,6 @@ export class Fact {
   )
   @JoinColumn({ name: 'categoryId' })
   category: Category;
-
 
   @BeforeUpdate()
   updateTimestamp(): void {

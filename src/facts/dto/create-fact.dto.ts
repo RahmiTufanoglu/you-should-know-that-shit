@@ -11,10 +11,16 @@ export class CreateFactDto {
   @ApiModelProperty()
   @IsDefined()
   @IsNotEmpty()
-  readonly isTrue: boolean;
+  readonly correct: boolean;
 
   @ApiModelProperty()
   readonly image: string;
+
+  @ApiModelProperty()
+  readonly imageLink: string;
+
+  @ApiModelProperty()
+  readonly source: string;
 
   @ApiModelProperty()
   readonly createdAt: Date;

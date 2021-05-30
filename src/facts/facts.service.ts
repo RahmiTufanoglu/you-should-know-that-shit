@@ -10,6 +10,7 @@ import { FactIdType } from './types/fact-id.type';
 import { Category } from '../categories/entities/category.entity';
 import { FACT_CATEGORY_ENUM } from '../enums';
 import { User } from '../users/entities/user.entity';
+import { GetFactEnumId } from '../enums/fact.enum';
 
 @Injectable()
 export class FactsService {
@@ -39,74 +40,34 @@ export class FactsService {
     return this.factRepository.save(newFact);
   }
 
-  async findAll(): Promise<Fact[]> {
-    return this.factRepository.find();
-  }
+  async findAll(correct: string, category: FACT_CATEGORY_ENUM): Promise<Fact[]> {
+    const query = getRepository(Fact).createQueryBuilder('fact');
 
-  async findAllSpecificFacts(isTrue: string): Promise<Fact[]> {
-    const query = getRepository(Fact)
-      .createQueryBuilder('fact');
-    // .select('fact')
-    // .from('facts', 'fact');
+    if (correct === 'true' || 'false') {
+      query.andWhere('fact.correct = :correct', { correct });
+    }
 
-    if (isTrue === 'true' || isTrue === 'false') {
-      query.andWhere('fact.isTrue = :isTrue', { isTrue });
+    if (Object.values(FACT_CATEGORY_ENUM).includes(category)) {
+      const categoryId = GetFactEnumId(category);
+      query.andWhere('fact.categoryId = :categoryId', { categoryId });
     }
 
     return query.getMany();
   }
 
-  // async findAllSpecificFacts(isCorrectStr: string): Promise<Fact[]> {
-  //   const facts = await this.factRepository.find();
-  //   if (isCorrectStr === 'true') {
-  //     return facts.filter(({ isTrue }: Fact) => isTrue);
-  //   } else if (isCorrectStr === 'false') {
-  //     return facts.filter(({ isTrue }: Fact) => !isTrue);
-  //   } else {
-  //     throw new HttpException('Query does not exists', HttpStatus.UNPROCESSABLE_ENTITY);
-  //   }
-  // }
-
-  async filterByCategory(category: string) {
-    const facts = await this.factRepository.find();
-
-    if (!this.getEnumId(category)) {
-      throw new HttpException('Category not available', HttpStatus.UNPROCESSABLE_ENTITY);
-    }
-
-    return facts.filter(({ categoryId }: Fact) => {
-      return parseInt(categoryId) === this.getEnumId(category);
-    });
-  }
-
-  getEnumId(category: string): number {
-    switch (category) {
-      case FACT_CATEGORY_ENUM.History:
-        return 3;
-      case FACT_CATEGORY_ENUM.Sport:
-        return 2;
-      case FACT_CATEGORY_ENUM.Politics:
-        return 1;
-      case FACT_CATEGORY_ENUM.Science:
-        return 4;
-      default:
-        break;
-    }
-  }
-
-  async findRandomFacts(): Promise<TrueAndFalseFact[]> {
+  async findRandomTrueAndFalseFact(): Promise<TrueAndFalseFact[]> {
     const facts = await this.factRepository.find();
     const trueFacts = facts
-      .filter(({ isTrue }: Fact) => isTrue)
-      .slice(0, 100)
-      .map(({ id, fact, image }: Fact) => {
-        return { id, fact, image };
+      .filter(({ correct }: Fact) => correct)
+      .slice(0, 1000)
+      .map(({ id, fact, image, source }: Fact) => {
+        return { id, fact, image, source };
       });
     const falseFacts = facts
-      .filter(({ isTrue }: Fact) => !isTrue)
-      .slice(0, 100)
-      .map(({ id, fact, image }: Fact) => {
-        return { id, fact, image };
+      .filter(({ correct }: Fact) => !correct)
+      .slice(0, 1000)
+      .map(({ id, fact, image, source }: Fact) => {
+        return { id, fact, image, source };
       });
 
     const shuffledTrueFacts = this.shuffleFacts(trueFacts);
@@ -125,31 +86,31 @@ export class FactsService {
 
   async findRandomCorrectFact(): Promise<Fact> {
     const facts = await this.factRepository.find();
-    const correctFacts = facts.filter(({ isTrue }: Fact) => isTrue);
+    const correctFacts = facts.filter(({ correct }: Fact) => correct);
     return correctFacts[Math.floor(Math.random() * correctFacts.length)];
-  }
-
-  async checkIfCorrect(factId: number, user: User): Promise<boolean> {
-    console.log(user.id);
-    const loggedInUser = await this.userRepository.findOne(user.id);
-    console.log(loggedInUser);
-
-    // const lastScore = loggedInUser.currentScore;
-
-    const fact = await this.getFactById(factId);
-
-    if (fact.isTrue) {
-      // loggedInUser.currentScore++;
-      const newUser = new User();
-      Object.assign(newUser, loggedInUser);
-      await this.userRepository.update(user.id, loggedInUser);
-    }
-
-    return fact.isTrue;
   }
 
   async findById(id: number): Promise<Fact> {
     return this.getFactById(id);
+  }
+
+  async checkIfFactIsCorrect(factId: number, user: User): Promise<{ correct: boolean, newScore: number }> {
+    const { correct } = await this.getFactById(factId);
+    const currentUser = await this.userRepository.findOne(user.id);
+
+    let newScore = currentUser.currentScore;
+    if (correct) {
+      newScore = ++currentUser.currentScore;
+      await this.userRepository.update(currentUser.id, currentUser);
+    } else {
+      if (currentUser.currentScore > currentUser.highscore) {
+        currentUser.highscore = currentUser.currentScore;
+      }
+      currentUser.currentScore = 0;
+      await this.userRepository.update(currentUser.id, currentUser);
+    }
+
+    return { correct, newScore };
   }
 
   async update(id: number, updateFactDto: UpdateFactDto): Promise<UpdateResult> {
@@ -158,7 +119,7 @@ export class FactsService {
     }
   }
 
-  async remove(id: number): Promise<DeleteResult> {
+  async delete(id: number): Promise<DeleteResult> {
     if (!!await this.getFactById(id)) {
       return this.factRepository.delete(id);
     }

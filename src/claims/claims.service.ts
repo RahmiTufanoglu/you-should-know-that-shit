@@ -5,7 +5,6 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { DeleteResult, Repository, UpdateResult } from 'typeorm';
 import { ClaimEntity } from './entities/claim.entity';
 import { ObjectNotFoundException } from '../exceptions/object-not-found-exception';
-// import { ClaimEntity } from './interfaces/claim.interface';
 
 @Injectable()
 export class ClaimsService {

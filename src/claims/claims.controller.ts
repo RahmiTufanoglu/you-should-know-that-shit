@@ -7,7 +7,6 @@ import { ClaimEntity } from './entities/claim.entity';
 import { JwtAuthGuard } from '../auth/guard/jwt-auth.guard';
 import { DeleteResult, UpdateResult } from 'typeorm';
 import { SETTINGS } from '../app.utils';
-// import { ClaimEntity } from './interfaces/claim.interface';
 
 @Controller('claims')
 @UseGuards(JwtAuthGuard)
